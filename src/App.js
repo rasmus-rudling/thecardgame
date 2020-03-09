@@ -38,7 +38,7 @@ function App() {
   return (    
   <Router>
     <Switch>
-        <Route exact path="/" >
+        <Route exact path="/ny_firebase_chatt" >
           <Start 
           email = {email}
           setEmail = {setEmail}
