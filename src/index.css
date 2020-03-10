@@ -105,9 +105,13 @@ code {
   border-radius: 5px;
   display:block;
   min-width: 300px;
-  min-height: 350px;
+  height: 350px;
   padding: 0px;
   margin: 0px;
+  overflow-y: auto;
+  overflow-x: visible;
+  padding-left: 13px;
+  padding-bottom: 10px;
   /*
   min-height: 300px;
   max-height: 300px;*/

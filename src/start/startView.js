@@ -10,7 +10,7 @@ const firebase = require('firebase');
 
 
 function StartView({email, setEmail, password, setPassword, loginError, setLoginError}) {
-    const history = useHistory()
+    const history = useHistory();
 
     return (
         <Container className="startContainer">
@@ -35,14 +35,10 @@ function StartView({email, setEmail, password, setPassword, loginError, setLogin
                         e.preventDefault();
                         
                         firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-                            console.log('R01')
                             history.push('/chat');
-                            // window.location = "chat"
                         
                         }, error => {
                             setLoginError('Server error');
-                            console.log("email: " + email);
-                            console.log("password: " + password);
                             console.log(error)
                         });
                     }}>

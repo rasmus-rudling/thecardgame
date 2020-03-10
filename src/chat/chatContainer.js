@@ -3,7 +3,6 @@ import ChatView from './chatView.js'
 
 const Chat = ({emailInChat}) => {
 
-    console.log("email in chatContainer " + emailInChat)
     return <ChatView
     email = {emailInChat}
     />
