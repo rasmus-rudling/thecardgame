@@ -6,34 +6,24 @@ import {Container, Row, Col, Button, FormControl, InputGroup} from 'react-bootst
 //import * as ROUTES from '../constants/routes.js';
 //^won't be needed
 
-function ChatView({email}) {
- // const [emailInChat, setEmailInChat] = React.useState(email);
-
-  /*
-  useEffect(() => {
-    setEmailInChat(email)
-    console.log(email)
-  }, [email]);
-  
-  console.log(email)
-  console.log(emailInChat)
-  */
-
+function ChatView({email, myMessages, otherMessages, otherTeamsMessages, displayText}) {
+ 
   var image = "https://img.freepik.com/free-vector/businessman-profile-cartoon_18591-58479.jpg?size=338&ext=jpg";
 
-  if(email==="Rasmus" || email==="rasmus"  || email==="rrudling@kth.se" || email==="rrudling@gmail.com"){
+  if(email==="rrudling@kth.se" || email==="Rrudling@kth.se"){
     var image = "https://scontent-arn2-2.xx.fbcdn.net/v/t1.0-9/68780115_10218157623043647_869986299145093120_n.jpg?_nc_cat=105&_nc_sid=85a577&_nc_ohc=mwN7yisOxXQAX8Pe3nH&_nc_ht=scontent-arn2-2.xx&oh=adb96402da673a7884160afacee987f7&oe=5E957F7B";
     var name = " Rasmus Rudling";
-  }else if(email==="Johanna" || email==="johanna"){
+  }else if(email==="simfors@kth.se" || email==="Simfors@kth.se"){
     var image = "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/s960x960/62459332_10211557969345271_2008241031601979392_o.jpg?_nc_cat=109&_nc_sid=85a577&_nc_ohc=srJZq4IbFGsAX-Dbd-q&_nc_ht=scontent-arn2-1.xx&_nc_tp=7&oh=dcd920d469e8c96a356ab28a35eadfae&oe=5E95855E";
     var name = " Johanna Simfors";
   }else{
     var image = "https://img.freepik.com/free-vector/businessman-profile-cartoon_18591-58479.jpg?size=338&ext=jpg";
   }
   
-
+  const [messagesObserver, setMessagesObserver] = React.useState(myMessages);
     return (
       <Container className="chatContainer">
+
         {/* HEADER   lägg till fluid={true} här uppe om chatterna ska fylla hela skärmen */}
       <Row>
           <Col>
@@ -67,7 +57,29 @@ function ChatView({email}) {
           <Row>
               <Col>    
                   <div id="textRow">
-                    <div id="chatText"></div>
+                    <div id="chatText">
+                      {
+                         React.useEffect(()=>{
+                          console.log("New messages updated!")
+                    }, [messagesObserver])
+                      }
+                      {myMessages.map((value) => {
+                        return (<Row>
+                          <Col>
+                            <div id="myMessages">{value}</div>
+                          </Col>
+                        </Row>)
+                        })}
+
+                      {otherMessages.map((value) => {
+                        return (<Row>
+                          <Col>
+                            <div id="otherMessages">{value}</div>
+                          </Col>
+                        </Row>)
+                        })}
+                        
+                    </div>
                   </div>
               </Col>
           </Row>
@@ -76,9 +88,9 @@ function ChatView({email}) {
               <Col xs={12}>    
                   <div id="submitRow">
                   <InputGroup>
-                    <FormControl bsPrefix="send_text"/>
+                    <FormControl id="textInput" bsPrefix="send_text"/>
                     <InputGroup.Append>
-                      <Button md="auto" variant="outline-dark" bsPrefix="send_button"><img src={"https://cdn1.iconfinder.com/data/icons/mail-2-basic/512/45-Send-512.png"}/></Button>
+                      <Button type="submit" md="auto" variant="outline-dark" bsPrefix="send_button" onClick={() => {displayText(myMessages); setMessagesObserver(myMessages)}} ><img src={"https://cdn1.iconfinder.com/data/icons/mail-2-basic/512/45-Send-512.png"}/></Button>
                     </InputGroup.Append>
                   </InputGroup>
                   </div>
@@ -107,7 +119,14 @@ function ChatView({email}) {
               <Col>    
                   <div id="textRow">
                     <div id="chatText">
-                      <p className="animate" id="animation">Diskussion pågår. . . </p>
+                      {/*<p className="animate" id="animation">Diskussion pågår. . . </p>*/}
+                      {otherTeamsMessages.map((value) => {
+                        return (<Row>
+                          <Col>
+                            <div id="otherTeamsMessages">{value}</div>
+                          </Col>
+                        </Row>)
+                        })}                      
                     </div>
                   </div>
               </Col>
@@ -119,9 +138,15 @@ function ChatView({email}) {
 
 
     <Row>
-        <Col>    
+        <Col md={{span:2, offset:5}}> 
             <div id="logout"><u>Spelregler</u><Link to="/">Log out</Link></div>
         </Col>
+
+        <Col md={{span:4, offset:1}}>
+            {/*<audio src={require("./music.mp3")} controls autoPlay/>*/}
+            <audio src={require("./music.mp3")} autoPlay/>
+
+          </Col>
     </Row>
 
     </Container>

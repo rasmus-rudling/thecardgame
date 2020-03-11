@@ -22,7 +22,6 @@ function App() {
 
     React.useEffect( () => {
         setEmailInChat(email);
-        console.log("I'm in the useEffect! :)")
     }   , [email])
   
 
@@ -32,7 +31,6 @@ function App() {
 
   // Kanske går att lösa på snyggare sätt än att ha ett separat state för chatView.
 //  const [emailInChat, setEmailInChat] = React.useState("No user");
-  console.log("Email in chat in App.js: " + email);
 
 
   return (    
