@@ -1,7 +1,6 @@
 import React from 'react';
-import {Link, Redirect, Route, useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {Container, Row, Col, Form, Button} from 'react-bootstrap';
-import ChatComponent from '../chat/chatView.js';
 
 const firebase = require('firebase');
 

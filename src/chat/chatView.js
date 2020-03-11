@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import {Container, Row, Col, Button, Form} from 'react-bootstrap';
 
+import OtherTeam from './otherTeam';
+
 const firebase = require('firebase');
 
 //import * as ROUTES from '../constants/routes.js';
@@ -9,8 +11,8 @@ const firebase = require('firebase');
 
 function ChatView({email}) {
     const history = useHistory();
-    const [emailLokal, setEmailLokal] = React.useState("");
-    const [chats, setChats] = React.useState([]);
+    const [chats, setChats] = useState([]);
+    
     console.log(`Inloggad som ${email}`)
 
     if(email==="Rasmus" || email==="rasmus"  || email==="rrudling@kth.se" || email==="rrudling@gmail.com") {
@@ -35,7 +37,6 @@ function ChatView({email}) {
                     .onSnapshot(async res => {
                         const chats = res.docs.map(_doc => _doc.data());
                         await (
-                            setEmailLokal(_usr.email),
                             setChats(chats)
                         )
                     })
@@ -43,14 +44,13 @@ function ChatView({email}) {
         })
     }, []);
 
+    
     let currentUsers = "";
 
     chats.filter((_chat, _index) => {
         let bool = false;
 
         _chat.users.forEach(user => {
-            console.log(user)
-            console.log(email)
             if (user === email) {
                 bool = true;
             }
@@ -61,7 +61,7 @@ function ChatView({email}) {
 
         document.getElementById('chatText').innerHTML = "";
 
-        _chat.messages.forEach((_message) => { 
+        _chat.messages.forEach(_message => { 
             
             const messageElement = document.createElement('div');
             const rowElement = document.createElement('div');
@@ -127,10 +127,8 @@ function ChatView({email}) {
 
                         <Row>
                             <Col>    
-                                <div id="textRow">
-                                    <div id="chatText">
-                                        
-                                    </div>
+                                <div id="chatText">
+                                    
                                 </div>
                             </Col>
                         </Row>
@@ -156,9 +154,6 @@ function ChatView({email}) {
 
                                         document.getElementById('msg-box').value = '';
                                         document.getElementById("msg-box").focus();
-
-                                        
-
                                     }}>
 
                                     <Row>
@@ -181,28 +176,7 @@ function ChatView({email}) {
                 </Col>
 
                 <Col sm={12} lg={6}> {/* 2ND CHAT */}
-                    <div className="chatBox" id="secretChat">
-                        <Row>
-                            <Col>      
-                                <div id="userinfo">
-                                    <b>Motståndarlaget:</b><br/> 
-                                    <img src={"https://res.cloudinary.com/inbound-org/image/twitter/w_200/189315459.jpg"} alt="" /> Sven Svensson
-                                    <img src={"https://s3-eu-west-1.amazonaws.com/video.gallereplay.com/production/user_108/renauddavies_2704201773733.jpg"} alt="" /> John Doe
-                                    <img src={"https://images.squarespace-cdn.com/content/v1/54bbd50ce4b05e8a36418abc/1533226867020-NALD4HA8GBL3IUIQE9PM/ke17ZwdGBToddI8pDm48kMh3mVmBaCAeGwqCLG3iONRZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PITeQtWPcxF65ANawkK25DREOmFck9peR6QL8AnpRiPJE/rachel-rouhana-profile-picture-circle.png"} alt="" /> Mary Moe
-                                </div>   
-                            </Col>
-                        </Row>
-
-                        <Row>
-                            <Col>    
-                                <div id="textRow">
-                                    <div id="chatText">
-                                        <p className="animate" id="animation">Diskussion pågår. . . </p>
-                                    </div>
-                                </div>
-                            </Col>
-                        </Row>
-                    </div>
+                    <OtherTeam />
                 </Col>
             </Row>
 
