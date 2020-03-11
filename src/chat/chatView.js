@@ -79,6 +79,9 @@ function ChatView({email}) {
         
         })
 
+        const objDiv = document.getElementById("chatText");
+        objDiv.scrollTop = objDiv.scrollHeight;
+
         _chat.users.forEach((user, index, array) => {
             if (index !== array.length - 1) { 
                 currentUsers += user + ":"; 
@@ -154,15 +157,22 @@ function ChatView({email}) {
                                         document.getElementById('msg-box').value = '';
                                         document.getElementById("msg-box").focus();
 
-                                        const objDiv = document.getElementById("chatText");
-                                        objDiv.scrollTop = objDiv.scrollHeight + 200;
+                                        
+
                                     }}>
 
-                                        <Form.Control type="text" id='msg-box' autoFocus />
-
-                                        <Button type="submit">
-                                            Skicka
-                                        </Button>
+                                    <Row>
+                                        <Col md={{span:5, offset:4}}>
+                                            <Form.Control type="text" id='msg-box' autoFocus />
+                                        </Col>
+                                        <Col md={{span:2}}>
+                                            <Button type="submit">
+                                                Skicka
+                                            </Button>
+                                        </Col>
+                                        
+                                    </Row>
+                                        
                                     </Form>
                                 </div>
                             </Col>
