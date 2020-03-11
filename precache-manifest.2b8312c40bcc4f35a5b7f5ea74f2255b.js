@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5d930539408a34d9d720941f932ed3ba",
+    "revision": "5f762bbf87307ae715aa180e5ca9081e",
     "url": "/ny_firebase_chatt/index.html"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ny_firebase_chatt/static/css/2.de424728.chunk.css"
   },
   {
-    "revision": "4fe0cbf99876ee428fdb",
-    "url": "/ny_firebase_chatt/static/css/main.dfaa3037.chunk.css"
+    "revision": "043aaf9b1dadfb0157d3",
+    "url": "/ny_firebase_chatt/static/css/main.1b6c2888.chunk.css"
   },
   {
     "revision": "44197dcf61f614ad4069",
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ny_firebase_chatt/static/js/2.69ed5025.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "4fe0cbf99876ee428fdb",
-    "url": "/ny_firebase_chatt/static/js/main.60d5cc93.chunk.js"
+    "revision": "043aaf9b1dadfb0157d3",
+    "url": "/ny_firebase_chatt/static/js/main.1cde2aa4.chunk.js"
   },
   {
     "revision": "357aa1318e0c1542c1e6",
