@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/ny_firebase_chatt/static/css/main.1b6c2888.chunk.css",
-    "main.js": "/ny_firebase_chatt/static/js/main.1cde2aa4.chunk.js",
-    "main.js.map": "/ny_firebase_chatt/static/js/main.1cde2aa4.chunk.js.map",
+    "main.css": "/ny_firebase_chatt/static/css/main.4bf5f941.chunk.css",
+    "main.js": "/ny_firebase_chatt/static/js/main.b5866c26.chunk.js",
+    "main.js.map": "/ny_firebase_chatt/static/js/main.b5866c26.chunk.js.map",
     "runtime-main.js": "/ny_firebase_chatt/static/js/runtime-main.c65c30c9.js",
     "runtime-main.js.map": "/ny_firebase_chatt/static/js/runtime-main.c65c30c9.js.map",
     "static/css/2.de424728.chunk.css": "/ny_firebase_chatt/static/css/2.de424728.chunk.css",
-    "static/js/2.69ed5025.chunk.js": "/ny_firebase_chatt/static/js/2.69ed5025.chunk.js",
-    "static/js/2.69ed5025.chunk.js.map": "/ny_firebase_chatt/static/js/2.69ed5025.chunk.js.map",
+    "static/js/2.8765346c.chunk.js": "/ny_firebase_chatt/static/js/2.8765346c.chunk.js",
+    "static/js/2.8765346c.chunk.js.map": "/ny_firebase_chatt/static/js/2.8765346c.chunk.js.map",
     "index.html": "/ny_firebase_chatt/index.html",
-    "precache-manifest.2b8312c40bcc4f35a5b7f5ea74f2255b.js": "/ny_firebase_chatt/precache-manifest.2b8312c40bcc4f35a5b7f5ea74f2255b.js",
+    "precache-manifest.e2049fb3d524aa9ee10f2851d4df4558.js": "/ny_firebase_chatt/precache-manifest.e2049fb3d524aa9ee10f2851d4df4558.js",
     "service-worker.js": "/ny_firebase_chatt/service-worker.js",
     "static/css/2.de424728.chunk.css.map": "/ny_firebase_chatt/static/css/2.de424728.chunk.css.map",
-    "static/css/main.1b6c2888.chunk.css.map": "/ny_firebase_chatt/static/css/main.1b6c2888.chunk.css.map",
-    "static/js/2.69ed5025.chunk.js.LICENSE.txt": "/ny_firebase_chatt/static/js/2.69ed5025.chunk.js.LICENSE.txt",
+    "static/css/main.4bf5f941.chunk.css.map": "/ny_firebase_chatt/static/css/main.4bf5f941.chunk.css.map",
+    "static/js/2.8765346c.chunk.js.LICENSE.txt": "/ny_firebase_chatt/static/js/2.8765346c.chunk.js.LICENSE.txt",
     "static/media/headerTextCards.png": "/ny_firebase_chatt/static/media/headerTextCards.ef84d908.png"
   },
   "entrypoints": [
     "static/js/runtime-main.c65c30c9.js",
     "static/css/2.de424728.chunk.css",
-    "static/js/2.69ed5025.chunk.js",
-    "static/css/main.1b6c2888.chunk.css",
-    "static/js/main.1cde2aa4.chunk.js"
+    "static/js/2.8765346c.chunk.js",
+    "static/css/main.4bf5f941.chunk.css",
+    "static/js/main.b5866c26.chunk.js"
   ]
 }
