@@ -67,10 +67,15 @@ function ChatView({email}) {
             const messageElement = document.createElement('div');
             const rowElement = document.createElement('div');
             const colElement = document.createElement('div');
+            
+            const d = new Date(_message.timestamp);
+
+            const minuteStamp = d.getMinutes();
+            const hourStamp = d.getHours();
 
             rowElement.className = 'row';
             colElement.className = 'col';
-            messageElement.innerText = `${_message.sender}: ${_message.message}`;
+            messageElement.innerText = `(${hourStamp}:${minuteStamp}) ${_message.sender}: ${_message.message}`;
             messageElement.id = _message.sender === email ? 'myMessages' : 'otherMessages';
 
             colElement.append(messageElement)
