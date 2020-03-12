@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import {Container, Row, Col, Button, Form} from 'react-bootstrap';
+import TimerReady from './TimerReady';
 
 import OtherTeam from './otherTeam';
 
@@ -126,7 +127,8 @@ function ChatView({email}) {
                         </Row>
 
                         <Row>
-                            <Col>    
+                            <Col>
+                                <TimerReady currentUsers = {currentUsers} />
                                 <div id="chatText">
                                     
                                 </div>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {Row, Col} from 'react-bootstrap';
 import Timer from './Timer';
 
-
 function OtherTeam () {
     const [otherChats, setOtherChats] = useState([]);
     const invisibleText = '　';
@@ -11,8 +10,6 @@ function OtherTeam () {
     const handleChange = (...otherChats) => {
 
         let tempArray = otherChats;
-        console.log('---')
-        console.log(tempArray)
         let msg = "";
         let randomWhiteSpaces = Math.round(Math.random() * 13) + 4;
         let randomSender = Math.round(Math.random() * (otherTeamNames.length - 1));
@@ -49,7 +46,7 @@ function OtherTeam () {
             }
             
         })     
-    }, [otherChats])
+    }, [otherChats]) // När otherChats uppdateras ska hela denna komponent uppdateras
 
     return (
         <div className="chatBox" id="secretChat">
@@ -67,19 +64,15 @@ function OtherTeam () {
             <Row>
                 <Col>    
                     <div id="chatTextOther">
-
                         <Timer
                             otherChats = {otherChats}
                             handleChange ={handleChange}
                         />
                     </div>
-
-                    
                 </Col>
             </Row>
         </div>
     )
 }
-
 
 export default OtherTeam;
