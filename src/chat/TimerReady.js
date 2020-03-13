@@ -4,18 +4,24 @@ const firebase = require('firebase');
 
 function TimerReady({currentUsers}) {
     const [seconds, setSeconds] = useState(0);
+    const [limit, setLimit] = useState(300);
 
     useEffect(() => {
         let interval = null;
-        // console.log(`seconds = ${seconds}`)
-        // console.log(`limit = ${limit}`)
+        
+        if (seconds >= limit) {
+            if (limit === 300) {
+                setLimit(60)
+            }
 
-        if (seconds >= 60) {
             setSeconds(0);
 
             const d = new Date();
+            const secondStamp = d.getSeconds();
             const minuteStamp = d.getMinutes();
             const hourStamp = d.getHours();
+
+            const strSecondStamp = secondStamp < 10 ? `0${secondStamp}` : `${secondStamp}`;
             const strMinuteStamp = minuteStamp < 10 ? `0${minuteStamp}` : `${minuteStamp}`;
             const strHourStamp = hourStamp < 10 ? `0${hourStamp}` : `${hourStamp}`;
             
@@ -27,8 +33,10 @@ function TimerReady({currentUsers}) {
                     messages: firebase.firestore.FieldValue.arrayUnion({
                         sender: 'Admin',
                         message: 'Är ni redo att gå till beslut?',
-                        timestamp: `${strHourStamp}:${strMinuteStamp}`
+                        timestamp: `${strHourStamp}:${strMinuteStamp}:${strSecondStamp}`
                     })
+                }).then(() => {
+                    console.log('Adminmeddelande skapat!')
                 })
         }
 
@@ -37,7 +45,7 @@ function TimerReady({currentUsers}) {
         }, 1000);
         
         return () => clearInterval(interval);
-    });
+    }, [seconds, currentUsers]);
 
     return (
         <div>
