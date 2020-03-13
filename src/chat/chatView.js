@@ -13,18 +13,8 @@ const firebase = require('firebase');
 function ChatView({email}) {
     const history = useHistory();
     const [chats, setChats] = useState([]);
-    
-    console.log(`Inloggad som ${email}`)
-
-    if(email==="Rasmus" || email==="rasmus"  || email==="rrudling@kth.se" || email==="rrudling@gmail.com") {
-        var image = "https://scontent-arn2-2.xx.fbcdn.net/v/t1.0-9/68780115_10218157623043647_869986299145093120_n.jpg?_nc_cat=105&_nc_sid=85a577&_nc_ohc=mwN7yisOxXQAX8Pe3nH&_nc_ht=scontent-arn2-2.xx&oh=adb96402da673a7884160afacee987f7&oe=5E957F7B";
-        var name = " Rasmus Rudling";
-    } else if(email==="Johanna" || email==="johanna" || email==="simfors@kth.se") {
-        var image = "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/s960x960/62459332_10211557969345271_2008241031601979392_o.jpg?_nc_cat=109&_nc_sid=85a577&_nc_ohc=srJZq4IbFGsAX-Dbd-q&_nc_ht=scontent-arn2-1.xx&_nc_tp=7&oh=dcd920d469e8c96a356ab28a35eadfae&oe=5E95855E";
-        var name = " Johanna Simfors";
-    } else {
-        var image = "https://img.freepik.com/free-vector/businessman-profile-cartoon_18591-58479.jpg?size=338&ext=jpg";
-    }
+    const [name, setName] = useState('');
+    const [imgURL, setImgURL] = useState('');
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(async _usr => {
@@ -43,8 +33,16 @@ function ChatView({email}) {
                     })
             }
         })
-    }, []);
 
+        firebase
+            .firestore()
+            .collection('users')
+            .doc(email)
+            .onSnapshot(function(doc) {
+                setName(doc.data().name)
+                setImgURL(doc.data().imgURL)
+            });
+    }, []);
     
     let currentUsers = "";
 
@@ -63,26 +61,48 @@ function ChatView({email}) {
         document.getElementById('chatText').innerHTML = "";
 
         _chat.messages.forEach(_message => { 
-            
             const messageElement = document.createElement('div');
             const rowElement = document.createElement('div');
             const colElement = document.createElement('div');
-            
-            const d = new Date(_message.timestamp);
+            const imgElement = document.createElement('img');
 
-            const minuteStamp = d.getMinutes();
-            const hourStamp = d.getHours();
+            imgElement.src = _message.senderImgURL
 
             rowElement.className = 'row';
             colElement.className = 'col';
-            messageElement.innerText = `(${hourStamp}:${minuteStamp}) ${_message.sender}: ${_message.message}`;
-            messageElement.id = _message.sender === email ? 'myMessages' : 'otherMessages';
+            
+            if (_message.sender === 'Admin') {
+                messageElement.className = 'adminMessages';
+                messageElement.innerText = ` ${_message.message}`;
+                colElement.append(messageElement)
+                rowElement.append(colElement)
+            } else if (_message.sender === name) {
+                const messageContainer = document.createElement('div');
+                
+                messageContainer.innerHTML = `${_message.timestamp} ${_message.sender} <br />` 
+                messageElement.innerText = ` ${_message.message}`;
+                messageContainer.append(messageElement);
+                messageContainer.append(imgElement);
 
-            colElement.append(messageElement)
-            rowElement.append(colElement)
-        
+                messageContainer.className = 'myMessagesBox'
+                messageElement.className = 'myMessages';
+                colElement.append(messageContainer)
+                rowElement.append(colElement)
+            } else {
+                const messageContainer = document.createElement('div');
+
+                messageContainer.innerHTML = `${_message.timestamp} ${_message.sender} <br />` 
+                messageElement.innerText = ` ${_message.message}`;
+                messageContainer.append(messageElement);
+                messageContainer.append(imgElement);
+
+                messageContainer.className = 'otherMessagesBox'
+                messageElement.className = 'otherMessages';
+                colElement.append(messageContainer)
+                rowElement.append(colElement)
+            }     
+
             document.getElementById('chatText').append(rowElement);
-        
         })
 
         const objDiv = document.getElementById("chatText");
@@ -103,7 +123,7 @@ function ChatView({email}) {
 
     
     return (
-        <Container className="chatContainer">
+        <Container className="chatContainer" fluid>
             {/* HEADER   lägg till fluid={true} här uppe om chatterna ska fylla hela skärmen */}
             <Row>
                 <Col>
@@ -118,7 +138,7 @@ function ChatView({email}) {
                             <Col md={4}>      
                                 <div id="userinfo">
                                     <b>Inloggad som:</b><br/> 
-                                    <img src={image} alt="" /> {name?name:email}
+                                    <img src={image} alt="" /> {name}
                                 </div>  
                             </Col>
 
@@ -146,16 +166,23 @@ function ChatView({email}) {
                                     <Form onSubmit={e => {
                                         e.preventDefault();
                                         const newMessage = document.getElementById('msg-box').value;
-                                        console.log(currentUsers)
+                                        
+                                        const d = new Date();
+                                        const minuteStamp = d.getMinutes();
+                                        const hourStamp = d.getHours();
+                                        const strMinuteStamp = minuteStamp < 10 ? `0${minuteStamp}` : `${minuteStamp}`;
+                                        const strHourStamp = hourStamp < 10 ? `0${hourStamp}` : `${hourStamp}`;
+
                                         firebase
                                             .firestore()
                                             .collection('chats')
                                             .doc(currentUsers)
                                             .update({
                                                 messages: firebase.firestore.FieldValue.arrayUnion({
-                                                    sender: email,
+                                                    sender: name,
                                                     message: newMessage,
-                                                    timestamp: Date.now()
+                                                    timestamp: `${strHourStamp}:${strMinuteStamp}`,
+                                                    senderImgURL: imgURL
                                                 })
                                             })
 
@@ -184,7 +211,26 @@ function ChatView({email}) {
 
                 <Col sm={12} lg={6}> {/* 2ND CHAT */}
                     <OtherTeam />
+
+                    <div id="voteBox">
+                <Row>
+                  <Col>
+                    <h5>VÄLJ KORT HÄR</h5> Se till att vara överrens i gruppen innan valet görs.
+                      Ni väljer kort som ett lag.
+                  </Col>
+                </Row>
+
+                  <Row>
+                      <Col>
+                        <div className="inline-block" ><img src={require('../red_card.png')}/><h6 className="inline-block">RÖTT KORT</h6></div>
+                        <div className="inline-block" ><img src={require('../blue_card.png')}/><h6 className="inline-block">BLÅTT KORT</h6></div>
+                      </Col>
+                  </Row>
+              </div>
+
                 </Col>
+
+
             </Row>
 
             <Row>
@@ -192,6 +238,7 @@ function ChatView({email}) {
                     <div id="logout"><u>Spelregler</u><Link to="/">Log out</Link></div>
                 </Col>
             </Row>
+            
         </Container>
     );
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+//import './App.css';
 import Start from './start/startContainer.js';
 import Chat from './chat/chatContainer.js';
 import {
@@ -7,7 +7,6 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
@@ -17,7 +16,7 @@ function App() {
   const [password, setPassword] = React.useState("");
   const [loginError, setLoginError] = React.useState('');
 
-  const [emailInChat, setEmailInChat] = React.useState("default");
+  const [emailInChat, setEmailInChat] = React.useState("rrudling@kth.se");
 
     React.useEffect( () => {
         setEmailInChat(email);
@@ -35,6 +34,17 @@ function App() {
   return (    
   <Router>
     <Switch>
+        <Route exact path="/" >
+            <Start 
+            email = {email}
+            setEmail = {setEmail}
+            password = {password}
+            setPassword = {updatePassword} // Vänster är blir variabelnamnet
+            loginError = {loginError}
+            setLoginError = {setLoginError}
+            />
+        </ Route>
+        
         <Route exact path="/ny_firebase_chatt" >
           <Start 
           email = {email}

@@ -6,12 +6,12 @@ function OtherTeam () {
     const [otherChats, setOtherChats] = useState([]);
     const invisibleText = '　';
     const otherTeamNames = ['Kristina', 'Anna', 'Robert'];
-
+    
     const handleChange = (...otherChats) => {
 
         let tempArray = otherChats;
         let msg = "";
-        let randomWhiteSpaces = Math.round(Math.random() * 13) + 4;
+        let randomWhiteSpaces = Math.round(Math.random() * 15) + 3;
         let randomSender = Math.round(Math.random() * (otherTeamNames.length - 1));
         for (let i = 0; i < randomWhiteSpaces; i++) {
             msg += invisibleText;
@@ -31,14 +31,14 @@ function OtherTeam () {
 
             rowElement.className = 'row';
             colElement.className = 'col';
-            messageElement.innerText = `${_message.sender}: ${_message.message}`;
-            messageElement.id = 'otherTeamsMessages';
+            messageElement.innerText = _message.message;
+            messageElement.className = 'otherTeamsMessages';
 
             colElement.append(messageElement)
             rowElement.append(colElement)
             
             // OBS OBS, detta är en så jävla ful lösning, lär dig hur arv funkar mellan komponenter
-            if (messageElement.innerText !== 'undefined: undefined') {
+            if (messageElement.innerText !== 'undefined') {
                 document.getElementById('chatTextOther').append(rowElement);
 
                 const objDiv = document.getElementById("chatTextOther");
