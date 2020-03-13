@@ -389,3 +389,10 @@ body {
 #voteBox img {
   border-radius: 0px;
 }
+
+.img-element-other {
+    max-width: 40px;
+    border-radius: 100px;
+    margin: 5px;
+    float: left;
+}

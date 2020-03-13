@@ -43,17 +43,21 @@ function OtherTeam () {
             const messageElement = document.createElement('div');
             const rowElement = document.createElement('div');
             const colElement = document.createElement('div');
+            const imgElementOther = document.createElement('img');
 
+            imgElementOther.src = 'https://images.squarespace-cdn.com/content/v1/5589a812e4b0248058743f7e/1562001389112-WFLCO7JEU2GDDM9ANYXT/ke17ZwdGBToddI8pDm48kMh3mVmBaCAeGwqCLG3iONRZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PITeQtWPcxF65ANawkK25DREOmFck9peR6QL8AnpRiPJE/LAURA+PROFILE+CIRCLE+NEW.png'//_message.senderImgURL
+            imgElementOther.className = 'img-element-other'
             rowElement.className = 'row';
             colElement.className = 'col';
             messageElement.innerText = _message.message;
             messageElement.className = 'otherTeamsMessages';
-
+            colElement.append(imgElementOther);
             colElement.append(messageElement)
             rowElement.append(colElement)
             
             // OBS OBS, detta är en så jävla ful lösning, lär dig hur arv funkar mellan komponenter
             if (messageElement.innerText !== 'undefined') {
+                
                 document.getElementById('chatTextOther').append(rowElement);
 
                 const objDiv = document.getElementById("chatTextOther");
