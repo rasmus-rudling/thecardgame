@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 function Timer({otherChats, handleChange}) {
-    const [limit, setLimit] = useState(2);
+    const [limit, setLimit] = useState(4);
     const [seconds, setSeconds] = useState(0);
+    const [totSeconds, setTotSeconds] = useState(0);
 
     function randn_bm(min, max, skew) {
         let u = 0, v = 0;
@@ -23,19 +24,37 @@ function Timer({otherChats, handleChange}) {
         let interval = null;
         // console.log(`seconds = ${seconds}`)
         // console.log(`limit = ${limit}`)
-        console.log(seconds)
 
         if (seconds >= limit) {
             setSeconds(0);
-            handleChange(otherChats)
-            
-            const randIntNormal = Math.round(randn_bm(2, 15, 2));
-            console.log(randIntNormal, 'rand')
-            setLimit(randIntNormal);
+            let randIntNormal;
+
+            if (totSeconds < 20) {
+                handleChange(3, 12, 3, otherChats)
+                randIntNormal = Math.round(randn_bm(2, 12, 3));
+                setLimit(randIntNormal);
+            } else if (totSeconds < 40) {
+                handleChange(2, 35, 2, otherChats)
+                randIntNormal = Math.round(randn_bm(2, 30, 1));
+                setLimit(randIntNormal);
+            } else if (totSeconds < 50) {
+                handleChange(2, 12, 4, otherChats)
+                randIntNormal = Math.round(randn_bm(3, 12, 3));
+                setLimit(randIntNormal);
+            } else if (totSeconds < 80) {
+                handleChange(2, 12, 3, otherChats)
+                randIntNormal = Math.round(randn_bm(2, 12, 1));
+                setLimit(randIntNormal);
+            } else {
+                handleChange(3, 35, 2, otherChats)
+                randIntNormal = Math.round(randn_bm(2, 30, 1));
+                setLimit(randIntNormal);
+            }
         }
 
         interval = setInterval(() => {
             setSeconds(seconds => seconds + 1);
+            setTotSeconds(totSeconds => totSeconds + 1);
         }, 1000);
         
         return () => clearInterval(interval);

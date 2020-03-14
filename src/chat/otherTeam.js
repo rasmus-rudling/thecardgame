@@ -6,8 +6,16 @@ const firebase = require('firebase');
 
 function OtherTeam () {
     const [otherChats, setOtherChats] = useState([]);
+    const [sentTexts0, setSentTexts0] = useState(0);
+    const [sentTexts1, setSentTexts1] = useState(0);
+    const [sentTexts2, setSentTexts2] = useState(0);
+    const [fewestSentTexts, setFewestSentTexts] = useState(sentTexts0);
+
+    const senders = [sentTexts0, sentTexts1, sentTexts2]
+
     const invisibleText = '　';
-    const otherTeamNames = ['Kristina', 'Anna', 'Robert'];
+    const otherTeamNames = ['Axel Hagel', 'Elin Rudling', 'Niklas Löwbeer'];
+    const otherTeamURL = ['https://i.imgur.com/IBlrCCT.jpg', 'https://i.imgur.com/wBeQrMt.jpg', 'https://i.imgur.com/GRSyGWE.jpg']
 
     function randn_bm(min, max, skew) {
         let u = 0, v = 0;
@@ -24,35 +32,72 @@ function OtherTeam () {
         return num;
     }
     
-    const handleChange = (...otherChats) => {
-
+    const handleChange = (minSpace, maxSpace, skewSpace, ...otherChats) => {
         let tempArray = otherChats;
         let msg = "";
-        let randomWhiteSpaces = Math.round(randn_bm(2, 35, 2));
+        let randomWhiteSpaces;
 
-        let randomSender = Math.round(Math.random() * (otherTeamNames.length - 1));
+        randomWhiteSpaces = Math.round(randn_bm(minSpace, maxSpace, skewSpace));
+        
+        let randomSenderIdx = Math.round(Math.random() * 2);
+        console.log(`idx1: ${randomSenderIdx}`)
+
+        if (senders[randomSenderIdx] !== fewestSentTexts) {
+            randomSenderIdx = Math.round(Math.random() * 2);
+            console.log(`idx2: ${randomSenderIdx}`)
+
+            if (senders[randomSenderIdx] !== fewestSentTexts) {
+                randomSenderIdx = Math.round(Math.random() * 2);
+                console.log(`idx3: ${randomSenderIdx}`)
+
+                if (senders[randomSenderIdx] !== fewestSentTexts) {
+                    randomSenderIdx = Math.round(Math.random() * 2);
+                    console.log(`idx3: ${randomSenderIdx}`)
+                }
+            }
+        }
+        
+        if (randomSenderIdx === 0) {
+            setSentTexts0(sentTexts0 => sentTexts0 + 1)
+        } else if (randomSenderIdx === 1) {
+            setSentTexts1(sentTexts1 => sentTexts1 + 1)
+        } else {
+            setSentTexts2(sentTexts2 => sentTexts2 + 1)
+        }
+
+        
+        if (sentTexts0 < fewestSentTexts) {
+            setFewestSentTexts(sentTexts0);
+        } else if (sentTexts1 < fewestSentTexts) {
+            setFewestSentTexts(sentTexts1);
+        } else {
+            setFewestSentTexts(sentTexts2);
+        }
+
+        console.log(sentTexts0, sentTexts1, sentTexts2)
+        console.log(fewestSentTexts)
+
+        // console.log(`Idx: ${randomSenderIdx} val: ${senders[randomSenderIdx]}`)
+
+
+        let randomSenderName = otherTeamNames[randomSenderIdx];
+        let randomSenderImgURL = otherTeamURL[randomSenderIdx];
+
         for (let i = 0; i < randomWhiteSpaces; i++) {
             msg += invisibleText;
         }
         
-        const objToPush = {message: msg, sender: otherTeamNames[randomSender]}
+        const d = new Date();
+        const minuteStamp = d.getMinutes();
+        const hourStamp = d.getHours();
+        const strMinuteStamp = minuteStamp < 10 ? `0${minuteStamp}` : `${minuteStamp}`;
+        const strHourStamp = hourStamp < 10 ? `0${hourStamp}` : `${hourStamp}`;
 
-        // firebase
-        //     .firestore()
-        //     .collection('chats')
-        //     .doc(otherTeamNames)
-        //     .update({
-        //         messages: firebase.firestore.FieldValue.arrayUnion({
-        //             sender: name,
-        //             message: newMessage,
-        //             timestamp: `${strHourStamp}:${strMinuteStamp}`,
-        //             senderImgURL: imgURL
-        //         })
-        //     })
+        const objToPush = {message: msg, sender: randomSenderName, imgURL: randomSenderImgURL, timeStamp: `${strHourStamp}:${strMinuteStamp}`};
+        
+        tempArray.push(objToPush);
 
-        tempArray.push(objToPush)
-
-        setOtherChats(tempArray)
+        setOtherChats(tempArray);
     }
 
     useEffect(() => {
@@ -62,8 +107,8 @@ function OtherTeam () {
             const colElement = document.createElement('div');
             const imgElementOther = document.createElement('img');
 
-            imgElementOther.src = 'https://images.squarespace-cdn.com/content/v1/5589a812e4b0248058743f7e/1562001389112-WFLCO7JEU2GDDM9ANYXT/ke17ZwdGBToddI8pDm48kMh3mVmBaCAeGwqCLG3iONRZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PITeQtWPcxF65ANawkK25DREOmFck9peR6QL8AnpRiPJE/LAURA+PROFILE+CIRCLE+NEW.png'//_message.senderImgURL
-            imgElementOther.className = 'img-element-other'
+            imgElementOther.src = _message.imgURL;
+            imgElementOther.className = 'img-element-other';
             rowElement.className = 'row';
             colElement.className = 'col';
             messageElement.innerText = _message.message;
@@ -90,9 +135,9 @@ function OtherTeam () {
                 <Col>      
                     <div id="userinfo">
                         <b>Motståndarlaget:</b><br/> 
-                        <img src={"https://res.cloudinary.com/inbound-org/image/twitter/w_200/189315459.jpg"} alt="" /> Sven Svensson
-                        <img src={"https://s3-eu-west-1.amazonaws.com/video.gallereplay.com/production/user_108/renauddavies_2704201773733.jpg"} alt="" /> John Doe
-                        <img src={"https://images.squarespace-cdn.com/content/v1/54bbd50ce4b05e8a36418abc/1533226867020-NALD4HA8GBL3IUIQE9PM/ke17ZwdGBToddI8pDm48kMh3mVmBaCAeGwqCLG3iONRZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PITeQtWPcxF65ANawkK25DREOmFck9peR6QL8AnpRiPJE/rachel-rouhana-profile-picture-circle.png"} alt="" /> Mary Moe
+                        <img src={'https://i.imgur.com/IBlrCCT.jpg'} alt="" /> Axel Hagel
+                        <img src={'https://i.imgur.com/wBeQrMt.jpg'} alt="" /> Elin Rudling
+                        <img src={'https://i.imgur.com/GRSyGWE.jpg'} alt="" /> Niklas Löwbeer
                     </div>   
                 </Col>
             </Row>
