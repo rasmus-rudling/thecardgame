@@ -40,19 +40,15 @@ function OtherTeam () {
         randomWhiteSpaces = Math.round(randn_bm(minSpace, maxSpace, skewSpace));
         
         let randomSenderIdx = Math.round(Math.random() * 2);
-        console.log(`idx1: ${randomSenderIdx}`)
 
         if (senders[randomSenderIdx] !== fewestSentTexts) {
             randomSenderIdx = Math.round(Math.random() * 2);
-            console.log(`idx2: ${randomSenderIdx}`)
 
             if (senders[randomSenderIdx] !== fewestSentTexts) {
                 randomSenderIdx = Math.round(Math.random() * 2);
-                console.log(`idx3: ${randomSenderIdx}`)
 
                 if (senders[randomSenderIdx] !== fewestSentTexts) {
                     randomSenderIdx = Math.round(Math.random() * 2);
-                    console.log(`idx3: ${randomSenderIdx}`)
                 }
             }
         }
@@ -74,11 +70,7 @@ function OtherTeam () {
             setFewestSentTexts(sentTexts2);
         }
 
-        console.log(sentTexts0, sentTexts1, sentTexts2)
-        console.log(fewestSentTexts)
-
         // console.log(`Idx: ${randomSenderIdx} val: ${senders[randomSenderIdx]}`)
-
 
         let randomSenderName = otherTeamNames[randomSenderIdx];
         let randomSenderImgURL = otherTeamURL[randomSenderIdx];
