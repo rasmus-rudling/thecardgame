@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {Row, Col} from 'react-bootstrap';
 import Timer from './Timer';
 
+const firebase = require('firebase');
+
 function OtherTeam () {
     const [otherChats, setOtherChats] = useState([]);
     const invisibleText = '　';
@@ -27,12 +29,27 @@ function OtherTeam () {
         let tempArray = otherChats;
         let msg = "";
         let randomWhiteSpaces = Math.round(randn_bm(2, 35, 2));
+
         let randomSender = Math.round(Math.random() * (otherTeamNames.length - 1));
         for (let i = 0; i < randomWhiteSpaces; i++) {
             msg += invisibleText;
         }
         
         const objToPush = {message: msg, sender: otherTeamNames[randomSender]}
+
+        // firebase
+        //     .firestore()
+        //     .collection('chats')
+        //     .doc(otherTeamNames)
+        //     .update({
+        //         messages: firebase.firestore.FieldValue.arrayUnion({
+        //             sender: name,
+        //             message: newMessage,
+        //             timestamp: `${strHourStamp}:${strMinuteStamp}`,
+        //             senderImgURL: imgURL
+        //         })
+        //     })
+
         tempArray.push(objToPush)
 
         setOtherChats(tempArray)
