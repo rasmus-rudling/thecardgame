@@ -9,7 +9,7 @@ function TimerReady({currentUsers}) {
     useEffect(() => {
         let interval = null;
         
-        if (seconds >= limit) {
+        if (seconds >= limit ){ 
             if (limit === 300) {
                 setLimit(60)
             }

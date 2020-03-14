@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import {Container, Row, Col, Button, Form} from 'react-bootstrap';
 import TimerReady from './TimerReady';
-
 import OtherTeam from './otherTeam';
+import './chatview.css';
+import './chat1.css';
+import './chat2.css';
 
 const firebase = require('firebase');
 
@@ -58,7 +60,7 @@ function ChatView({email}) {
         return bool;
     }).forEach((_chat, _index) => {
 
-        document.getElementById('chatText').innerHTML = "";
+        document.getElementById('chatMessages').innerHTML = "";
 
         _chat.messages.forEach(_message => { 
             const messageElement = document.createElement('div');
@@ -78,34 +80,40 @@ function ChatView({email}) {
                 rowElement.append(colElement)
             } else if (_message.sender === name) {
                 const messageContainer = document.createElement('div');
+                const nameTimeContainer =  document.createElement('div');
                 
-                messageContainer.innerHTML = `${_message.timestamp} ${_message.sender} <br />` 
+                nameTimeContainer.innerText =  `${_message.timestamp} ${_message.sender}` 
                 messageElement.innerText = ` ${_message.message}`;
+                messageContainer.append(nameTimeContainer)
                 messageContainer.append(messageElement);
                 messageContainer.append(imgElement);
 
                 messageContainer.className = 'myMessagesBox'
                 messageElement.className = 'myMessages';
+                nameTimeContainer.className = 'nameTimeTag';
                 colElement.append(messageContainer)
                 rowElement.append(colElement)
             } else {
                 const messageContainer = document.createElement('div');
+                const nameTimeContainer =  document.createElement('div');
 
-                messageContainer.innerHTML = `${_message.timestamp} ${_message.sender} <br />` 
+                nameTimeContainer.innerText = `${_message.timestamp} ${_message.sender}` 
                 messageElement.innerText = ` ${_message.message}`;
-                messageContainer.append(messageElement);
+                messageContainer.append(nameTimeContainer)
                 messageContainer.append(imgElement);
+                messageContainer.append(messageElement);
 
                 messageContainer.className = 'otherMessagesBox'
                 messageElement.className = 'otherMessages';
+                nameTimeContainer.className = 'nameTimeTag';
                 colElement.append(messageContainer)
                 rowElement.append(colElement)
             }     
 
-            document.getElementById('chatText').append(rowElement);
+            document.getElementById('chatMessages').append(rowElement);
         })
 
-        const objDiv = document.getElementById("chatText");
+        const objDiv = document.getElementById("chatMessages");
         objDiv.scrollTop = objDiv.scrollHeight;
 
         _chat.users.forEach((user, index, array) => {
@@ -154,7 +162,7 @@ function ChatView({email}) {
                         <Row>
                             <Col>
                                 <TimerReady currentUsers = {currentUsers} />
-                                <div id="chatText">
+                                <div id="chatMessages">
                                     
                                 </div>
                             </Col>
@@ -190,7 +198,23 @@ function ChatView({email}) {
                                         document.getElementById("msg-box").focus();
                                     }}>
 
-                                    <Row>
+                                        <Row>
+                                            <Col>    
+                                                {/* <Form> */}
+                                                    <Form.Row >
+                                                            <Form.Control  bsPrefix="send_text" type="text" id="msg-box" autoFocus />
+                                                            <Button  bsPrefix="send_button" type="submit" >
+                                                                SEND
+                                                            {/*<img src={"https://cdn1.iconfinder.com/data/icons/mail-2-basic/512/45-Send-512.png"}/>*/}
+                                                            </Button>
+                                                        
+                                                    </Form.Row>
+                                                {/* </Form> */}
+                                            </Col>
+                                        </Row>
+
+
+                                    {/* <Row>
                                         <Col md={{span:5, offset:4}}>
                                             <Form.Control type="text" id='msg-box' autoFocus />
                                         </Col>
@@ -200,7 +224,7 @@ function ChatView({email}) {
                                             </Button>
                                         </Col>
                                         
-                                    </Row>
+                                    </Row> */}
                                         
                                     </Form>
                                 </div>

@@ -1,0 +1,188 @@
+/*  All CSS that belong to the first chat window. (The chat for the users own team) */ 
+
+.chatBox #chatMessages{ 
+    /* chatMesages: the bart of the chatbox containing med messages */
+    color: #e9e9e9;
+    background-color: rgba(2, 2, 2, 0.144);
+    border-radius: 5px;
+    display:block;
+    min-width: 300px;
+    height: 350px;
+    padding: 0px;
+    margin: 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-left: 13px;
+    padding-bottom: 10px;
+  }
+
+/* MY MESSAGES */
+
+.chatBox .myMessagesBox { 
+    /*  myMessageBox contains everything that belongs to a message:
+        The time, name, image and the message itself. */
+    text-align:right;  
+    font-size: smaller;
+    position: relative;
+    display: block;
+    margin: 5px 20px 10px 5px;
+    padding-left: 10px;
+    padding-right: 25px;
+    color: rgba(255, 255, 255, 0.479);
+}
+
+.myMessagesBox .nameTimeTag { 
+    /* Contains the name and time, top part of myMessageBox */
+    margin-bottom: 2px;
+    margin-top: 20px;
+    margin-right: 15px;
+}
+
+
+.myMessagesBox .myMessages {
+    /* Contains actuall message in message box */
+    color: black;
+    text-align: left;;
+    font-size: medium;
+    margin-right: 10px;
+    padding: 10px 15px 10px 15px;
+    max-width: 90%;
+    display:inline-block;
+    position: relative; 
+    background-image: linear-gradient(120deg, #336db1 0%, #68a6ee 100%);
+    border-radius: 1em;
+}
+    
+
+.myMessagesBox img {
+    /* Contains image that belongs to every message */
+    max-width: 30px;
+    border-radius: 100px;
+    display:inline-block;
+    margin: 0;
+    margin-left: 5px;
+    position: absolute;
+    top: 45%;
+}
+
+.chatBox .myMessages:after {
+    /* the "tail" of every chatbubble */
+    content: '';
+    position: absolute;
+    right: 0.05em;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 0.406em solid transparent;
+    border-left-color: #68a6ee;
+    border-right: 0;
+    margin-top: -0.406em;
+    margin-right: -0.406em;
+}
+
+
+/* OTHER MESSAGES IN MY TEAM */
+  
+.chatBox .otherMessagesBox {
+    /*  otherMessageBox contains everything that belongs to a message from another person, in the same chat:
+        The time, name, image and the message itself. */
+      text-align: left;
+      font-size: smaller;
+      position: relative;
+      display: block;
+
+      margin: 5px 10px 5px 10px;
+      color: rgba(255, 255, 255, 0.479);
+}
+
+.otherMessagesBox .nameTimeTag { 
+    /* Contains the name and time, top part of myMessageBox */
+    margin-bottom: 2px;
+    margin-top: 20px;
+    margin-left: 50px;
+}
+
+.otherMessagesBox img {
+    /* Contains image that belongs to the other persons message */
+    max-width: 30px;
+    border-radius: 100px;
+    display:inline-block;
+    margin: 0;
+    margin-left: 5px;
+    position: relative;
+    top: 50%;
+}
+
+.chatBox .otherMessages {
+    /* Contains actuall message in message box */
+
+      color: black;
+      text-align: left;
+      font-size: medium;
+      margin-left: 10px;
+      padding: 10px 15px 10px 15px;
+      max-width: 90%;
+      display:inline-block;
+      position: absolute;
+      background-image: linear-gradient(120deg, #a72828 0%, #cf5f6e 100%);
+      border-radius: 1em;
+}
+  
+
+
+.chatBox .otherMessages:after {
+    /* the "tail" of every chatbubble */
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 0.406em solid transparent;
+    border-right-color: #a72828;
+    border-left: 0;
+    margin-top: -0.406em;
+    margin-left: -0.406em;
+}
+  
+  
+ /* ADMIN MESSAGES */
+
+.adminMessages {
+    color: black;
+    font-size: smaller;
+    padding: 5px 15px 5px 15px;
+    margin: 20px 20px 5px 5px;
+    text-align: center;
+    float: center;
+      position: relative;
+    background-image: linear-gradient(120deg, #727272 0%, #ffffff 100%);
+      border-radius: .7em;
+}
+
+/* INPUT ROW */ 
+
+.form-row {
+    margin: 0px;
+    padding: 0px 0px 0px 0px;
+    width: 100%;
+  }
+  
+  
+  .form-row .send_text {
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.39);
+    border: none;
+    padding: 10px;
+    padding-left: 30px;
+    border-radius: 0px 0px 0px 50px;
+    width:80%;
+  }
+  
+  .form-row .send_button {
+    color: white;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.582);
+    border-radius: 0 0px 45px 0px;
+    width: 20%;
+  }

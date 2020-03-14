@@ -1,7 +1,7 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
 import {Container, Row, Col, Form, Button} from 'react-bootstrap';
-
+import './start.css'
 const firebase = require('firebase');
 
 //import * as ROUTES from '../constants/routes.js';

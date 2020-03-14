@@ -1,0 +1,103 @@
+/*  All CSS that belongs in the chat view, but not to a specific chat */
+
+.chatContainer {
+    text-align: center;
+    margin: 0px;
+  }
+
+  .chatContainer img {
+    max-width: 40px;
+    border-radius: 100px;
+    margin: 5px;
+  }
+
+  .chatContainer #headerimg {
+    max-width: 80%;
+    margin-bottom: -50px;
+  }
+  
+  
+  .chatBox { 
+    /* The box containing the whole chat,
+    including: top-bar with users, messages and input-bar
+    For both chat 1 and 2 */
+
+    margin-top: 10px;
+    text-align: left;
+  
+    color: rgba(250, 250, 250, 1);
+    background-color: rgba(2, 2, 2, 0.541);
+  
+    border-radius: 50px;
+    -webkit-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.47);
+    -moz-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.47);
+    box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.47);
+  }
+  
+/* USER INFO BAR  (Top of chat) */
+
+#userinfo{
+    font-size: small;
+    padding-bottom: 10px;
+    padding: 10px;
+    padding-left: 25px;
+  }
+  
+  #userinfo img {
+    max-width: 40px;
+    border-radius: 100px;
+    margin: 5px;
+    object-fit: cover;
+    max-height: 40px;
+  }
+  
+
+/* VOTE BOX */
+
+#voteBox {
+  margin-top: 10px;
+  padding: 20px;
+  padding-left: 30px;
+  text-align: left;
+
+  color: rgba(250, 250, 250, 1);
+  background-color: rgba(2, 2, 2, 0.541);
+
+  border-radius: 50px;
+  -webkit-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.47);
+  -moz-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.47);
+  box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.47);
+
+  height: 155px;
+  font-size: small;
+  
+}
+
+#voteBox .inline-block {
+  display: inline-block;
+  padding: 10px;
+}
+
+#voteBox img {
+  max-width: 40px;
+  border-radius: 0px;
+  margin: 5px;
+  object-fit: cover;
+  max-height: 40px;}
+
+/* BOTTOM ROW */ 
+
+#logout {
+    margin: 30px;
+    color: rgb(105, 23, 23);
+    font-size: smaller;
+    }
+
+/* OTHER */
+
+.img-element-other {
+    max-width: 40px;
+    border-radius: 100px;
+    margin: 5px;
+    float: left;
+}
