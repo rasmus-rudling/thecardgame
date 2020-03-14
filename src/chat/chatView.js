@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import {Link} from 'react-router-dom';
-import {Container, Row, Col, Button, FormControl, InputGroup} from 'react-bootstrap';
+import {Container, Row, Col, Button, FormControl, InputGroup, Form} from 'react-bootstrap';
 
 
 //import * as ROUTES from '../constants/routes.js';
 //^won't be needed
 
-function ChatView({email, myMessages, otherMessages, otherTeamsMessages, displayText}) {
+function ChatView({email, myMessages, otherMessages, otherTeamsMessages, adminMessage, displayText}) {
  
   var image = "https://img.freepik.com/free-vector/businessman-profile-cartoon_18591-58479.jpg?size=338&ext=jpg";
 
@@ -22,7 +22,7 @@ function ChatView({email, myMessages, otherMessages, otherTeamsMessages, display
   
   const [messagesObserver, setMessagesObserver] = React.useState(myMessages);
     return (
-      <Container className="chatContainer">
+      <Container className="chatContainer" fluid>
 
         {/* HEADER   lägg till fluid={true} här uppe om chatterna ska fylla hela skärmen */}
       <Row>
@@ -58,26 +58,39 @@ function ChatView({email, myMessages, otherMessages, otherTeamsMessages, display
               <Col>    
                   <div id="textRow">
                     <div id="chatText">
-                      {
-                         React.useEffect(()=>{
-                          console.log("New messages updated!")
-                    }, [messagesObserver])
-                      }
-                      {myMessages.map((value) => {
+
+                      {myMessages.map((object) => {
                         return (<Row>
                           <Col>
-                            <div id="myMessages">{value}</div>
+                            <div id="myMessagesBox">
+                              <div class="nameTimeTag">{object.name} {object.time}</div>
+                              
+                                <div id="myMessages">{object.message}</div>
+                                
+                                <img src={object.image}/>
+                            </div>
                           </Col>
                         </Row>)
                         })}
 
-                      {otherMessages.map((value) => {
+                      {otherMessages.map((object) => {
                         return (<Row>
                           <Col>
-                            <div id="otherMessages">{value}</div>
+
+                          <div id="otherMessagesBox">
+                                {object.name} {object.time}<br />
+                                <div id="otherMessages">{object.message}</div>
+                                <img src={object.image}/>
+                            </div>
                           </Col>
                         </Row>)
                         })}
+
+                        <Row>
+                          <Col>
+                            <div id="adminMessage">Är ni redo att välja kort? <b><u>Klicka här</u></b> - Fortsätt annars att diskutera</div>
+                          </Col>
+                        </Row>
                         
                     </div>
                   </div>
@@ -85,15 +98,18 @@ function ChatView({email, myMessages, otherMessages, otherTeamsMessages, display
           </Row>
 
           <Row>
-              <Col xs={12}>    
-                  <div id="submitRow">
-                  <InputGroup>
-                    <FormControl id="textInput" bsPrefix="send_text"/>
-                    <InputGroup.Append>
-                      <Button type="submit" md="auto" variant="outline-dark" bsPrefix="send_button" onClick={() => {displayText(myMessages); setMessagesObserver(myMessages)}} ><img src={"https://cdn1.iconfinder.com/data/icons/mail-2-basic/512/45-Send-512.png"}/></Button>
-                    </InputGroup.Append>
-                  </InputGroup>
-                  </div>
+            <Col>
+            
+          <Form>
+              <Form.Row >
+                      <Form.Control  bsPrefix="send_text" type="text" autoFocus />
+                      <Button  bsPrefix="send_button" type="submit" >
+                        SEND
+                      {/*<img src={"https://cdn1.iconfinder.com/data/icons/mail-2-basic/512/45-Send-512.png"}/>*/}
+                      </Button>
+                 
+              </Form.Row>
+              </Form>
               </Col>
           </Row>
           </div>
@@ -102,7 +118,7 @@ function ChatView({email, myMessages, otherMessages, otherTeamsMessages, display
   
         <Col sm={12} lg={6}> {/* 2ND CHAT */}
         <div className="chatBox" id="secretChat">
-          <Row>
+          <Row md={4}>
               <Col>      
               <div id="userinfo">
                       <b>Motståndarlaget:</b><br/> 
@@ -118,7 +134,7 @@ function ChatView({email, myMessages, otherMessages, otherTeamsMessages, display
           <Row>
               <Col>    
                   <div id="textRow">
-                    <div id="chatText">
+                    <div id="chatText" id="secretChat">
                       {/*<p className="animate" id="animation">Diskussion pågår. . . </p>*/}
                       {otherTeamsMessages.map((value) => {
                         return (<Row>
@@ -130,23 +146,43 @@ function ChatView({email, myMessages, otherMessages, otherTeamsMessages, display
                     </div>
                   </div>
               </Col>
-          </Row>
-          </div>
-        </Col>
+            </Row>
+        </div>
+          {/* END OF SECRET CHAT */}
+
+
+              <div id="voteBox">
+                <Row>
+                  <Col>
+                    <h5>VÄLJ KORT HÄR</h5> Se till att vara överrens i gruppen innan valet görs.
+                      Ni väljer kort som ett lag.
+                  </Col>
+                </Row>
+
+                  <Row>
+                      <Col>
+                        <div class="inline-block" ><img src={require('../red_card.png')}/><h6 class="inline-block">RÖTT KORT</h6></div>
+                        <div class="inline-block" ><img src={require('../blue_card.png')}/><h6 class="inline-block">BLÅTT KORT</h6></div>
+                      </Col>
+                  </Row>
+              </div>
+
+      
+      </Col>
         
     </Row>
 
 
     <Row>
-        <Col md={{span:2, offset:5}}> 
+        <Col> 
             <div id="logout"><u>Spelregler</u><Link to="/">Log out</Link></div>
         </Col>
-
+{/*
         <Col md={{span:4, offset:1}}>
-            {/*<audio src={require("./music.mp3")} controls autoPlay/>*/}
+            <audio src={require("./music.mp3")} controls autoPlay/>
             <audio src={require("./music.mp3")} autoPlay/>
-
           </Col>
+          */}
     </Row>
 
     </Container>

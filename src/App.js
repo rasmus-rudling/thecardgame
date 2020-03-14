@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+//import './App.css';
 import Start from './start/startContainer.js'
 import Chat from './chat/chatContainer.js'
 import {
@@ -7,9 +7,6 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import StartComponent from './start/startView.js';
-import ChatComponent from './chat/chatView.js';
 
 
 
