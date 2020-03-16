@@ -1,11 +1,13 @@
-import React from 'react';
-import ChatView from './chatView.js'
+import React, { useState } from 'react';
+import ChatView from './chatView.js';
 
-const Chat = ({emailInChat}) => {
 
-    return <ChatView
-    email = {emailInChat}
-    />
+function ChatContainer({emailInChat}) {
+    return (
+        <ChatView
+            email = {emailInChat}
+        />
+    )
 }
 
-export default Chat;
+export default ChatContainer;

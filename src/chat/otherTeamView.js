@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {Row, Col} from 'react-bootstrap';
 import Timer from './Timer';
 
-const firebase = require('firebase');
 
-function OtherTeam () {
+function OtherTeamView () {
     const [otherChats, setOtherChats] = useState([]);
     const [sentTexts0, setSentTexts0] = useState(0);
     const [sentTexts1, setSentTexts1] = useState(0);
@@ -32,7 +31,7 @@ function OtherTeam () {
         return num;
     }
     
-    const handleChange = (minSpace, maxSpace, skewSpace, ...otherChats) => {
+    function handleChange(minSpace, maxSpace, skewSpace, ...otherChats) {
         let tempArray = otherChats;
         let msg = "";
         let randomWhiteSpaces;
@@ -148,4 +147,4 @@ function OtherTeam () {
     )
 }
 
-export default OtherTeam;
+export default OtherTeamView;

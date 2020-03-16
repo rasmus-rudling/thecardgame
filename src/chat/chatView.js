@@ -3,7 +3,7 @@ import {Link, useHistory} from 'react-router-dom';
 import {Container, Row, Col, Button, Form} from 'react-bootstrap';
 import TimerReady from './TimerReady';
 
-import OtherTeam from './otherTeam';
+import OtherTeamView from './otherTeamView';
 
 const firebase = require('firebase');
 
@@ -117,10 +117,35 @@ function ChatView({email}) {
         })
     })
 
+    function submitMessage(event) {
+        event.preventDefault();
+        const newMessage = document.getElementById('msg-box').value;
+        
+        const d = new Date();
+        const minuteStamp = d.getMinutes();
+        const hourStamp = d.getHours();
+        const strMinuteStamp = minuteStamp < 10 ? `0${minuteStamp}` : `${minuteStamp}`;
+        const strHourStamp = hourStamp < 10 ? `0${hourStamp}` : `${hourStamp}`;
+
+        firebase
+            .firestore()
+            .collection('chats')
+            .doc(currentUsers)
+            .update({
+                messages: firebase.firestore.FieldValue.arrayUnion({
+                    sender: name,
+                    message: newMessage,
+                    timestamp: `${strHourStamp}:${strMinuteStamp}`,
+                    senderImgURL: imgURL
+                })
+            })
+
+        document.getElementById('msg-box').value = '';
+        document.getElementById("msg-box").focus();
+    }
     // --------------------
 
     var image = "https://img.freepik.com/free-vector/businessman-profile-cartoon_18591-58479.jpg?size=338&ext=jpg";
-
     
     return (
         <Container className="chatContainer" fluid>
@@ -163,32 +188,7 @@ function ChatView({email}) {
                         <Row>
                             <Col xs={12}>    
                                 <div id="submitRow">
-                                    <Form onSubmit={e => {
-                                        e.preventDefault();
-                                        const newMessage = document.getElementById('msg-box').value;
-                                        
-                                        const d = new Date();
-                                        const minuteStamp = d.getMinutes();
-                                        const hourStamp = d.getHours();
-                                        const strMinuteStamp = minuteStamp < 10 ? `0${minuteStamp}` : `${minuteStamp}`;
-                                        const strHourStamp = hourStamp < 10 ? `0${hourStamp}` : `${hourStamp}`;
-
-                                        firebase
-                                            .firestore()
-                                            .collection('chats')
-                                            .doc(currentUsers)
-                                            .update({
-                                                messages: firebase.firestore.FieldValue.arrayUnion({
-                                                    sender: name,
-                                                    message: newMessage,
-                                                    timestamp: `${strHourStamp}:${strMinuteStamp}`,
-                                                    senderImgURL: imgURL
-                                                })
-                                            })
-
-                                        document.getElementById('msg-box').value = '';
-                                        document.getElementById("msg-box").focus();
-                                    }}>
+                                    <Form onSubmit={event => submitMessage(event)}>
 
                                     <Row>
                                         <Col md={{span:5, offset:4}}>
@@ -210,7 +210,7 @@ function ChatView({email}) {
                 </Col>
 
                 <Col sm={12} lg={6}> {/* 2ND CHAT */}
-                    <OtherTeam />
+                    <OtherTeamView />
 
                     <div id="voteBox">
                 <Row>
