@@ -116,7 +116,6 @@ function OtherTeamView () {
                 const objDiv = document.getElementById("chatTextOther");
                 objDiv.scrollTop = objDiv.scrollHeight;
             }
-            
         })     
     }, [otherChats]) // När otherChats uppdateras ska hela denna komponent uppdateras
 
