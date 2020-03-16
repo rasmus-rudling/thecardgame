@@ -97,18 +97,29 @@ function OtherTeamView () {
             const rowElement = document.createElement('div');
             const colElement = document.createElement('div');
             const imgElementOther = document.createElement('img');
+            const nameTimeContainer =  document.createElement('div');
+            const messageContainer = document.createElement('div');
+
+            nameTimeContainer.innerText = `${_message.timeStamp} ${_message.sender}` 
 
             imgElementOther.src = _message.imgURL;
+            nameTimeContainer.className = 'name-time-tag-other';
             imgElementOther.className = 'img-element-other';
+
             rowElement.className = 'row';
             colElement.className = 'col';
+
             messageElement.innerText = _message.message;
             messageElement.className = 'otherTeamsMessages';
-            colElement.append(imgElementOther);
-            colElement.append(messageElement)
+
+            messageContainer.append(imgElementOther);
+            messageContainer.append(nameTimeContainer);
+            messageContainer.append(messageElement);
+
+            colElement.append(messageContainer);
             rowElement.append(colElement)
             
-            // OBS OBS, detta är en så jävla ful lösning, lär dig hur arv funkar mellan komponenter
+            // OBS OBS, detta är en så sjuk ful lösning, lär dig hur arv funkar mellan komponenter
             if (messageElement.innerText !== 'undefined') {
                 
                 document.getElementById('chatTextOther').append(rowElement);

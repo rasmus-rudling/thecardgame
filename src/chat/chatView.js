@@ -3,12 +3,14 @@ import {Link, useHistory} from 'react-router-dom';
 import {Container, Row, Col, Button, Form} from 'react-bootstrap';
 import TimerReady from './TimerReady';
 
+import './chatView.css';
+import './chatView.css';
+import './chat1.css';
+import './chat2.css';
+
 import OtherTeamView from './otherTeamView';
 
 const firebase = require('firebase');
-
-//import * as ROUTES from '../constants/routes.js';
-//^won't be needed
 
 function ChatView({email}) {
     const history = useHistory();
@@ -17,6 +19,8 @@ function ChatView({email}) {
     const [imgURL, setImgURL] = useState('');
 
     useEffect(() => {
+        console.log('I chatview:', email)
+
         firebase.auth().onAuthStateChanged(async _usr => {
             if (!_usr) { // Om användaren INTE finns --> Skicka användaren till startsidan
                 history.push('/');
@@ -34,6 +38,8 @@ function ChatView({email}) {
             }
         })
 
+        console.log('Tvåaaan02');
+        console.log(email);
         firebase
             .firestore()
             .collection('users')
@@ -58,7 +64,7 @@ function ChatView({email}) {
         return bool;
     }).forEach((_chat, _index) => {
 
-        document.getElementById('chatText').innerHTML = "";
+        document.getElementById('chatMessages').innerHTML = "";
 
         _chat.messages.forEach(_message => { 
             const messageElement = document.createElement('div');
@@ -74,38 +80,64 @@ function ChatView({email}) {
             if (_message.sender === 'Admin') {
                 messageElement.className = 'adminMessages';
                 messageElement.innerText = ` ${_message.message}`;
-                colElement.append(messageElement)
-                rowElement.append(colElement)
+                const buttonElementYes = document.createElement('button');
+                const buttonElementNo = document.createElement('button');
+
+                buttonElementYes.innerText = 'Ja';
+                buttonElementNo.innerText = 'Nej';
+
+                messageElement.append(buttonElementYes);
+                messageElement.append(buttonElementNo);
+
+                // Låt dessa motsvara hur många readyToAnswer i databsen
+                // När minst två är gröna så ska välj-kort-rutan visas
+                messageElement.append('✔️');
+                messageElement.append('❌');
+                messageElement.append('❌');
+
+                colElement.append(messageElement);
+                rowElement.append(colElement);
             } else if (_message.sender === name) {
                 const messageContainer = document.createElement('div');
+                const nameTimeContainer =  document.createElement('div');
                 
-                messageContainer.innerHTML = `${_message.timestamp} ${_message.sender} <br />` 
+                nameTimeContainer.innerText = `${_message.timestamp} ${_message.sender}` 
                 messageElement.innerText = ` ${_message.message}`;
+                
+                messageContainer.append(nameTimeContainer);
                 messageContainer.append(messageElement);
                 messageContainer.append(imgElement);
 
                 messageContainer.className = 'myMessagesBox'
                 messageElement.className = 'myMessages';
+                nameTimeContainer.className = 'nameTimeTag';
+
                 colElement.append(messageContainer)
                 rowElement.append(colElement)
             } else {
                 const messageContainer = document.createElement('div');
+                const nameTimeContainer =  document.createElement('div');
 
-                messageContainer.innerHTML = `${_message.timestamp} ${_message.sender} <br />` 
+                nameTimeContainer.innerText = `${_message.timestamp} ${_message.sender}`; 
                 messageElement.innerText = ` ${_message.message}`;
-                messageContainer.append(messageElement);
+
+                messageContainer.append(nameTimeContainer);
                 messageContainer.append(imgElement);
+                messageContainer.append(messageElement);
+                
 
                 messageContainer.className = 'otherMessagesBox'
                 messageElement.className = 'otherMessages';
+                nameTimeContainer.className = 'nameTimeTag';
+
                 colElement.append(messageContainer)
                 rowElement.append(colElement)
             }     
 
-            document.getElementById('chatText').append(rowElement);
+            document.getElementById('chatMessages').append(rowElement);
         })
 
-        const objDiv = document.getElementById("chatText");
+        const objDiv = document.getElementById("chatMessages");
         objDiv.scrollTop = objDiv.scrollHeight;
 
         _chat.users.forEach((user, index, array) => {
@@ -127,6 +159,7 @@ function ChatView({email}) {
         const strMinuteStamp = minuteStamp < 10 ? `0${minuteStamp}` : `${minuteStamp}`;
         const strHourStamp = hourStamp < 10 ? `0${hourStamp}` : `${hourStamp}`;
 
+        console.log('Treannnn03')
         firebase
             .firestore()
             .collection('chats')
@@ -179,7 +212,7 @@ function ChatView({email}) {
                         <Row>
                             <Col>
                                 <TimerReady currentUsers = {currentUsers} />
-                                <div id="chatText">
+                                <div id="chatMessages">
                                     
                                 </div>
                             </Col>
@@ -190,17 +223,25 @@ function ChatView({email}) {
                                 <div id="submitRow">
                                     <Form onSubmit={event => submitMessage(event)}>
 
-                                    <Row>
-                                        <Col md={{span:5, offset:4}}>
-                                            <Form.Control type="text" id='msg-box' autoFocus />
-                                        </Col>
-                                        <Col md={{span:2}}>
-                                            <Button type="submit">
-                                                Skicka
-                                            </Button>
-                                        </Col>
-                                        
-                                    </Row>
+                                        <Row>
+                                            <Col>    
+                                                <Form.Row >
+                                                    <Form.Control 
+                                                        bsPrefix="send_text" 
+                                                        type="text" 
+                                                        id="msg-box" 
+                                                        autoFocus 
+                                                    />
+                                                    
+                                                    <Button  
+                                                        bsPrefix="send_button" 
+                                                        type="submit" 
+                                                    >
+                                                            SKICKA
+                                                    </Button>
+                                                </Form.Row>
+                                            </Col>
+                                        </Row>
                                         
                                     </Form>
                                 </div>

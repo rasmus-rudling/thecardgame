@@ -33,6 +33,7 @@ function TimerReady({currentUsers}) {
                     messages: firebase.firestore.FieldValue.arrayUnion({
                         sender: 'Admin',
                         message: 'Är ni redo att gå till beslut?',
+                        senderImgURL: 'none',
                         timestamp: `${strHourStamp}:${strMinuteStamp}:${strSecondStamp}`
                     })
                 }).then(() => {
