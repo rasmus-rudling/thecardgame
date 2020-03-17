@@ -17,7 +17,6 @@ function ChatView({email}) {
     const [chats, setChats] = useState([]);
     const [name, setName] = useState('');
     const [imgURL, setImgURL] = useState('');
-    const [btnClass, setBtnClass] = useState('');
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(async _usr => {
@@ -71,6 +70,8 @@ function ChatView({email}) {
             }
         })
 
+        const chatRef = firebase.firestore().collection('chats').doc(currentUsers);
+
         _chat.messages.forEach(_message => { 
             const messageElement = document.createElement('div');
             const rowElement = document.createElement('div');
@@ -83,19 +84,23 @@ function ChatView({email}) {
             colElement.className = 'col';
             
             if (_message.sender === 'Admin') {
+                const ready = _chat.readyToChoose;
+                const notReady = _chat.notReadyToChoose;
+                
+                if (ready + notReady === 3) {
+                    if (ready >= 2) {
+                        document.getElementById('voteBox').className = '';
+                    }
+                    
+                    chatRef.update({
+                        messages: firebase.firestore.FieldValue.arrayRemove(_message)
+                    })   
 
-                if (_chat.resetVotes) {
-                    firebase
-                    .firestore()
-                    .collection('chats')
-                    .doc(currentUsers)
-                    .update({
+                    chatRef.update({
                         readyToChoose: 0,
-                        notReadyToChoose: 0,
-                        resetVotes: false
+                        notReadyToChoose: 0
                     })
                 }
-                
 
                 messageElement.className = 'adminMessages';
                 messageElement.innerText = ` ${_message.message}`;
@@ -106,32 +111,26 @@ function ChatView({email}) {
                 buttonElementYes.innerText = 'Ja';
                 buttonElementNo.innerText = 'Nej';
 
-                buttonElementYes.addEventListener("click", () => {
-                    setBtnClass('hide');
+                buttonElementYes.className = '';
+                buttonElementNo.className = '';
 
-                    firebase
-                        .firestore()
-                        .collection('chats')
-                        .doc(currentUsers)
-                        .update({
-                            readyToChoose: _chat.readyToChoose + 1
-                        })
+                buttonElementYes.addEventListener("click", () => {
+                    buttonElementYes.className = 'hide';
+                    buttonElementNo.className = 'hide';
+
+                    chatRef.update({
+                        readyToChoose: _chat.readyToChoose + 1
+                    })
                 });
 
                 buttonElementNo.addEventListener("click", () => {
-                    setBtnClass('hide');
+                    buttonElementYes.className = 'hide';
+                    buttonElementNo.className = 'hide';
 
-                    firebase
-                        .firestore()
-                        .collection('chats')
-                        .doc(currentUsers)
-                        .update({
-                            notReadyToChoose: _chat.notReadyToChoose + 1
-                        })
+                    chatRef.update({
+                        notReadyToChoose: _chat.notReadyToChoose + 1
+                    })
                 });
-
-                buttonElementYes.className = btnClass;
-                buttonElementNo.className = btnClass;
 
                 messageElement.append(buttonElementYes);
                 messageElement.append(buttonElementNo);
@@ -139,14 +138,11 @@ function ChatView({email}) {
                 // Låt dessa motsvara hur många readyToAnswer i databsen
                 // När minst två är gröna så ska välj-kort-rutan visas
 
-                const readyToChoose = _chat.readyToChoose;
-                const notReadyToChoose = _chat.notReadyToChoose;
-
-                for (let i = 0; i < readyToChoose; i++) {
+                for (let i = 0; i < ready; i++) {
                     messageElement.append('✔️');
                 }
 
-                for (let i = 0; i < notReadyToChoose; i++) {
+                for (let i = 0; i < notReady; i++) {
                     messageElement.append('❌');
                 }
                 
@@ -300,21 +296,23 @@ function ChatView({email}) {
                 <Col sm={12} lg={6}> {/* 2ND CHAT */}
                     <OtherTeamView />
 
-                    <div id="voteBox">
-                <Row>
-                  <Col>
-                    <h5>VÄLJ KORT HÄR</h5> Se till att vara överrens i gruppen innan valet görs.
-                      Ni väljer kort som ett lag.
-                  </Col>
-                </Row>
+                    <div id = 'voteBox' className='hide'>
+                        <Row>
+                            <Col>
+                                <h5>VÄLJ KORT HÄR</h5> 
+                                
+                                Se till att vara överrens i gruppen innan valet görs.
+                                Ni väljer kort som ett lag.
+                            </Col>
+                        </Row>
 
-                  <Row>
-                      <Col>
-                        <div className="inline-block" ><img src={require('../red_card.png')}/><h6 className="inline-block">RÖTT KORT</h6></div>
-                        <div className="inline-block" ><img src={require('../blue_card.png')}/><h6 className="inline-block">BLÅTT KORT</h6></div>
-                      </Col>
-                  </Row>
-              </div>
+                        <Row>
+                            <Col>
+                                <div className="inline-block" ><img src={require('../red_card.png')}/><h6 className="inline-block">RÖTT KORT</h6></div>
+                                <div className="inline-block" ><img src={require('../blue_card.png')}/><h6 className="inline-block">BLÅTT KORT</h6></div>
+                            </Col>
+                        </Row>
+                    </div>
 
                 </Col>
 
