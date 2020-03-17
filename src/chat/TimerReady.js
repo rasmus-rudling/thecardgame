@@ -9,7 +9,7 @@ function TimerReady({currentUsers}) {
     useEffect(() => {
         let interval = null;
 
-        setLimit(50);
+        setLimit(30);
         
         if (seconds >= limit) {
             // setLimit(50)
@@ -39,7 +39,8 @@ function TimerReady({currentUsers}) {
                         message: 'Är ni redo att gå till beslut?',
                         senderImgURL: 'none',
                         timestamp: `${strHourStamp}:${strMinuteStamp}:${strSecondStamp}`
-                    })
+                    }),
+                    usersVoted: []
                 }).then(() => {
                     console.log('Adminmeddelande skapat!')
                 })

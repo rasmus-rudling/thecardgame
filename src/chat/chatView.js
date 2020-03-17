@@ -47,6 +47,7 @@ function ChatView({email}) {
     }, []);
     
     let currentUsers = "";
+    let usersVoted = [];
 
     chats.filter((_chat, _index) => {
         let bool = false;
@@ -59,7 +60,6 @@ function ChatView({email}) {
 
         return bool;
     }).forEach((_chat, _index) => {
-
         document.getElementById('chatMessages').innerHTML = "";
 
         _chat.users.forEach((user, index, array) => {
@@ -69,6 +69,9 @@ function ChatView({email}) {
                 currentUsers += user
             }
         })
+
+        usersVoted = _chat.usersVoted;
+        console.log(usersVoted, 'usersVoted');
 
         const chatRef = firebase.firestore().collection('chats').doc(currentUsers);
 
@@ -91,7 +94,7 @@ function ChatView({email}) {
                     if (ready >= 2) {
                         document.getElementById('voteBox').className = '';
                     }
-                    
+
                     chatRef.update({
                         messages: firebase.firestore.FieldValue.arrayRemove(_message)
                     })   
@@ -111,15 +114,23 @@ function ChatView({email}) {
                 buttonElementYes.innerText = 'Ja';
                 buttonElementNo.innerText = 'Nej';
 
-                buttonElementYes.className = '';
-                buttonElementNo.className = '';
+                console.log(usersVoted.includes(email));
+
+                if (usersVoted.includes(email)) {
+                    buttonElementYes.className = 'hide';
+                    buttonElementNo.className = 'hide';
+                } else {
+                    buttonElementYes.className = '';
+                    buttonElementNo.className = '';
+                }
 
                 buttonElementYes.addEventListener("click", () => {
                     buttonElementYes.className = 'hide';
                     buttonElementNo.className = 'hide';
 
                     chatRef.update({
-                        readyToChoose: _chat.readyToChoose + 1
+                        readyToChoose: _chat.readyToChoose + 1,
+                        usersVoted: firebase.firestore.FieldValue.arrayUnion(email)
                     })
                 });
 
@@ -128,7 +139,8 @@ function ChatView({email}) {
                     buttonElementNo.className = 'hide';
 
                     chatRef.update({
-                        notReadyToChoose: _chat.notReadyToChoose + 1
+                        notReadyToChoose: _chat.notReadyToChoose + 1,
+                        usersVoted: firebase.firestore.FieldValue.arrayUnion(email)
                     })
                 });
 
