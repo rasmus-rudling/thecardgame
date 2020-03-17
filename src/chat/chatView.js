@@ -17,10 +17,9 @@ function ChatView({email}) {
     const [chats, setChats] = useState([]);
     const [name, setName] = useState('');
     const [imgURL, setImgURL] = useState('');
+    const [btnClass, setBtnClass] = useState('');
 
     useEffect(() => {
-        console.log('I chatview:', email)
-
         firebase.auth().onAuthStateChanged(async _usr => {
             if (!_usr) { // Om användaren INTE finns --> Skicka användaren till startsidan
                 history.push('/');
@@ -38,8 +37,6 @@ function ChatView({email}) {
             }
         })
 
-        console.log('Tvåaaan02');
-        console.log(email);
         firebase
             .firestore()
             .collection('users')
@@ -66,6 +63,14 @@ function ChatView({email}) {
 
         document.getElementById('chatMessages').innerHTML = "";
 
+        _chat.users.forEach((user, index, array) => {
+            if (index !== array.length - 1) { 
+                currentUsers += user + ":"; 
+            } else {
+                currentUsers += user
+            }
+        })
+
         _chat.messages.forEach(_message => { 
             const messageElement = document.createElement('div');
             const rowElement = document.createElement('div');
@@ -78,23 +83,73 @@ function ChatView({email}) {
             colElement.className = 'col';
             
             if (_message.sender === 'Admin') {
+
+                if (_chat.resetVotes) {
+                    firebase
+                    .firestore()
+                    .collection('chats')
+                    .doc(currentUsers)
+                    .update({
+                        readyToChoose: 0,
+                        notReadyToChoose: 0,
+                        resetVotes: false
+                    })
+                }
+                
+
                 messageElement.className = 'adminMessages';
                 messageElement.innerText = ` ${_message.message}`;
                 const buttonElementYes = document.createElement('button');
                 const buttonElementNo = document.createElement('button');
+                // setBtnClass('');
 
                 buttonElementYes.innerText = 'Ja';
                 buttonElementNo.innerText = 'Nej';
+
+                buttonElementYes.addEventListener("click", () => {
+                    setBtnClass('hide');
+
+                    firebase
+                        .firestore()
+                        .collection('chats')
+                        .doc(currentUsers)
+                        .update({
+                            readyToChoose: _chat.readyToChoose + 1
+                        })
+                });
+
+                buttonElementNo.addEventListener("click", () => {
+                    setBtnClass('hide');
+
+                    firebase
+                        .firestore()
+                        .collection('chats')
+                        .doc(currentUsers)
+                        .update({
+                            notReadyToChoose: _chat.notReadyToChoose + 1
+                        })
+                });
+
+                buttonElementYes.className = btnClass;
+                buttonElementNo.className = btnClass;
 
                 messageElement.append(buttonElementYes);
                 messageElement.append(buttonElementNo);
 
                 // Låt dessa motsvara hur många readyToAnswer i databsen
                 // När minst två är gröna så ska välj-kort-rutan visas
-                messageElement.append('✔️');
-                messageElement.append('❌');
-                messageElement.append('❌');
 
+                const readyToChoose = _chat.readyToChoose;
+                const notReadyToChoose = _chat.notReadyToChoose;
+
+                for (let i = 0; i < readyToChoose; i++) {
+                    messageElement.append('✔️');
+                }
+
+                for (let i = 0; i < notReadyToChoose; i++) {
+                    messageElement.append('❌');
+                }
+                
                 colElement.append(messageElement);
                 rowElement.append(colElement);
             } else if (_message.sender === name) {
@@ -140,13 +195,7 @@ function ChatView({email}) {
         const objDiv = document.getElementById("chatMessages");
         objDiv.scrollTop = objDiv.scrollHeight;
 
-        _chat.users.forEach((user, index, array) => {
-            if (index !== array.length - 1) { 
-                currentUsers += user + ":"; 
-            } else {
-                currentUsers += user
-            }
-        })
+        
     })
 
     function submitMessage(event) {
@@ -159,7 +208,6 @@ function ChatView({email}) {
         const strMinuteStamp = minuteStamp < 10 ? `0${minuteStamp}` : `${minuteStamp}`;
         const strHourStamp = hourStamp < 10 ? `0${hourStamp}` : `${hourStamp}`;
 
-        console.log('Treannnn03')
         firebase
             .firestore()
             .collection('chats')
@@ -222,7 +270,6 @@ function ChatView({email}) {
                             <Col xs={12}>    
                                 <div id="submitRow">
                                     <Form onSubmit={event => submitMessage(event)}>
-
                                         <Row>
                                             <Col>    
                                                 <Form.Row >

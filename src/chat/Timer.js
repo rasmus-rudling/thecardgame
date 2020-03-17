@@ -23,9 +23,6 @@ function Timer({otherChats, handleChange}) {
     useEffect(() => {
         let interval = null;
 
-        console.log(totSeconds)
-
-
         if (seconds >= limit) {
             setSeconds(0);
             let randIntNormal;
@@ -34,30 +31,23 @@ function Timer({otherChats, handleChange}) {
                 handleChange(3, 12, 1, otherChats)
                 randIntNormal = Math.round(randn_bm(2, 12, 1));
                 setLimit(randIntNormal);
-                console.log('Mindre än 20')
             } else if (totSeconds < 55) {
                 handleChange(2, 35, 2, otherChats)
                 randIntNormal = Math.round(randn_bm(2, 30, 1));
                 setLimit(randIntNormal);
-                console.log('Mindre än 40')
             } else if (totSeconds < 90) {
                 handleChange(2, 12, 2, otherChats)
                 randIntNormal = Math.round(randn_bm(3, 12, 3));
                 setLimit(randIntNormal);
-                console.log('Mindre än 90')
             } else if (totSeconds < 100) {
                 handleChange(2, 12, 3, otherChats)
                 randIntNormal = Math.round(randn_bm(2, 12, 1));
                 setLimit(randIntNormal);
-                console.log('Mindre än 100')
             } else {
                 handleChange(3, 35, 2, otherChats)
                 randIntNormal = Math.round(randn_bm(2, 30, 1));
                 setLimit(randIntNormal);
-                console.log('Högre än 100')
             }
-
-            console.log('randintnormal', randIntNormal)
         }
 
         interval = setInterval(() => {
