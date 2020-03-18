@@ -17,6 +17,7 @@ function ChatView({email}) {
     const [chats, setChats] = useState([]);
     const [name, setName] = useState('');
     const [imgURL, setImgURL] = useState('');
+    const [askIfReady, setAskIfReady] = useState(true);
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(async _usr => {
@@ -46,8 +47,15 @@ function ChatView({email}) {
             });
     }, []);
     
+    const askIfReadyHandler = () => {
+        if (askIfReady) {
+            setAskIfReady(false);
+        }
+    }
+
     let currentUsers = "";
     let usersVoted = [];
+    let firstMailInCHat;
 
     chats.filter((_chat, _index) => {
         let bool = false;
@@ -80,6 +88,7 @@ function ChatView({email}) {
             const rowElement = document.createElement('div');
             const colElement = document.createElement('div');
             const imgElement = document.createElement('img');
+            firstMailInCHat = currentUsers.split(':')[0]
 
             imgElement.src = _message.senderImgURL
 
@@ -93,11 +102,15 @@ function ChatView({email}) {
                 if (ready + notReady === 3) {
                     if (ready >= 2) {
                         document.getElementById('voteBox').className = '';
+
+                        if (email === firstMailInCHat) {
+                            askIfReadyHandler();
+                        }
                     }
 
                     chatRef.update({
                         messages: firebase.firestore.FieldValue.arrayRemove(_message)
-                    })   
+                    })
 
                     chatRef.update({
                         readyToChoose: 0,
@@ -201,9 +214,7 @@ function ChatView({email}) {
         })
 
         const objDiv = document.getElementById("chatMessages");
-        objDiv.scrollTop = objDiv.scrollHeight;
-
-        
+        objDiv.scrollTop = objDiv.scrollHeight;  
     })
 
     function submitMessage(event) {
@@ -236,6 +247,7 @@ function ChatView({email}) {
 
     var image = "https://img.freepik.com/free-vector/businessman-profile-cartoon_18591-58479.jpg?size=338&ext=jpg";
     
+
     return (
         <Container className="chatContainer" fluid>
             {/* HEADER   lägg till fluid={true} här uppe om chatterna ska fylla hela skärmen */}
@@ -267,7 +279,12 @@ function ChatView({email}) {
 
                         <Row>
                             <Col>
-                                <TimerReady currentUsers = {currentUsers} />
+                                {
+                                    email === firstMailInCHat && askIfReady ? 
+                                        <TimerReady currentUsers={currentUsers} /> 
+                                            : 
+                                        <p></p>
+                                }
                                 <div id="chatMessages">
                                     
                                 </div>
