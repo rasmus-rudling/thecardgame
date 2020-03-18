@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import {Container, Row, Col, Button, Form} from 'react-bootstrap';
+import Popup from "reactjs-popup";
+
 import TimerReady from './TimerReady';
 
 import './chatview.css';
 import './chat1.css';
 import './chat2.css';
+import './popup.css';
 
 import OtherTeamView from './otherTeamView';
 
@@ -172,7 +175,7 @@ function ChatView({email}) {
                 
                 colElement.append(messageElement);
                 rowElement.append(colElement);
-            } else if (_message.sender === name) {
+            } else if (_message.sender === name) { // the users own messges
                 const messageContainer = document.createElement('div');
                 const nameTimeContainer =  document.createElement('div');
                 
@@ -187,7 +190,7 @@ function ChatView({email}) {
                 nameTimeContainer.className = 'nameTimeTag';
                 colElement.append(messageContainer)
                 rowElement.append(colElement)
-            } else {
+            } else { // messages from other people in chat 1
                 const messageContainer = document.createElement('div');
                 const nameTimeContainer =  document.createElement('div');
 
@@ -196,6 +199,7 @@ function ChatView({email}) {
 
                 messageContainer.append(nameTimeContainer);
                 messageContainer.append(imgElement);
+
                 messageContainer.append(messageElement);
                 
 
@@ -204,6 +208,7 @@ function ChatView({email}) {
                 nameTimeContainer.className = 'nameTimeTag';
                 colElement.append(messageContainer)
                 rowElement.append(colElement)
+                
             }     
 
             document.getElementById('chatMessages').append(rowElement);
@@ -240,6 +245,21 @@ function ChatView({email}) {
         document.getElementById("msg-box").focus();
     }
     // --------------------
+    /* POP UP CONTENT: */
+let popupcontent = (
+    <div className="popContent">  
+        <div id="header"> SPELGRELER </div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, a nostrum.
+        Dolorem, repellat quidem ut, minima sint vel eveniet quibusdam voluptates
+        delectus doloremque, explicabo tempore dicta adipisci fugit amet dignissimos?
+        <br />
+        <br />
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur sit
+        commodi beatae optio voluptatum sed eius cumque, delectus saepe repudiandae
+        explicabo nemo nam libero ad, doloribus, voluptas rem alias. Vitae?
+        </div>);
+
+    // ---
 
     var image = "https://img.freepik.com/free-vector/businessman-profile-cartoon_18591-58479.jpg?size=338&ext=jpg";
     
@@ -346,7 +366,14 @@ function ChatView({email}) {
 
             <Row>
                 <Col>    
-                    <div id="logout"><u>Spelregler</u><Link to="/">Log out</Link></div>
+                    <div id="logout">
+                        {/* POP-UP WINDOW FÖR SPELREGLER */}
+
+                        <Popup trigger={<u>Spelregler</u>} modal>
+                            {popupcontent}
+                        </Popup>
+
+                    <Link to="/ny_firebase_chatt">     Log out</Link></div>
                 </Col>
             </Row>
             
