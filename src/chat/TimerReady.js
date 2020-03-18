@@ -4,12 +4,12 @@ const firebase = require('firebase');
 
 function TimerReady({currentUsers}) {
     const [seconds, setSeconds] = useState(0);
-    const [limit, setLimit] = useState(300);
+    const [limit, setLimit] = useState(30000); // set back to 300
 
     useEffect(() => {
         let interval = null;
         
-        if (seconds >= limit ){ 
+        if (seconds >= limit+seconds ){  //remove +seconds
             if (limit === 300) {
                 setLimit(60)
             }
