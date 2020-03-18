@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-//import './App.css';
-import Start from './start/startContainer.js';
-import Chat from './chat/chatContainer.js';
+import React, { useState } from 'react';
+import StartView from './start/startView.js';
+import ChatView from './chat/chatView.js';
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,23 +8,19 @@ import {
 } from "react-router-dom";
 
 
-
-
 function App() {
-  const [email, setEmail] = useState("rrudling@kth.se");
-  const [password, setPassword] = useState("");
-  const [loginError, setLoginError] = useState('');
+    const [email, setEmail] = useState("rrudling@kth.se");
+    const [password, setPassword] = useState("");
+    const [loginError, setLoginError] = useState('');
 
-  const [emailInChat, setEmailInChat] = useState("rrudling@kth.se");
+    function updatePassword(newPassword) {
+        setPassword(newPassword);
+    };
 
-    useEffect( () => {
-        setEmailInChat(email);
-    }, [email])
-  
-
-  const updatePassword = e => {
-    setPassword(e.target.value);
-  };
+    function updateEmail(newEmail) {
+        console.log(newEmail, 'raz12')
+        setEmail(newEmail)
+    }
 
     function updateEmail(newEmail) {
         setEmail(newEmail)
@@ -34,41 +29,39 @@ function App() {
 // Kanske går att lösa på snyggare sätt än att ha ett separat state för chatView.
 //  const [emailInChat, setEmailInChat] = React.useState("No user");
 
-
-  return (    
-  <Router>
-    <Switch>
-        <Route exact path="/" >
-            <Start 
-            email = {email}
-            setEmail = {setEmail}
-            password = {password}
-            setPassword = {updatePassword} // Vänster är blir variabelnamnet
-            loginError = {loginError}
-            setLoginError = {setLoginError}
-            />
-        </ Route>
-        
-        <Route exact path="/ny_firebase_chatt" >
-          <Start 
-          email = {email}
-          setEmail = {setEmail}
-          password = {password}
-          setPassword = {updatePassword} // Vänster är blir variabelnamnet
-          loginError = {loginError}
-          setLoginError = {setLoginError}
-          />
-        </Route>
-        
-        <Route exact path="/chat">
-          <Chat 
-          emailInChat = {emailInChat}
-          />
-        </Route>
-    </Switch>
-  </Router>
-  );
+    return (    
+        <Router>
+            <Switch>
+                <Route exact path="/" >
+                    <StartView
+                        email = {email}
+                        setEmail = {updateEmail}
+                        password = {password}
+                        setPassword = {updatePassword} // Vänster är blir variabelnamnet
+                        loginError = {loginError}
+                        setLoginError = {setLoginError}
+                    />
+                </ Route>
+                
+                <Route exact path="/ny_firebase_chatt" >
+                    <StartView
+                        email = {email}
+                        setEmail = {updateEmail}
+                        password = {password}
+                        setPassword = {updatePassword} // Vänster är blir variabelnamnet
+                        loginError = {loginError}
+                        setLoginError = {setLoginError}
+                    />
+                </Route>
+                
+                <Route exact path="/chat">
+                    <ChatView
+                        email = {email}
+                    />
+                </Route>
+            </Switch>
+        </Router>
+    );
 }
-// Har installerat react, react-router-dom och react-bootstrap
 
 export default App;

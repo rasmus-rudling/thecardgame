@@ -49,13 +49,10 @@
     max-width: 90%;
     display:inline-block;
     position: relative; 
-    background-image: linear-gradient(120deg, #858585 0%, #cecece 100%);
-
-    /*background-image: linear-gradient(120deg, #336db1 0%, #68a6ee 100%);
-    */
+    background-image: linear-gradient(120deg, #336db1 0%, #68a6ee 100%);
     border-radius: 1em;
 }
-    
+
 
 .myMessagesBox img {
     /* Contains image that belongs to every message */
@@ -77,7 +74,7 @@
     width: 0;
     height: 0;
     border: 0.406em solid transparent;
-    border-left-color: #cecece;
+    border-left-color: #68a6ee;
     border-right: 0;
     margin-top: -0.406em;
     margin-right: -0.406em;
@@ -85,7 +82,6 @@
 
 
 /* OTHER MESSAGES IN MY TEAM */
-  
 .chatBox .otherMessagesBox {
     /*  otherMessageBox contains everything that belongs to a message from another person, in the same chat:
         The time, name, image and the message itself. */
@@ -127,12 +123,10 @@
       max-width: 90%;
       display:inline-block;
       position: absolute;
-      background-image: linear-gradient(120deg, #858585 0%, #cecece 100%);
-      /*background-image: linear-gradient(120deg, #a72828 0%, #cf5f6e 100%);
-      */
+      background-image: linear-gradient(120deg, #a72828 0%, #cf5f6e 100%);
       border-radius: 1em;
 }
-  
+
 
 
 .chatBox .otherMessages:after {
@@ -144,13 +138,12 @@
     width: 0;
     height: 0;
     border: 0.406em solid transparent;
-    border-right-color: #858585;
+    border-right-color: #a72828;
     border-left: 0;
     margin-top: -0.406em;
     margin-left: -0.406em;
 }
-  
-  
+
  /* ADMIN MESSAGES */
 
 .adminMessages {
@@ -182,8 +175,9 @@
     padding-left: 30px;
     border-radius: 0px 0px 0px 50px;
     width:80%;
+    outline: none;
   }
-  
+
   .form-row .send_button {
     color: white;
     border: none;
@@ -191,3 +185,12 @@
     border-radius: 0 0px 45px 0px;
     width: 20%;
   }
+
+
+
+/* ***************************** */
+/* Är ni redo att gå till beslut */
+/* ***************************** */
+.hide {
+    display: none;
+}
