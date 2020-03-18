@@ -93,27 +93,28 @@ function OtherTeamView () {
 
     useEffect(() => {
         otherChats.forEach(_message => {
+            const messageContainer = document.createElement('div');
             const messageElement = document.createElement('div');
             const rowElement = document.createElement('div');
             const colElement = document.createElement('div');
             const imgElementOther = document.createElement('img');
             const nameTimeContainer =  document.createElement('div');
-            const messageContainer = document.createElement('div');
 
             nameTimeContainer.innerText = `${_message.timeStamp} ${_message.sender}` 
 
             imgElementOther.src = _message.imgURL;
-            nameTimeContainer.className = 'name-time-tag-other';
-            imgElementOther.className = 'img-element-other';
+            nameTimeContainer.className = 'nameTimeTag';
+            imgElementOther.className = 'img-element-other-team';
 
             rowElement.className = 'row';
             colElement.className = 'col';
 
             messageElement.innerText = _message.message;
-            messageElement.className = 'otherTeamsMessages';
+            messageElement.className = 'otherMessages';
+            messageContainer.className = 'otherMessagesBox'
 
-            messageContainer.append(imgElementOther);
             messageContainer.append(nameTimeContainer);
+            messageContainer.append(imgElementOther);
             messageContainer.append(messageElement);
 
             colElement.append(messageContainer);

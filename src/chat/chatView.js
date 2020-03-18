@@ -3,7 +3,7 @@ import {Link, useHistory} from 'react-router-dom';
 import {Container, Row, Col, Button, Form} from 'react-bootstrap';
 import TimerReady from './TimerReady';
 
-import './chatView.css';
+import './chatview.css';
 import './chat1.css';
 import './chat2.css';
 
