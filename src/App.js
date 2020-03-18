@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 //import './App.css';
 import Start from './start/startContainer.js';
 import Chat from './chat/chatContainer.js';
@@ -12,13 +12,13 @@ import {
 
 
 function App() {
-  const [email, setEmail] = React.useState("rrudling@kth.se");
-  const [password, setPassword] = React.useState("");
-  const [loginError, setLoginError] = React.useState('');
+  const [email, setEmail] = useState("rrudling@kth.se");
+  const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState('');
 
-  const [emailInChat, setEmailInChat] = React.useState("rrudling@kth.se");
+  const [emailInChat, setEmailInChat] = useState("rrudling@kth.se");
 
-    React.useEffect( () => {
+    useEffect( () => {
         setEmailInChat(email);
     }, [email])
   
@@ -26,6 +26,10 @@ function App() {
   const updatePassword = e => {
     setPassword(e.target.value);
   };
+
+    function updateEmail(newEmail) {
+        setEmail(newEmail)
+    }
 
 // Kanske går att lösa på snyggare sätt än att ha ett separat state för chatView.
 //  const [emailInChat, setEmailInChat] = React.useState("No user");
