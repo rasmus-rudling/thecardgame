@@ -202,8 +202,8 @@ function ChatView({email}) {
                                             <Col>    
                                                 {/* <Form> */}
                                                     <Form.Row >
-                                                            <Form.Control  bsPrefix="send_text" type="text" id="msg-box" autoFocus />
-                                                            <Button  bsPrefix="send_button" type="submit" >
+                                                            <Form.Control  bsPrefix="send_text" type="text" id="msg-box" autoFocus/>
+                                                            <Button  bsPrefix="send_button" type="submit">
                                                                 SEND
                                                             {/*<img src={"https://cdn1.iconfinder.com/data/icons/mail-2-basic/512/45-Send-512.png"}/>*/}
                                                             </Button>
