@@ -8,7 +8,6 @@ import TimerReady from './TimerReady';
 import './chatview.css';
 import './chat1.css';
 import './chat2.css';
-import './popup.css';
 
 import OtherTeamView from './otherTeamView';
 
