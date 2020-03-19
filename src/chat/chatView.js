@@ -57,6 +57,8 @@ function ChatView({email}) {
     let currentUsers = "";
     let usersVoted = [];
     let firstMailInCHat;
+    let teamReady;
+    
 
     chats.filter((_chat, _index) => {
         let bool = false;
@@ -79,8 +81,10 @@ function ChatView({email}) {
             }
         })
 
+        console.log(_index)
+        teamReady = _chat.teamReady;
+
         usersVoted = _chat.usersVoted;
-        console.log(usersVoted, 'usersVoted');
 
         const chatRef = firebase.firestore().collection('chats').doc(currentUsers);
 
@@ -102,7 +106,9 @@ function ChatView({email}) {
                 
                 if (ready + notReady === 3) {
                     if (ready >= 2) {
-                        document.getElementById('voteBox').className = '';
+                        chatRef.update({
+                            teamReady: true
+                        })
 
                         if (email === firstMailInCHat) {
                             askIfReadyHandler();
@@ -123,7 +129,6 @@ function ChatView({email}) {
                 messageElement.innerText = ` ${_message.message}`;
                 const buttonElementYes = document.createElement('button');
                 const buttonElementNo = document.createElement('button');
-                // setBtnClass('');
 
                 buttonElementYes.innerText = 'Ja';
                 buttonElementNo.innerText = 'Nej';
@@ -339,24 +344,30 @@ let popupcontent = (
 
                 <Col sm={12} lg={6}> {/* 2ND CHAT */}
                     <OtherTeamView />
+                    
+                    {
+                        teamReady ? 
+                            <div id='voteBox'>
+                                <Row>
+                                    <Col>
+                                        <h5>VÄLJ KORT HÄR</h5> 
+                                        
+                                        Se till att vara överrens i gruppen innan valet görs.
+                                        Ni väljer kort som ett lag.
+                                    </Col>
+                                </Row>
 
-                    <div id = 'voteBox' className='hide'>
-                        <Row>
-                            <Col>
-                                <h5>VÄLJ KORT HÄR</h5> 
-                                
-                                Se till att vara överrens i gruppen innan valet görs.
-                                Ni väljer kort som ett lag.
-                            </Col>
-                        </Row>
-
-                        <Row>
-                            <Col>
-                                <div className="inline-block" ><img src={require('../red_card.png')}/><h6 className="inline-block">RÖTT KORT</h6></div>
-                                <div className="inline-block" ><img src={require('../blue_card.png')}/><h6 className="inline-block">BLÅTT KORT</h6></div>
-                            </Col>
-                        </Row>
-                    </div>
+                                <Row>
+                                    <Col>
+                                        <div className="inline-block" ><img src={require('../red_card.png')}/><h6 className="inline-block">RÖTT KORT</h6></div>
+                                        <div className="inline-block" ><img src={require('../blue_card.png')}/><h6 className="inline-block">BLÅTT KORT</h6></div>
+                                    </Col>
+                                </Row>
+                            </div>
+                        :
+                            <div></div>
+                    }
+                    
 
                 </Col>
 
@@ -372,7 +383,7 @@ let popupcontent = (
                             {popupcontent}
                         </Popup>
 
-                    <Link to="/ny_firebase_chatt">     Log out</Link></div>
+                    <Link to="/ny_firebase_chatt">Log out</Link></div>
                 </Col>
             </Row>
             
