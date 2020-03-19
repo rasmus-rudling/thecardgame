@@ -59,6 +59,8 @@ function ChatView({email}) {
     let firstMailInCHat;
     let teamReady;
     
+    console.log('---')
+    console.log(chats[1])
 
     chats.filter((_chat, _index) => {
         let bool = false;
@@ -87,6 +89,37 @@ function ChatView({email}) {
         usersVoted = _chat.usersVoted;
 
         const chatRef = firebase.firestore().collection('chats').doc(currentUsers);
+
+        // --- Visa valda kort ---
+        if (teamReady) {
+            const chosenRed = _chat.chosenRedCard;
+            const chosenBlue = _chat.chosenBlueCard;
+    
+            const chosenCardContainer = document.getElementById('chosenCardContainer');
+    
+            console.log('H')
+            console.log(chosenCardContainer);
+    
+            const redCardElement = document.createElement('img');
+            const blueCardElement = document.createElement('img');
+    
+            redCardElement.src = '../red_card.png';
+            blueCardElement.src = '../blue_card.png';
+    
+            redCardElement.className = 'choicesCard';
+            blueCardElement.className = 'choicesCard';
+    
+            for (let i = 0; i < chosenRed; i++) {
+                chosenCardContainer.append(redCardElement)
+            }
+    
+            for (let i = 0; i < chosenBlue; i++) {
+                chosenCardContainer.append(blueCardElement)
+            }
+        }
+        
+
+        // -----------------------
 
         _chat.messages.forEach(_message => { 
             const messageElement = document.createElement('div');
@@ -249,19 +282,30 @@ function ChatView({email}) {
         document.getElementById("msg-box").focus();
     }
     // --------------------
+
+    const chooseRedCard = () => {
+        const dbRef = firebase.firestore().collection('chats').doc(currentUsers)
+        let increment = firebase.firestore.FieldValue.increment(1);
+        
+        dbRef.update({
+            chosenRedCard: increment
+        })
+    }
+
     /* POP UP CONTENT: */
-let popupcontent = (
-    <div className="popContent">  
-        <div id="header"> SPELGRELER </div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, a nostrum.
-        Dolorem, repellat quidem ut, minima sint vel eveniet quibusdam voluptates
-        delectus doloremque, explicabo tempore dicta adipisci fugit amet dignissimos?
-        <br />
-        <br />
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur sit
-        commodi beatae optio voluptatum sed eius cumque, delectus saepe repudiandae
-        explicabo nemo nam libero ad, doloribus, voluptas rem alias. Vitae?
-        </div>);
+    let popupcontent = (
+        <div className="popContent">  
+            <div id="header"> SPELGRELER </div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, a nostrum.
+            Dolorem, repellat quidem ut, minima sint vel eveniet quibusdam voluptates
+            delectus doloremque, explicabo tempore dicta adipisci fugit amet dignissimos?
+            <br />
+            <br />
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur sit
+            commodi beatae optio voluptatum sed eius cumque, delectus saepe repudiandae
+            explicabo nemo nam libero ad, doloribus, voluptas rem alias. Vitae?
+        </div>
+    );
 
     // ---
 
@@ -314,7 +358,7 @@ let popupcontent = (
                         <Row>
                             <Col xs={12}>    
                                 <div id="submitRow">
-                                    <Form onSubmit={event => submitMessage(event)}>
+                                    <Form onSubmit={submitMessage}>
                                         <Row>
                                             <Col>    
                                                 <Form.Row >
@@ -359,19 +403,35 @@ let popupcontent = (
 
                                 <Row>
                                     <Col>
-                                        <div className="inline-block" ><img src={require('../red_card.png')}/><h6 className="inline-block">RÖTT KORT</h6></div>
-                                        <div className="inline-block" ><img src={require('../blue_card.png')}/><h6 className="inline-block">BLÅTT KORT</h6></div>
+                                        <div className="inline-block">
+                                            <div onClick={chooseRedCard}>
+                                                <img src={require('../red_card.png')}/>
+                                                <h6 className="inline-block">RÖTT KORT</h6>
+                                            </div>
+                                        </div>
+
+                                        <div className="inline-block">
+                                            <div>
+                                                <img src={require('../blue_card.png')}/>
+                                                <h6 className="inline-block">BLÅTT KORT</h6>
+                                            </div>
+                                        </div>
+                                    </Col>
+                                </Row>
+
+                                <Row>
+                                    <Col>
+                                        <p className='choicesText'>Era val: </p>
+                                        <div id='chosenCardContainer'>
+
+                                        </div>
                                     </Col>
                                 </Row>
                             </div>
                         :
                             <div></div>
                     }
-                    
-
                 </Col>
-
-
             </Row>
 
             <Row>
