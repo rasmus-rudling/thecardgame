@@ -25,7 +25,7 @@
     font-size: smaller;
     position: relative;
     display: block;
-    margin: 5px 20px 10px 5px;
+    margin: -20px 20px 10px 5px;
     padding-left: 10px;
     padding-right: 25px;
     color: rgba(255, 255, 255, 0.479);
@@ -46,7 +46,7 @@
     font-size: medium;
     margin-right: 10px;
     padding: 10px 15px 10px 15px;
-    max-width: 90%;
+    max-width: 80%;
     display:inline-block;
     position: relative; 
     background-image: linear-gradient(120deg, #7d7d7e 0%, #e3e7ec 100%);
@@ -89,14 +89,14 @@
       font-size: smaller;
       position: relative;
       display: block;
-
-      margin: 5px 10px 5px 10px;
+      margin: -20px 10px 5px 10px;
+    
       color: rgba(255, 255, 255, 0.479);
 }
 
 .otherMessagesBox .nameTimeTag { 
     /* Contains the name and time, top part of myMessageBox */
-    margin-bottom: 2px;
+    margin-bottom: 0px;
     margin-top: 20px;
     margin-left: 50px;
 }
@@ -107,9 +107,10 @@
     border-radius: 100px;
     display:inline-block;
     margin: 0;
-    margin-left: 5px;
+    margin-right: 5px;
     position: relative;
-    top: 50%;
+    top: 40%;
+
 }
 
 .chatBox .otherMessages {
@@ -120,9 +121,9 @@
       font-size: medium;
       margin-left: 10px;
       padding: 10px 15px 10px 15px;
-      max-width: 90%;
+      max-width: 80%;
       display:inline-block;
-      /* position: absolute; */
+      position: relative;
       background-image: linear-gradient(120deg, #888888 0%, #dbdbdb 100%);
       border-radius: 1em;
 }
