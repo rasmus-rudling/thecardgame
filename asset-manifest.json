@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/ny_firebase_chatt/static/css/main.d7cfff05.chunk.css",
-    "main.js": "/ny_firebase_chatt/static/js/main.93e63684.chunk.js",
-    "main.js.map": "/ny_firebase_chatt/static/js/main.93e63684.chunk.js.map",
+    "main.js": "/ny_firebase_chatt/static/js/main.53e8b1d4.chunk.js",
+    "main.js.map": "/ny_firebase_chatt/static/js/main.53e8b1d4.chunk.js.map",
     "runtime-main.js": "/ny_firebase_chatt/static/js/runtime-main.c65c30c9.js",
     "runtime-main.js.map": "/ny_firebase_chatt/static/js/runtime-main.c65c30c9.js.map",
     "static/css/2.de424728.chunk.css": "/ny_firebase_chatt/static/css/2.de424728.chunk.css",
     "static/js/2.2e87e0bb.chunk.js": "/ny_firebase_chatt/static/js/2.2e87e0bb.chunk.js",
     "static/js/2.2e87e0bb.chunk.js.map": "/ny_firebase_chatt/static/js/2.2e87e0bb.chunk.js.map",
     "index.html": "/ny_firebase_chatt/index.html",
-    "precache-manifest.e00bc44a78f0c3a6cdce400c9bebe02b.js": "/ny_firebase_chatt/precache-manifest.e00bc44a78f0c3a6cdce400c9bebe02b.js",
+    "precache-manifest.b709b39be3bac7c65b8934b878ab1873.js": "/ny_firebase_chatt/precache-manifest.b709b39be3bac7c65b8934b878ab1873.js",
     "service-worker.js": "/ny_firebase_chatt/service-worker.js",
     "static/css/2.de424728.chunk.css.map": "/ny_firebase_chatt/static/css/2.de424728.chunk.css.map",
     "static/css/main.d7cfff05.chunk.css.map": "/ny_firebase_chatt/static/css/main.d7cfff05.chunk.css.map",
@@ -23,6 +23,6 @@
     "static/css/2.de424728.chunk.css",
     "static/js/2.2e87e0bb.chunk.js",
     "static/css/main.d7cfff05.chunk.css",
-    "static/js/main.93e63684.chunk.js"
+    "static/js/main.53e8b1d4.chunk.js"
   ]
 }
