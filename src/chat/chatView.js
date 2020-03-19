@@ -90,35 +90,37 @@ function ChatView({email}) {
 
         const chatRef = firebase.firestore().collection('chats').doc(currentUsers);
 
+        console.log(teamReady, 'Teamready')
         // --- Visa valda kort ---
         if (teamReady) {
-            const chosenRed = _chat.chosenRedCard;
-            const chosenBlue = _chat.chosenBlueCard;
-    
-            const chosenCardContainer = document.getElementById('chosenCardContainer');
-    
-            console.log('H')
-            console.log(chosenCardContainer);
-    
-            const redCardElement = document.createElement('img');
-            const blueCardElement = document.createElement('img');
-    
-            redCardElement.src = '../red_card.png';
-            blueCardElement.src = '../blue_card.png';
-    
-            redCardElement.className = 'choicesCard';
-            blueCardElement.className = 'choicesCard';
-    
-            for (let i = 0; i < chosenRed; i++) {
-                chosenCardContainer.append(redCardElement)
-            }
-    
-            for (let i = 0; i < chosenBlue; i++) {
-                chosenCardContainer.append(blueCardElement)
-            }
-        }
-        
+            setTimeout(() => {
+                
+                const chosenRed = _chat.chosenRedCard;
+                const chosenBlue = _chat.chosenBlueCard;
+                console.log(chosenRed)
+                console.log(chosenBlue)
+                const tempCardsContainer = document.createElement('div');
 
+                for (let r = 0; r < chosenRed; r++) {
+                    const redCardElement = document.createElement('img');
+                    redCardElement.src = require('../red_card.png');
+                    redCardElement.className = 'choicesCard';
+                    tempCardsContainer.append(redCardElement)
+                }
+                
+                for (let b = 0; b < chosenBlue; b++) {
+                    const blueCardElement = document.createElement('img');
+                    blueCardElement.src = require('../blue_card.png');
+                    blueCardElement.className = 'choicesCard';
+                    tempCardsContainer.append(blueCardElement)
+                }
+
+                const chosenCardContainer = document.getElementById('chosenCardContainer');
+                chosenCardContainer.innerHTML = '';
+                chosenCardContainer.append(tempCardsContainer);
+            }, 50)
+            
+        }
         // -----------------------
 
         _chat.messages.forEach(_message => { 
@@ -284,11 +286,25 @@ function ChatView({email}) {
     // --------------------
 
     const chooseRedCard = () => {
+        document.getElementById('redCardChooser').className = 'hide';
+        document.getElementById('blueCardChooser').className = 'hide';
         const dbRef = firebase.firestore().collection('chats').doc(currentUsers)
         let increment = firebase.firestore.FieldValue.increment(1);
         
         dbRef.update({
             chosenRedCard: increment
+        })
+    }
+
+    const chooseBlueCard = () => {
+        document.getElementById('redCardChooser').className = 'hide';
+        document.getElementById('blueCardChooser').className = 'hide';
+        
+        const dbRef = firebase.firestore().collection('chats').doc(currentUsers)
+        let increment = firebase.firestore.FieldValue.increment(1);
+        
+        dbRef.update({
+            chosenBlueCard: increment
         })
     }
 
@@ -388,7 +404,6 @@ function ChatView({email}) {
 
                 <Col sm={12} lg={6}> {/* 2ND CHAT */}
                     <OtherTeamView />
-                    
                     {
                         teamReady ? 
                             <div id='voteBox'>
@@ -403,15 +418,15 @@ function ChatView({email}) {
 
                                 <Row>
                                     <Col>
-                                        <div className="inline-block">
+                                        <div className="inline-block" id='redCardChooser'>
                                             <div onClick={chooseRedCard}>
                                                 <img src={require('../red_card.png')}/>
                                                 <h6 className="inline-block">RÖTT KORT</h6>
                                             </div>
                                         </div>
 
-                                        <div className="inline-block">
-                                            <div>
+                                        <div className="inline-block" id='blueCardChooser'>
+                                            <div onClick={chooseBlueCard}>
                                                 <img src={require('../blue_card.png')}/>
                                                 <h6 className="inline-block">BLÅTT KORT</h6>
                                             </div>
