@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/ny_firebase_chatt/static/css/main.7b67ad8b.chunk.css",
-    "main.js": "/ny_firebase_chatt/static/js/main.e7ff8c6b.chunk.js",
-    "main.js.map": "/ny_firebase_chatt/static/js/main.e7ff8c6b.chunk.js.map",
+    "main.css": "/ny_firebase_chatt/static/css/main.d7cfff05.chunk.css",
+    "main.js": "/ny_firebase_chatt/static/js/main.93e63684.chunk.js",
+    "main.js.map": "/ny_firebase_chatt/static/js/main.93e63684.chunk.js.map",
     "runtime-main.js": "/ny_firebase_chatt/static/js/runtime-main.c65c30c9.js",
     "runtime-main.js.map": "/ny_firebase_chatt/static/js/runtime-main.c65c30c9.js.map",
     "static/css/2.de424728.chunk.css": "/ny_firebase_chatt/static/css/2.de424728.chunk.css",
-    "static/js/2.e960f2fa.chunk.js": "/ny_firebase_chatt/static/js/2.e960f2fa.chunk.js",
-    "static/js/2.e960f2fa.chunk.js.map": "/ny_firebase_chatt/static/js/2.e960f2fa.chunk.js.map",
+    "static/js/2.2e87e0bb.chunk.js": "/ny_firebase_chatt/static/js/2.2e87e0bb.chunk.js",
+    "static/js/2.2e87e0bb.chunk.js.map": "/ny_firebase_chatt/static/js/2.2e87e0bb.chunk.js.map",
     "index.html": "/ny_firebase_chatt/index.html",
-    "precache-manifest.52c2432158df59d9c4ad8dce9afa518e.js": "/ny_firebase_chatt/precache-manifest.52c2432158df59d9c4ad8dce9afa518e.js",
+    "precache-manifest.e00bc44a78f0c3a6cdce400c9bebe02b.js": "/ny_firebase_chatt/precache-manifest.e00bc44a78f0c3a6cdce400c9bebe02b.js",
     "service-worker.js": "/ny_firebase_chatt/service-worker.js",
     "static/css/2.de424728.chunk.css.map": "/ny_firebase_chatt/static/css/2.de424728.chunk.css.map",
-    "static/css/main.7b67ad8b.chunk.css.map": "/ny_firebase_chatt/static/css/main.7b67ad8b.chunk.css.map",
-    "static/js/2.e960f2fa.chunk.js.LICENSE.txt": "/ny_firebase_chatt/static/js/2.e960f2fa.chunk.js.LICENSE.txt",
+    "static/css/main.d7cfff05.chunk.css.map": "/ny_firebase_chatt/static/css/main.d7cfff05.chunk.css.map",
+    "static/js/2.2e87e0bb.chunk.js.LICENSE.txt": "/ny_firebase_chatt/static/js/2.2e87e0bb.chunk.js.LICENSE.txt",
     "static/media/blue_card.png": "/ny_firebase_chatt/static/media/blue_card.db0b65ea.png",
     "static/media/headerTextCards.png": "/ny_firebase_chatt/static/media/headerTextCards.ef84d908.png",
     "static/media/red_card.png": "/ny_firebase_chatt/static/media/red_card.2abfa2da.png"
@@ -21,8 +21,8 @@
   "entrypoints": [
     "static/js/runtime-main.c65c30c9.js",
     "static/css/2.de424728.chunk.css",
-    "static/js/2.e960f2fa.chunk.js",
-    "static/css/main.7b67ad8b.chunk.css",
-    "static/js/main.e7ff8c6b.chunk.js"
+    "static/js/2.2e87e0bb.chunk.js",
+    "static/css/main.d7cfff05.chunk.css",
+    "static/js/main.93e63684.chunk.js"
   ]
 }
