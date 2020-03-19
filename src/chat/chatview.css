@@ -90,7 +90,8 @@
     margin: 30px;
     color: rgb(105, 23, 23);
     font-size: smaller;
-    }
+    cursor: pointer;
+}
 
 
 /* POP-UP */
