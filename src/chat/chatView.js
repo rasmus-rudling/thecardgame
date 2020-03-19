@@ -363,7 +363,7 @@ function ChatView({email}) {
                                     email === firstMailInCHat && askIfReady ? 
                                         <TimerReady currentUsers={currentUsers} /> 
                                             : 
-                                        <p></p>
+                                        null
                                 }
                                 <div id="chatMessages">
                                     
@@ -444,7 +444,7 @@ function ChatView({email}) {
                                 </Row>
                             </div>
                         :
-                            <div></div>
+                            null
                     }
                 </Col>
             </Row>
