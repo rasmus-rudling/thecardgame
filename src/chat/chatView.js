@@ -323,6 +323,57 @@ function ChatView({email}) {
 
     var image = "https://img.freepik.com/free-vector/businessman-profile-cartoon_18591-58479.jpg?size=338&ext=jpg";
     
+    let timerContent = null;
+
+    if (email === firstMailInCHat && askIfReady) {
+        timerContent = (
+            <TimerReady currentUsers={currentUsers} />
+        )
+    }
+
+    let voteBoxContent = null;
+
+    if (teamReady) {
+        voteBoxContent = (
+            <div id='voteBox'>
+                <Row>
+                    <Col>
+                        <h5>VÄLJ KORT HÄR</h5> 
+                        
+                        Se till att vara överrens i gruppen innan valet görs.
+                        Ni väljer kort som ett lag.
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col>
+                        <div className="inline-block" id='redCardChooser'>
+                            <div onClick={chooseRedCard}>
+                                <img src={require('../red_card.png')}/>
+                                <h6 className="inline-block">RÖTT KORT</h6>
+                            </div>
+                        </div>
+
+                        <div className="inline-block" id='blueCardChooser'>
+                            <div onClick={chooseBlueCard}>
+                                <img src={require('../blue_card.png')}/>
+                                <h6 className="inline-block">BLÅTT KORT</h6>
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col>
+                        <p className='choicesText'>Era val: </p>
+                        <div id='chosenCardContainer'>
+
+                        </div>
+                    </Col>
+                </Row>
+            </div>
+        )
+    }
 
     return (
         <Container className="chatContainer" fluid>
@@ -364,12 +415,8 @@ function ChatView({email}) {
 
                         <Row>
                             <Col>
-                                {
-                                    email === firstMailInCHat && askIfReady ? 
-                                        <TimerReady currentUsers={currentUsers} /> 
-                                            : 
-                                        null
-                                }
+                                {timerContent}
+
                                 <div id="chatMessages">
                                     
                                 </div>
@@ -409,47 +456,8 @@ function ChatView({email}) {
 
                 <Col sm={12} lg={6}> {/* 2ND CHAT */}
                     <OtherTeamView />
-                    {
-                        teamReady ? 
-                            <div id='voteBox'>
-                                <Row>
-                                    <Col>
-                                        <h5>VÄLJ KORT HÄR</h5> 
-                                        
-                                        Se till att vara överrens i gruppen innan valet görs.
-                                    </Col>
-                                </Row>
 
-                                <Row>
-                                    <Col>
-                                        <div className="inline-block" id='redCardChooser'>
-                                            <div onClick={chooseRedCard}>
-                                                <img src={require('../red_card.png')}/>
-                                                <h6 className="inline-block">RÖTT KORT</h6>
-                                            </div>
-                                        </div>
-
-                                        <div className="inline-block" id='blueCardChooser'>
-                                            <div onClick={chooseBlueCard}>
-                                                <img src={require('../blue_card.png')}/>
-                                                <h6 className="inline-block">BLÅTT KORT</h6>
-                                            </div>
-                                        </div>
-                                    </Col>
-                                </Row>
-
-                                <Row>
-                                    <Col>
-                                        <p className='choicesText'>Era val: </p>
-                                        <div id='chosenCardContainer'>
-
-                                        </div>
-                                    </Col>
-                                </Row>
-                            </div>
-                        :
-                            null
-                    }
+                    {voteBoxContent}
                 </Col>
             </Row>
 
@@ -465,7 +473,6 @@ function ChatView({email}) {
                     <Link to="/ny_firebase_chatt">Log out</Link></div>
                 </Col>
             </Row>
-            
         </Container>
     );
   }

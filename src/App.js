@@ -43,7 +43,7 @@ function App() {
                     />
                 </ Route>
                 
-                <Route exact path="/ny_firebase_chatt" >
+                <Route exact path="/thecardgame" >
                     <StartView
                         email = {email}
                         setEmail = {updateEmail}
