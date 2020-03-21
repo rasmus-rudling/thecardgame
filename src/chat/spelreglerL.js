@@ -18,7 +18,7 @@ var reglerLong = <div>
     Ni kan som längst diskutera i 10 minuter. Det är inte möjligt att kommunicera med det andra laget.
     < br/>
     <br />
-    När båda laget har tagit sitt beslut kommer en ruta upp med vilka som vann. Motståndarlaget kan inte se att ni gått till beslut förrän efter spelet är över.
+    När båda lagen har tagit sitt beslut kommer en ruta upp med vilka som vann. Motståndarlaget kan inte se att ni gått till beslut förrän efter spelet är över.
     < br/>
     <br />
     <b><i>Lycka till!</i></b>
