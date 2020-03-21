@@ -268,7 +268,7 @@ let popupcontent = (
             {/* HEADER   lägg till fluid={true} här uppe om chatterna ska fylla hela skärmen */}
             <Row>
                 <Col>
-                    <img src={require('../headerTextCards.png')}  alt="THE CARD GAME" id="headerimg"></img>
+                    <img src={require('../headerImage.png')}  alt="THE CARD GAME" id="headerimg"></img>
                 </Col>
             </Row> 
       
