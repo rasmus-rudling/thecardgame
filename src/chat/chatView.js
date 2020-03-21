@@ -470,7 +470,7 @@ function ChatView({email}) {
                             {popupcontent}
                         </Popup>
 
-                    <Link to="/ny_firebase_chatt">Log out</Link></div>
+                    <Link to="/thecardgame">Log out</Link></div>
                 </Col>
             </Row>
         </Container>
