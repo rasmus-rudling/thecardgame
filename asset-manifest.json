@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/thecardgame/static/css/main.31e532a4.chunk.css",
-    "main.js": "/thecardgame/static/js/main.44ba4398.chunk.js",
-    "main.js.map": "/thecardgame/static/js/main.44ba4398.chunk.js.map",
+    "main.js": "/thecardgame/static/js/main.d72febe3.chunk.js",
+    "main.js.map": "/thecardgame/static/js/main.d72febe3.chunk.js.map",
     "runtime-main.js": "/thecardgame/static/js/runtime-main.7d58137d.js",
     "runtime-main.js.map": "/thecardgame/static/js/runtime-main.7d58137d.js.map",
     "static/css/2.de424728.chunk.css": "/thecardgame/static/css/2.de424728.chunk.css",
     "static/js/2.13c8e67c.chunk.js": "/thecardgame/static/js/2.13c8e67c.chunk.js",
     "static/js/2.13c8e67c.chunk.js.map": "/thecardgame/static/js/2.13c8e67c.chunk.js.map",
     "index.html": "/thecardgame/index.html",
-    "precache-manifest.268a60576ae64ccecc3b1e48a3464e55.js": "/thecardgame/precache-manifest.268a60576ae64ccecc3b1e48a3464e55.js",
+    "precache-manifest.150fe71c707db7044939c88bbe57bbf7.js": "/thecardgame/precache-manifest.150fe71c707db7044939c88bbe57bbf7.js",
     "service-worker.js": "/thecardgame/service-worker.js",
     "static/css/2.de424728.chunk.css.map": "/thecardgame/static/css/2.de424728.chunk.css.map",
     "static/css/main.31e532a4.chunk.css.map": "/thecardgame/static/css/main.31e532a4.chunk.css.map",
@@ -23,6 +23,6 @@
     "static/css/2.de424728.chunk.css",
     "static/js/2.13c8e67c.chunk.js",
     "static/css/main.31e532a4.chunk.css",
-    "static/js/main.44ba4398.chunk.js"
+    "static/js/main.d72febe3.chunk.js"
   ]
 }
