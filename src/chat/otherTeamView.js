@@ -13,8 +13,25 @@ function OtherTeamView () {
     const senders = [sentTexts0, sentTexts1, sentTexts2]
 
     const invisibleText = '　';
-    const otherTeamNames = ['Axel Hagel', 'Elin Rudling', 'Niklas Löwbeer'];
-    const otherTeamURL = ['https://i.imgur.com/IBlrCCT.jpg', 'https://i.imgur.com/wBeQrMt.jpg', 'https://i.imgur.com/GRSyGWE.jpg']
+
+    const otherTeamUsers = [
+        {
+            name: 'Alexander Öberg',
+            imgURL: 'https://i.imgur.com/zQK9g6C.jpg'
+        },
+        {
+            name: 'Anna Gustavsson',
+            imgURL: 'https://i.imgur.com/wfIuhfl.jpg'
+        },
+        {
+            name: 'Julia Lindholm',
+            imgURL: 'https://i.imgur.com/Fci8yao.jpg'
+        },
+        {
+            name: 'Martin Berglund',
+            imgURL: 'https://i.imgur.com/l7sJZwW.jpg'
+        }
+    ]
 
     function randn_bm(min, max, skew) {
         let u = 0, v = 0;
@@ -71,8 +88,8 @@ function OtherTeamView () {
 
         // console.log(`Idx: ${randomSenderIdx} val: ${senders[randomSenderIdx]}`)
 
-        let randomSenderName = otherTeamNames[randomSenderIdx];
-        let randomSenderImgURL = otherTeamURL[randomSenderIdx];
+        let randomSenderName = otherTeamUsers[randomSenderIdx].name;
+        let randomSenderImgURL = otherTeamUsers[randomSenderIdx].imgURL;
 
         for (let i = 0; i < randomWhiteSpaces; i++) {
             msg += invisibleText;
@@ -137,9 +154,9 @@ function OtherTeamView () {
                 <Col>      
                     <div id="userinfo">
                         <b>Motståndarlaget:</b><br/> 
-                        <img src={'https://i.imgur.com/IBlrCCT.jpg'} alt="" /> Axel Hagel
-                        <img src={'https://i.imgur.com/wBeQrMt.jpg'} alt="" /> Elin Rudling
-                        <img src={'https://i.imgur.com/GRSyGWE.jpg'} alt="" /> Niklas Löwbeer
+                        <img src={otherTeamUsers[0].imgURL} alt="" /> {otherTeamUsers[0].name}
+                        <img src={otherTeamUsers[1].imgURL} alt="" /> {otherTeamUsers[1].name}
+                        <img src={otherTeamUsers[2].imgURL} alt="" /> {otherTeamUsers[2].name}
                     </div>   
                 </Col>
             </Row>

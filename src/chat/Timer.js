@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 function Timer({otherChats, handleChange}) {
-    const [limit, setLimit] = useState(120);
+    const [limit, setLimit] = useState(2); //useState(120);
     const [seconds, setSeconds] = useState(0);
-    const [totSeconds, setTotSeconds] = useState(-120);
+    const [totSeconds, setTotSeconds] = useState(0); //useState(-120);
 
     function randn_bm(min, max, skew) {
         let u = 0, v = 0;

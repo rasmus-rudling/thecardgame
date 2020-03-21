@@ -22,6 +22,7 @@ function ChatView({email, resultHandler}) {
     const [name, setName] = useState('');
     const [imgURL, setImgURL] = useState('');
     const [askIfReady, setAskIfReady] = useState(true);
+    const [otherNames, setotherNames] = useState([]);
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(async _usr => {
@@ -35,7 +36,24 @@ function ChatView({email, resultHandler}) {
                     .onSnapshot(async res => {
                         const chats = res.docs.map(_doc => _doc.data());
                         await (
-                            setChats(chats)
+                            setChats(chats),
+                            
+                            chats[0].users.forEach(userEmail => {
+                                
+                                if (userEmail !== email) {
+                                    firebase
+                                        .firestore()
+                                        .collection('users')
+                                        .doc(userEmail)
+                                        .onSnapshot(function(doc) {
+                                            setotherNames(oldArray => {
+                                                let tempArr = [...oldArray]
+                                                tempArr.push(doc.data().name);
+                                                return tempArr
+                                            })
+                                        })
+                                }
+                            })
                         )
                     })
             }
@@ -48,7 +66,7 @@ function ChatView({email, resultHandler}) {
             .onSnapshot(function(doc) {
                 setName(doc.data().name)
                 setImgURL(doc.data().imgURL)
-            });
+            })
     }, []);
     
     const askIfReadyHandler = () => {
@@ -61,9 +79,22 @@ function ChatView({email, resultHandler}) {
     let usersVoted = [];
     let firstMailInCHat;
     let teamReady;
-    
-    console.log('---')
-    console.log(chats[1])
+
+    const myTeamUsers = [
+        {
+            rName: otherNames[0],
+            name: 'My Sjögren',
+            imgURL: 'https://i.imgur.com/N8uazyK.jpg'
+        },
+
+        {
+            rName: otherNames[1],
+            name: 'Kevin Ström',
+            imgURL: 'https://i.imgur.com/6zqOXhR.jpg'
+        }
+    ]
+
+    console.log(myTeamUsers)
 
     chats.filter((_chat, _index) => {
         let bool = false;
@@ -85,6 +116,7 @@ function ChatView({email, resultHandler}) {
                 currentUsers += user
             }
         })
+
 
         console.log(_index)
         teamReady = _chat.teamReady;
@@ -167,11 +199,10 @@ function ChatView({email, resultHandler}) {
             const imgElement = document.createElement('img');
             firstMailInCHat = currentUsers.split(':')[0]
 
-            imgElement.src = _message.senderImgURL
+            
 
             rowElement.className = 'row';
             colElement.className = 'col';
-
             
             if (_message.sender === 'Admin') {
                 const ready = _chat.readyToChoose;
@@ -253,6 +284,7 @@ function ChatView({email, resultHandler}) {
                 colElement.append(messageElement);
                 rowElement.append(colElement);
             } else if (_message.sender === name) { // the users own messges
+                imgElement.src = _message.senderImgURL
                 const messageContainer = document.createElement('div');
                 const nameTimeContainer =  document.createElement('div');
                 
@@ -271,7 +303,14 @@ function ChatView({email, resultHandler}) {
                 const messageContainer = document.createElement('div');
                 const nameTimeContainer =  document.createElement('div');
 
-                nameTimeContainer.innerText = `${_message.timestamp} ${_message.sender}`; 
+                if (myTeamUsers[0].rName === _message.sender) {
+                    imgElement.src = myTeamUsers[0].imgURL;
+                    nameTimeContainer.innerText = `${_message.timestamp} ${myTeamUsers[0].name}`;
+                } else {
+                    imgElement.src = myTeamUsers[1].imgURL;
+                    nameTimeContainer.innerText = `${_message.timestamp} ${myTeamUsers[1].name}`;
+                }
+                 
                 messageElement.innerText = ` ${_message.message}`;
 
                 messageContainer.append(nameTimeContainer);
@@ -285,6 +324,7 @@ function ChatView({email, resultHandler}) {
                 nameTimeContainer.className = 'nameTimeTag';
                 colElement.append(messageContainer)
                 rowElement.append(colElement)
+                console.log(myTeamUsers)
                 
             }     
 
@@ -356,8 +396,6 @@ function ChatView({email, resultHandler}) {
 
     // ---
 
-    var image = "https://img.freepik.com/free-vector/businessman-profile-cartoon_18591-58479.jpg?size=338&ext=jpg";
-    
     let timerContent = null;
 
     if (email === firstMailInCHat && askIfReady) {
@@ -435,15 +473,15 @@ function ChatView({email, resultHandler}) {
                             <Col md={4}>      
                                 <div id="userinfo">
                                     <b>Inloggad som:</b><br/> 
-                                    <img src={image} alt="" /> {name}
+                                    <img src={imgURL} alt="" /> {name}
                                 </div>  
                             </Col>
 
                             <Col md={8}>
                                 <div id="userinfo">
                                     <b>Lagmedlemmar</b><br/> 
-                                    <img src={"https://www.positivelysplendid.com/wp-content/uploads/2013/09/Circle-Crop-Profile-300x300.png"} alt="" /> Emma Bobsson
-                                    <img src={"https://images.squarespace-cdn.com/content/v1/5589a812e4b0248058743f7e/1562001389112-WFLCO7JEU2GDDM9ANYXT/ke17ZwdGBToddI8pDm48kMh3mVmBaCAeGwqCLG3iONRZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PITeQtWPcxF65ANawkK25DREOmFck9peR6QL8AnpRiPJE/LAURA+PROFILE+CIRCLE+NEW.png"} alt="" /> Mary Major
+                                    <img src={myTeamUsers[0].imgURL} alt="" /> {myTeamUsers[0].name}
+                                    <img src={myTeamUsers[1].imgURL} alt="" /> {myTeamUsers[1].name}
                                 </div>
                             </Col>
                         </Row>

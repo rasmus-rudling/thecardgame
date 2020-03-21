@@ -31,7 +31,6 @@ function App() {
     };
 
     function updateEmail(newEmail) {
-        console.log(newEmail, 'raz12')
         setEmail(newEmail)
     }
 
