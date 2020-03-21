@@ -183,3 +183,7 @@ margin-bottom: 20px;
 .hide {
     display: none;
 }
+
+.teamMates {
+    display: inline-block;
+}

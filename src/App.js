@@ -11,7 +11,7 @@ import {
 
 
 function App() {
-    const [email, setEmail] = useState("rrudling@kth.se");
+    const [email, setEmail] = useState("angus@kth.se");
     const [password, setPassword] = useState("");
     const [loginError, setLoginError] = useState('');
     const [finalCard, setFinalCard] = useState('');
