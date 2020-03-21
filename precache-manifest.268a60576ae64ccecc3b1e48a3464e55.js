@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b31cf7b0806bc267810ae6ffe8fd1e2f",
+    "revision": "97a137f09ce58a165678b295b6e5da81",
     "url": "/thecardgame/index.html"
   },
   {
-    "revision": "a264fe6a635f2711217d",
+    "revision": "bac6c6c4f59283bd621d",
     "url": "/thecardgame/static/css/2.de424728.chunk.css"
   },
   {
-    "revision": "2a82d759f3d91bedc883",
-    "url": "/thecardgame/static/css/main.cf49a191.chunk.css"
+    "revision": "d04494825da7e4b01672",
+    "url": "/thecardgame/static/css/main.31e532a4.chunk.css"
   },
   {
-    "revision": "a264fe6a635f2711217d",
-    "url": "/thecardgame/static/js/2.7afa37fb.chunk.js"
+    "revision": "bac6c6c4f59283bd621d",
+    "url": "/thecardgame/static/js/2.13c8e67c.chunk.js"
   },
   {
     "revision": "e7c98ec14a83431558650502bdf0b8bd",
-    "url": "/thecardgame/static/js/2.7afa37fb.chunk.js.LICENSE.txt"
+    "url": "/thecardgame/static/js/2.13c8e67c.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "2a82d759f3d91bedc883",
-    "url": "/thecardgame/static/js/main.b9fd0594.chunk.js"
+    "revision": "d04494825da7e4b01672",
+    "url": "/thecardgame/static/js/main.44ba4398.chunk.js"
   },
   {
     "revision": "5c21a19b5c14615b9e6d",
@@ -32,8 +32,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/thecardgame/static/media/blue_card.db0b65ea.png"
   },
   {
-    "revision": "aa125e658ff5774877993db25e2a2c3f",
-    "url": "/thecardgame/static/media/headerImage.aa125e65.png"
+    "revision": "22c1bb2dcabd33aaf1459def0229e29b",
+    "url": "/thecardgame/static/media/headerImage.22c1bb2d.png"
   },
   {
     "revision": "2abfa2da10d3076ecef3f13d8e3424c8",
