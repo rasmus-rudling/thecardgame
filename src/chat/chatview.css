@@ -68,7 +68,7 @@
   -moz-box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.47);
   box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.47);
 
-  height: 155px;
+  height: 190px;
   font-size: small;
 }
 
@@ -76,6 +76,12 @@
   display: inline-block;
   padding: 10px;
 }
+
+.inline-block div:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+    cursor: pointer;
+}
+
 
 #voteBox img {
   max-width: 40px;
@@ -90,7 +96,8 @@
     margin: 30px;
     color: rgb(105, 23, 23);
     font-size: smaller;
-    }
+    cursor: pointer;
+}
 
 
 /* POP-UP */
@@ -120,4 +127,18 @@ margin-bottom: 20px;
   border-radius: 100px;
   margin: 5px;
   float: left;
+}
+
+.choicesCard {
+    width: 20px;
+    float: left;
+}
+
+.choicesText {
+    margin-top: 10px;
+    float: left;
+}
+
+.hide {
+    display: none;
 }

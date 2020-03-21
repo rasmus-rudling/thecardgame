@@ -57,6 +57,10 @@ function ChatView({email}) {
     let currentUsers = "";
     let usersVoted = [];
     let firstMailInCHat;
+    let teamReady;
+    
+    console.log('---')
+    console.log(chats[1])
 
     chats.filter((_chat, _index) => {
         let bool = false;
@@ -79,10 +83,45 @@ function ChatView({email}) {
             }
         })
 
+        console.log(_index)
+        teamReady = _chat.teamReady;
+
         usersVoted = _chat.usersVoted;
-        console.log(usersVoted, 'usersVoted');
 
         const chatRef = firebase.firestore().collection('chats').doc(currentUsers);
+
+        console.log(teamReady, 'Teamready')
+        // --- Visa valda kort ---
+        if (teamReady) {
+            setTimeout(() => {
+                
+                const chosenRed = _chat.chosenRedCard;
+                const chosenBlue = _chat.chosenBlueCard;
+                console.log(chosenRed)
+                console.log(chosenBlue)
+                const tempCardsContainer = document.createElement('div');
+
+                for (let r = 0; r < chosenRed; r++) {
+                    const redCardElement = document.createElement('img');
+                    redCardElement.src = require('../red_card.png');
+                    redCardElement.className = 'choicesCard';
+                    tempCardsContainer.append(redCardElement)
+                }
+                
+                for (let b = 0; b < chosenBlue; b++) {
+                    const blueCardElement = document.createElement('img');
+                    blueCardElement.src = require('../blue_card.png');
+                    blueCardElement.className = 'choicesCard';
+                    tempCardsContainer.append(blueCardElement)
+                }
+
+                const chosenCardContainer = document.getElementById('chosenCardContainer');
+                chosenCardContainer.innerHTML = '';
+                chosenCardContainer.append(tempCardsContainer);
+            }, 50)
+            
+        }
+        // -----------------------
 
         _chat.messages.forEach(_message => { 
             const messageElement = document.createElement('div');
@@ -102,7 +141,9 @@ function ChatView({email}) {
                 
                 if (ready + notReady === 3) {
                     if (ready >= 2) {
-                        document.getElementById('voteBox').className = '';
+                        chatRef.update({
+                            teamReady: true
+                        })
 
                         if (email === firstMailInCHat) {
                             askIfReadyHandler();
@@ -123,7 +164,6 @@ function ChatView({email}) {
                 messageElement.innerText = ` ${_message.message}`;
                 const buttonElementYes = document.createElement('button');
                 const buttonElementNo = document.createElement('button');
-                // setBtnClass('');
 
                 buttonElementYes.innerText = 'Ja';
                 buttonElementNo.innerText = 'Nej';
@@ -244,19 +284,44 @@ function ChatView({email}) {
         document.getElementById("msg-box").focus();
     }
     // --------------------
+
+    const chooseRedCard = () => {
+        document.getElementById('redCardChooser').className = 'hide';
+        document.getElementById('blueCardChooser').className = 'hide';
+        const dbRef = firebase.firestore().collection('chats').doc(currentUsers)
+        let increment = firebase.firestore.FieldValue.increment(1);
+        
+        dbRef.update({
+            chosenRedCard: increment
+        })
+    }
+
+    const chooseBlueCard = () => {
+        document.getElementById('redCardChooser').className = 'hide';
+        document.getElementById('blueCardChooser').className = 'hide';
+        
+        const dbRef = firebase.firestore().collection('chats').doc(currentUsers)
+        let increment = firebase.firestore.FieldValue.increment(1);
+        
+        dbRef.update({
+            chosenBlueCard: increment
+        })
+    }
+
     /* POP UP CONTENT: */
-let popupcontent = (
-    <div className="popContent">  
-        <div id="header"> SPELGRELER </div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, a nostrum.
-        Dolorem, repellat quidem ut, minima sint vel eveniet quibusdam voluptates
-        delectus doloremque, explicabo tempore dicta adipisci fugit amet dignissimos?
-        <br />
-        <br />
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur sit
-        commodi beatae optio voluptatum sed eius cumque, delectus saepe repudiandae
-        explicabo nemo nam libero ad, doloribus, voluptas rem alias. Vitae?
-        </div>);
+    let popupcontent = (
+        <div className="popContent">  
+            <div id="header"> SPELGRELER </div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, a nostrum.
+            Dolorem, repellat quidem ut, minima sint vel eveniet quibusdam voluptates
+            delectus doloremque, explicabo tempore dicta adipisci fugit amet dignissimos?
+            <br />
+            <br />
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur sit
+            commodi beatae optio voluptatum sed eius cumque, delectus saepe repudiandae
+            explicabo nemo nam libero ad, doloribus, voluptas rem alias. Vitae?
+        </div>
+    );
 
     // ---
 
@@ -298,7 +363,7 @@ let popupcontent = (
                                     email === firstMailInCHat && askIfReady ? 
                                         <TimerReady currentUsers={currentUsers} /> 
                                             : 
-                                        <p></p>
+                                        null
                                 }
                                 <div id="chatMessages">
                                     
@@ -309,7 +374,7 @@ let popupcontent = (
                         <Row>
                             <Col xs={12}>    
                                 <div id="submitRow">
-                                    <Form onSubmit={event => submitMessage(event)}>
+                                    <Form onSubmit={submitMessage}>
                                         <Row>
                                             <Col>    
                                                 <Form.Row >
@@ -339,28 +404,49 @@ let popupcontent = (
 
                 <Col sm={12} lg={6}> {/* 2ND CHAT */}
                     <OtherTeamView />
+                    {
+                        teamReady ? 
+                            <div id='voteBox'>
+                                <Row>
+                                    <Col>
+                                        <h5>VÄLJ KORT HÄR</h5> 
+                                        
+                                        Se till att vara överrens i gruppen innan valet görs.
+                                        Ni väljer kort som ett lag.
+                                    </Col>
+                                </Row>
 
-                    <div id = 'voteBox' className='hide'>
-                        <Row>
-                            <Col>
-                                <h5>VÄLJ KORT HÄR</h5> 
-                                
-                                Se till att vara överrens i gruppen innan valet görs.
-                                Ni väljer kort som ett lag.
-                            </Col>
-                        </Row>
+                                <Row>
+                                    <Col>
+                                        <div className="inline-block" id='redCardChooser'>
+                                            <div onClick={chooseRedCard}>
+                                                <img src={require('../red_card.png')}/>
+                                                <h6 className="inline-block">RÖTT KORT</h6>
+                                            </div>
+                                        </div>
 
-                        <Row>
-                            <Col>
-                                <div className="inline-block" ><img src={require('../red_card.png')}/><h6 className="inline-block">RÖTT KORT</h6></div>
-                                <div className="inline-block" ><img src={require('../blue_card.png')}/><h6 className="inline-block">BLÅTT KORT</h6></div>
-                            </Col>
-                        </Row>
-                    </div>
+                                        <div className="inline-block" id='blueCardChooser'>
+                                            <div onClick={chooseBlueCard}>
+                                                <img src={require('../blue_card.png')}/>
+                                                <h6 className="inline-block">BLÅTT KORT</h6>
+                                            </div>
+                                        </div>
+                                    </Col>
+                                </Row>
 
+                                <Row>
+                                    <Col>
+                                        <p className='choicesText'>Era val: </p>
+                                        <div id='chosenCardContainer'>
+
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </div>
+                        :
+                            null
+                    }
                 </Col>
-
-
             </Row>
 
             <Row>
@@ -372,7 +458,7 @@ let popupcontent = (
                             {popupcontent}
                         </Popup>
 
-                    <Link to="/ny_firebase_chatt">     Log out</Link></div>
+                    <Link to="/ny_firebase_chatt">Log out</Link></div>
                 </Col>
             </Row>
             
