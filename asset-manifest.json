@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.css": "/ny_firebase_chatt/static/css/main.2047729f.chunk.css",
-    "main.js": "/ny_firebase_chatt/static/js/main.85e4557b.chunk.js",
-    "main.js.map": "/ny_firebase_chatt/static/js/main.85e4557b.chunk.js.map",
-    "runtime-main.js": "/ny_firebase_chatt/static/js/runtime-main.c65c30c9.js",
-    "runtime-main.js.map": "/ny_firebase_chatt/static/js/runtime-main.c65c30c9.js.map",
-    "static/css/2.de424728.chunk.css": "/ny_firebase_chatt/static/css/2.de424728.chunk.css",
-    "static/js/2.2e87e0bb.chunk.js": "/ny_firebase_chatt/static/js/2.2e87e0bb.chunk.js",
-    "static/js/2.2e87e0bb.chunk.js.map": "/ny_firebase_chatt/static/js/2.2e87e0bb.chunk.js.map",
-    "index.html": "/ny_firebase_chatt/index.html",
-    "precache-manifest.ce485ea6f3e90500310e914e74cb018b.js": "/ny_firebase_chatt/precache-manifest.ce485ea6f3e90500310e914e74cb018b.js",
-    "service-worker.js": "/ny_firebase_chatt/service-worker.js",
-    "static/css/2.de424728.chunk.css.map": "/ny_firebase_chatt/static/css/2.de424728.chunk.css.map",
-    "static/css/main.2047729f.chunk.css.map": "/ny_firebase_chatt/static/css/main.2047729f.chunk.css.map",
-    "static/js/2.2e87e0bb.chunk.js.LICENSE.txt": "/ny_firebase_chatt/static/js/2.2e87e0bb.chunk.js.LICENSE.txt",
-    "static/media/blue_card.png": "/ny_firebase_chatt/static/media/blue_card.db0b65ea.png",
-    "static/media/headerImage.png": "/ny_firebase_chatt/static/media/headerImage.aa125e65.png",
-    "static/media/red_card.png": "/ny_firebase_chatt/static/media/red_card.2abfa2da.png"
+    "main.css": "/thecardgame/static/css/main.2047729f.chunk.css",
+    "main.js": "/thecardgame/static/js/main.7925b526.chunk.js",
+    "main.js.map": "/thecardgame/static/js/main.7925b526.chunk.js.map",
+    "runtime-main.js": "/thecardgame/static/js/runtime-main.7d58137d.js",
+    "runtime-main.js.map": "/thecardgame/static/js/runtime-main.7d58137d.js.map",
+    "static/css/2.de424728.chunk.css": "/thecardgame/static/css/2.de424728.chunk.css",
+    "static/js/2.901a4eab.chunk.js": "/thecardgame/static/js/2.901a4eab.chunk.js",
+    "static/js/2.901a4eab.chunk.js.map": "/thecardgame/static/js/2.901a4eab.chunk.js.map",
+    "index.html": "/thecardgame/index.html",
+    "precache-manifest.eafd61611697fe25d7daadde58f2ef54.js": "/thecardgame/precache-manifest.eafd61611697fe25d7daadde58f2ef54.js",
+    "service-worker.js": "/thecardgame/service-worker.js",
+    "static/css/2.de424728.chunk.css.map": "/thecardgame/static/css/2.de424728.chunk.css.map",
+    "static/css/main.2047729f.chunk.css.map": "/thecardgame/static/css/main.2047729f.chunk.css.map",
+    "static/js/2.901a4eab.chunk.js.LICENSE.txt": "/thecardgame/static/js/2.901a4eab.chunk.js.LICENSE.txt",
+    "static/media/blue_card.png": "/thecardgame/static/media/blue_card.db0b65ea.png",
+    "static/media/headerImage.png": "/thecardgame/static/media/headerImage.aa125e65.png",
+    "static/media/red_card.png": "/thecardgame/static/media/red_card.2abfa2da.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.c65c30c9.js",
+    "static/js/runtime-main.7d58137d.js",
     "static/css/2.de424728.chunk.css",
-    "static/js/2.2e87e0bb.chunk.js",
+    "static/js/2.901a4eab.chunk.js",
     "static/css/main.2047729f.chunk.css",
-    "static/js/main.85e4557b.chunk.js"
+    "static/js/main.7925b526.chunk.js"
   ]
 }
