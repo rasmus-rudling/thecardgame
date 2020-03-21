@@ -5,7 +5,8 @@
     }
     
 .startContainer #headerimg {
-    max-width: 80%;
+    margin-top: 0;
+    max-width: 100%;
     }
     
 .startContainer #text {
@@ -19,7 +20,6 @@
     background-color: rgba(2, 2, 2, 0.541);
     border-radius: 50px;
     text-align: center;
-    margin-top: 50px;
     padding: 40px;
 
     /* Shadow: */  

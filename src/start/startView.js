@@ -31,7 +31,6 @@ function StartView({email, setEmail, password, setPassword, loginError, setLogin
             <Row>
                 <Col>
                     <div id="text">
-                        Välkommen till The Card Game! Här är reglerna: Lorem ipsum dolor sit amet, no consequat assueverit honestatis vix. Nam an error mundi veritus, quem tractatos at sea. Eos cu soleat graece. Volumus repudiandae pri eu, ad usu veniam propriae assueverit. Mundi primis aperiam an eam, facete omittantur eum at. Eligendi dissentiet concludaturque ne nec, nam et nisl ornatus voluptatibus, ea prompta fabulas pri.
                     </div>  
                 </Col>
             </Row>
@@ -53,7 +52,6 @@ function StartView({email, setEmail, password, setPassword, loginError, setLogin
                                 />
 
                                 <Form.Text className="text-muted">
-                                    Använd samma mejl som du kommunicerat med oss med
                                 </Form.Text>
                             </Form.Group>
 
