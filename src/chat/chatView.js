@@ -10,6 +10,9 @@ import './chat1.css';
 import './chat2.css';
 
 import OtherTeamView from './otherTeamView';
+import reglerShort from './spelreglerS';
+import reglerLong from './spelreglerL';
+
 
 const firebase = require('firebase');
 
@@ -347,14 +350,7 @@ function ChatView({email, resultHandler}) {
     let popupcontent = (
         <div className="popContent">  
             <div id="header"> SPELGRELER </div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, a nostrum.
-            Dolorem, repellat quidem ut, minima sint vel eveniet quibusdam voluptates
-            delectus doloremque, explicabo tempore dicta adipisci fugit amet dignissimos?
-            <br />
-            <br />
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur sit
-            commodi beatae optio voluptatum sed eius cumque, delectus saepe repudiandae
-            explicabo nemo nam libero ad, doloribus, voluptas rem alias. Vitae?
+            {reglerLong}
         </div>
     );
 
@@ -422,7 +418,16 @@ function ChatView({email, resultHandler}) {
                     <img src={require('../headerImage.png')}  alt="THE CARD GAME" id="headerimg"></img>
                 </Col>
             </Row> 
-      
+            <Row>
+
+                <Col>
+                    <div id="text">
+                        {reglerShort}
+                    </div>  
+                </Col>
+            </Row>
+
+
             <Row > {/* ROW FOR THE CHAT WINDOWS */}
                 <Col sm={12} lg={6} >  {/* ACTIVE CHAT */}
                     <div className="chatBox">
@@ -486,6 +491,7 @@ function ChatView({email, resultHandler}) {
 
                 <Col sm={12} lg={6}> {/* 2ND CHAT */}
                     <OtherTeamView />
+
                     {voteBoxContent}
                 </Col>
             </Row>
@@ -499,7 +505,7 @@ function ChatView({email, resultHandler}) {
                             {popupcontent}
                         </Popup>
 
-                    <Link to="/ny_firebase_chatt">Log out</Link></div>
+                    <Link to="/thecardgame">Log out</Link></div>
                 </Col>
             </Row>
         </Container>
