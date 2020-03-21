@@ -12,10 +12,19 @@
   }
 
   .chatContainer #headerimg {
-    max-width: 80%;
+    max-width: 70%;
     margin-bottom: -50px;
+    margin-top: -1.9em;
   }
   
+  .chatContainer #text {
+    color: white;
+    font-size: small;
+    margin-top: -50px;
+    padding:20px;
+    padding-top: 0px;
+    text-shadow: 0px 0px 12px #000000;    
+    }
   
   .chatBox { 
     /* The box containing the whole chat,
@@ -111,8 +120,9 @@
   border-radius: 25px;
   text-align: left;
   float: left;
+  font-size: small;
+  max-width: 100%;
 }
-
 
 .popContent #header {
 color: rgb(0, 0, 0);
@@ -120,6 +130,15 @@ font-size: xx-large;
 margin-bottom: 20px;
 }
 
+.popContent img {
+  border-radius: 0px;
+  max-height: 30px;
+  margin: 2px;
+}
+
+.popup-content {
+  margin: 10px;
+}
 /* OTHER */
 
 .img-element-other {
