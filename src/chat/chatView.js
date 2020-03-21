@@ -13,7 +13,7 @@ import OtherTeamView from './otherTeamView';
 
 const firebase = require('firebase');
 
-function ChatView({email}) {
+function ChatView({email, resultHandler}) {
     const history = useHistory();
     const [chats, setChats] = useState([]);
     const [name, setName] = useState('');
@@ -116,12 +116,46 @@ function ChatView({email}) {
                 }
 
                 const chosenCardContainer = document.getElementById('chosenCardContainer');
-                chosenCardContainer.innerHTML = '';
-                chosenCardContainer.append(tempCardsContainer);
+
+                if (chosenCardContainer !== null) {
+                    chosenCardContainer.innerHTML = '';
+                    chosenCardContainer.append(tempCardsContainer);
+                }
+
             }, 50)
             
         }
         // -----------------------
+
+        if (_chat.chosenBlueCard + _chat.chosenRedCard === 3) {
+            const finalCard = _chat.chosenRedCard >= 2 ? 'redCard' : 'blueCard';
+            const otherTeamCard = _chat.otherTeamFinalCard;
+            let myPoints = -1;
+            let othersPoints = -1;
+
+            if (finalCard === 'redCard' && otherTeamCard === 'redCard') {
+                myPoints = 0;
+                othersPoints = 0;
+            } else if (finalCard === 'redCard' && otherTeamCard === 'blueCard') {
+                myPoints = 100;
+                othersPoints = 0;
+            } else if (finalCard === 'blueCard' && otherTeamCard === 'redCard') {
+                myPoints = 0;
+                othersPoints = 100;
+            } else if (finalCard === 'blueCard' && otherTeamCard === 'blueCard') {
+                myPoints = 50;
+                othersPoints = 50;
+            }
+
+            chatRef.update({
+                teamPoints: myPoints,
+                finalCard: finalCard
+            })
+
+            resultHandler(finalCard, otherTeamCard, myPoints, othersPoints)
+
+            history.push('/result')
+        }
 
         _chat.messages.forEach(_message => { 
             const messageElement = document.createElement('div');
@@ -134,6 +168,7 @@ function ChatView({email}) {
 
             rowElement.className = 'row';
             colElement.className = 'col';
+
             
             if (_message.sender === 'Admin') {
                 const ready = _chat.readyToChoose;

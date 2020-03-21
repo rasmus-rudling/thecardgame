@@ -1,0 +1,40 @@
+.myTeam {
+    text-align: center;
+    border-right: 2px solid white;
+}
+
+.otherTeam {
+    text-align: center;
+}
+
+.row {
+    height: 100vh;
+    padding: 0px;
+    margin: 0px;
+}
+
+.row img {
+    height: 500px;
+}
+
+.row h1 {
+    margin-top: 20px;
+    color: white;
+}
+
+.row p {
+    color: white;
+    font-size: 30px;
+}
+
+.container {
+    padding: 0px;
+}
+
+.redText {
+    color: red;
+}
+
+.blueText {
+    color: #226be2;
+}
