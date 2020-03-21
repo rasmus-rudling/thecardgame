@@ -24,7 +24,7 @@ function StartView({email, setEmail, password, setPassword, loginError, setLogin
         <Container className="startContainer">
             <Row>
                 <Col>
-                    <img src={require('../headerTextCards.png')}  alt="THE CARD GAME" id="headerimg"></img>
+                    <img src={require('../headerImage.png')}  alt="THE CARD GAME" id="headerimg"></img>
                 </Col>
             </Row>
 
