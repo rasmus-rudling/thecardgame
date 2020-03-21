@@ -301,9 +301,9 @@ function ChatView({email, resultHandler}) {
     
                     // --------------------------
                     // --- FAKE:A MEDDELANDEN ---
-                    console.log(textMessage.toUpperCase(), 1)
-                    console.log(myTeamUsers[1].name.split(" ")[0].toUpperCase(), 2)
-                    console.log('')
+                    // console.log(textMessage.toUpperCase(), 1)
+                    // console.log(myTeamUsers[1].name.split(" ")[0].toUpperCase(), 2)
+                    // console.log('')
 
                     if (name === myTeamUsers[0].rName) {
                         let searchMask = myTeamUsers[0].name.split(" ")[0];
@@ -311,22 +311,61 @@ function ChatView({email, resultHandler}) {
                         let replaceMask = myTeamUsers[0].rName.split(" ")[0];
                         
                         textMessage = textMessage.replace(regEx, replaceMask);
-                    } 
-                    
-                    else if (name === myTeamUsers[1].rName) {
+
+                        if (_message.sender === myTeamUsers[1].rName) {
+                            let searchMask = myTeamUsers[1].rName.split(" ")[0];
+                            let regEx = new RegExp(searchMask, "ig");
+                            let replaceMask = myTeamUsers[1].name.split(" ")[0];
+                            
+                            textMessage = textMessage.replace(regEx, replaceMask);
+                        } else if (_message.sender === myTeamUsers[2].rName) {
+                            let searchMask = myTeamUsers[2].rName.split(" ")[0];
+                            let regEx = new RegExp(searchMask, "ig");
+                            let replaceMask = myTeamUsers[2].name.split(" ")[0];
+                            
+                            textMessage = textMessage.replace(regEx, replaceMask);
+                        }
+
+                    } else if (name === myTeamUsers[1].rName) {
                         let searchMask = myTeamUsers[1].name.split(" ")[0];
                         let regEx = new RegExp(searchMask, "ig");
                         let replaceMask = myTeamUsers[1].rName.split(" ")[0];
                         
                         textMessage = textMessage.replace(regEx, replaceMask);
-                    } 
-                    
-                    else if (name === myTeamUsers[2].rName) {
+
+                        if (_message.sender === myTeamUsers[0].rName) {
+                            let searchMask = myTeamUsers[0].rName.split(" ")[0];
+                            let regEx = new RegExp(searchMask, "ig");
+                            let replaceMask = myTeamUsers[0].name.split(" ")[0];
+                            
+                            textMessage = textMessage.replace(regEx, replaceMask);
+                        } else if (_message.sender === myTeamUsers[2].rName) {
+                            let searchMask = myTeamUsers[2].rName.split(" ")[0];
+                            let regEx = new RegExp(searchMask, "ig");
+                            let replaceMask = myTeamUsers[2].name.split(" ")[0];
+                            
+                            textMessage = textMessage.replace(regEx, replaceMask);
+                        }
+                    } else if (name === myTeamUsers[2].rName) {
                         let searchMask = myTeamUsers[2].name.split(" ")[0];
                         let regEx = new RegExp(searchMask, "ig");
                         let replaceMask = myTeamUsers[2].rName.split(" ")[0];
                         
                         textMessage = textMessage.replace(regEx, replaceMask);
+
+                        if (_message.sender === myTeamUsers[0].rName) {
+                            let searchMask = myTeamUsers[0].rName.split(" ")[0];
+                            let regEx = new RegExp(searchMask, "ig");
+                            let replaceMask = myTeamUsers[0].name.split(" ")[0];
+                            
+                            textMessage = textMessage.replace(regEx, replaceMask);
+                        } else if (_message.sender === myTeamUsers[1].rName) {
+                            let searchMask = myTeamUsers[1].rName.split(" ")[0];
+                            let regEx = new RegExp(searchMask, "ig");
+                            let replaceMask = myTeamUsers[1].name.split(" ")[0];
+                            
+                            textMessage = textMessage.replace(regEx, replaceMask);
+                        }
                     }
     
                     if (myTeamUsers[0].rName === _message.sender) {
@@ -339,7 +378,6 @@ function ChatView({email, resultHandler}) {
                         imgElement.src = myTeamUsers[2].imgURL;
                         nameTimeContainer.innerText = `${_message.timestamp} ${myTeamUsers[2].name}`;
                     }
-
                     // --------------------------
                      
                     messageElement.innerText = textMessage;
