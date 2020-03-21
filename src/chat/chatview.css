@@ -98,11 +98,34 @@
 
 /* BOTTOM ROW */ 
 
-#logout {
+
+#bottomRow {
     margin: 30px;
-    color: rgb(105, 23, 23);
     font-size: smaller;
     cursor: pointer;
+    display: block;
+}
+
+#bottomRow #regler {
+  color: rgb(148, 24, 24);
+  display:inline-block;
+  position: relative; 
+  padding-right: 5px;
+  font-size: small;
+}
+
+#bottomRow #regler:hover {
+  text-decoration: underline;
+  color: rgb(114, 16, 16);
+
+}
+
+#bottomRow #logout {
+  display:inline-block;
+  position: relative; 
+  padding-left: 5px;
+  font-size: small;
+
 }
 
 

@@ -498,14 +498,17 @@ function ChatView({email, resultHandler}) {
 
             <Row>
                 <Col>    
-                    <div id="logout">
-                        {/* POP-UP WINDOW FÖR SPELREGLER */}
-
-                        <Popup trigger={<u>Spelregler</u>} modal>
-                            {popupcontent}
-                        </Popup>
-
-                    <Link to="/thecardgame">Log out</Link></div>
+                    <div id="bottomRow">
+                        <div id="regler">
+                            {/* POP-UP WINDOW FÖR SPELREGLER */}
+                            <Popup trigger={<div>Spelregler</div>} modal>
+                                {popupcontent}
+                            </Popup>
+                        </div>
+                        <div id="logout">
+                            <Link to="/thecardgame">Logga ut</Link>
+                        </div>
+                    </div>
                 </Col>
             </Row>
         </Container>

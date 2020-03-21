@@ -16,6 +16,26 @@
     padding-bottom: 10px;
   }
 
+  .chatBox #chatMessages::-webkit-scrollbar {
+    /* width of scroll*/
+    width: 0.8em; 
+  }
+.chatBox #chatMessages::-webkit-scrollbar-track {
+    /* inner shadow på scrollbar*/
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.529);
+    -moz-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.529);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.529);
+  }
+
+.chatBox #chatMessages::-webkit-scrollbar-thumb {
+  background-color: rgb(106, 106, 106);
+  outline: 1px solid slategrey;
+  border-radius: 15px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.529);
+  -moz-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.529);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.529);
+}
+
 /* MY MESSAGES */
 
 .chatBox .myMessagesBox { 
