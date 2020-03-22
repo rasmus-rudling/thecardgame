@@ -260,15 +260,15 @@ function ChatView({email, resultHandler}) {
                 // --- Visa inloggade användare ---
                 console.log(`loggedInUsers: ${loggedInUsers}`)
                 if (loggedInUsers.includes(myTeamUsers[0].mail)) {
-                    setUser1Online('🌐');
+                    setUser1Online('https://i.imgur.com/LWKMROF.png');
                 } 
                 
                 if (loggedInUsers.includes(myTeamUsers[1].mail)) {
-                    setUser2Online('🌐');
+                    setUser2Online('https://i.imgur.com/LWKMROF.png');
                 }
                 
                 if (loggedInUsers.includes(myTeamUsers[2].mail)) {
-                    setUser3Online('🌐');
+                    setUser3Online('https://i.imgur.com/LWKMROF.png');
                 }
                 
                 // --- Visa valda kort ---
@@ -712,7 +712,8 @@ function ChatView({email, resultHandler}) {
                                             </div>
                                         :
                                             <div>
-                                                <img src={imgURL} alt="" /> {name}🌐
+                                                <img src={imgURL} alt="" /> {name} <img src={require('../bilder/onlineDot.png')}/>
+
                                             </div>
                                     }
                                     
@@ -726,21 +727,21 @@ function ChatView({email, resultHandler}) {
                                     {
                                         name !== myTeamUsers[0].rName ? 
                                             <div className='teamMates'>
-                                                <img src={myTeamUsers[0].imgURL} alt="" /> {myTeamUsers[0].name} {user1Online}
+                                                <img src={myTeamUsers[0].imgURL} alt="" /> {myTeamUsers[0].name} <img src={user1Online} alt="" />
                                             </div>
                                         : null
                                     }
                                     {
                                         name !== myTeamUsers[1].rName ? 
                                             <div className='teamMates'>
-                                                <img src={myTeamUsers[1].imgURL} alt="" /> {myTeamUsers[1].name} {user2Online}
+                                                <img src={myTeamUsers[1].imgURL} alt="" /> {myTeamUsers[1].name} <img src={user2Online} alt="" />
                                             </div>
                                         : null
                                     }
                                     {
                                         name !== myTeamUsers[2].rName ? 
                                             <div className='teamMates'>
-                                                <img src={myTeamUsers[2].imgURL} alt="" /> {myTeamUsers[2].name} {user3Online}
+                                                <img src={myTeamUsers[2].imgURL} alt="" /> {myTeamUsers[2].name} <img src={user3Online} alt="" />
                                             </div>
                                         : null
                                     }
