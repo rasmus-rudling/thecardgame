@@ -375,7 +375,10 @@ function ChatView({email, resultHandler}) {
                         const buttonElementNo = document.createElement('button');
         
                         buttonElementYes.innerText = 'Ja';
+                        buttonElementYes.className = "voteButton"
                         buttonElementNo.innerText = 'Nej';
+                        buttonElementNo.className = "voteButton"
+
         
                         if (usersVoted.includes(email)) {
                             buttonElementYes.className = 'hide';
