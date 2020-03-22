@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {useHistory} from 'react-router-dom';
 import {Container, Row, Col, Form, Button} from 'react-bootstrap';
 import './startView.css'
@@ -7,6 +7,7 @@ const firebase = require('firebase');
 
 function StartView({email, setEmail, password, setPassword, loginError, setLoginError}) {
     const history = useHistory();
+    const [errorMessage, setErrorMessage] = useState('');
 
     function submitLogin(event) {
         event.preventDefault();
@@ -16,11 +17,11 @@ function StartView({email, setEmail, password, setPassword, loginError, setLogin
         
         }, error => {
             if (error.message === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
-                console.log('Fel mailadress!')
+                setErrorMessage('Fel mailadress!');
             } else if (error.message === 'The password is invalid or the user does not have a password.') {
-                console.log('Fel lösenord!')
+                setErrorMessage('Fel lösenord!')
             } else {
-                console.log(error)
+                setErrorMessage(error.message)
             }
             
         });
@@ -69,10 +70,17 @@ function StartView({email, setEmail, password, setPassword, loginError, setLogin
                                     placeholder="Password" 
                                     onChange = {event => setPassword(event.target.value)}/>
                             </Form.Group>
+                            
+                            <Form.Group>
+                                <Form.Label className='redText'>{errorMessage}</Form.Label>
+                            </Form.Group>
 
-                            <Button type="submit">
-                                Logga in
-                            </Button>
+                            <Form.Group>
+                                <Button type="submit">
+                                    Logga in
+                                </Button>
+                            </Form.Group>
+                            
                         </Form>
                     </div>
                 </Col>
