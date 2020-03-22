@@ -24,8 +24,8 @@ function ChatView({email, resultHandler}) {
     const [askIfReady, setAskIfReady] = useState(true);
     const [otherPersons, setotherPersons] = useState(['','','']);
 
-    const anonymousMode = true;
-    const prankMode = false;
+    const anonymousMode = false;
+    const prankMode = true;
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(async _usr => {
@@ -426,7 +426,9 @@ function ChatView({email, resultHandler}) {
                                 textMessage = textMessage.replace(regEx, replaceMask);
                             }
                         }
+                    }
 
+                    if (prankMode || anonymousMode) {
                         if (myTeamUsers[0].rName === _message.sender) {
                             imgElement.src = myTeamUsers[0].imgURL;
                             nameTimeContainer.innerText = `${_message.timestamp} ${myTeamUsers[0].name}`;
@@ -441,9 +443,7 @@ function ChatView({email, resultHandler}) {
                         imgElement.src = _message.senderImgURL;
                         nameTimeContainer.innerText = `${_message.timestamp} ${_message.sender}`;
                     }
-                    
-                    // --------------------------
-                     
+                                         
                     messageElement.innerText = textMessage;
     
                     messageContainer.append(nameTimeContainer);
