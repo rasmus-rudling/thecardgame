@@ -332,7 +332,8 @@ function ChatView({email, resultHandler}) {
                         let replaceMask = myTeamUsers[1].rName.split(" ")[0];
                         
                         textMessage = textMessage.replace(regEx, replaceMask);
-
+                        
+                        
                         if (_message.sender === myTeamUsers[0].rName) {
                             let searchMask = myTeamUsers[0].rName.split(" ")[0];
                             let regEx = new RegExp(searchMask, "ig");
