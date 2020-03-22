@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/thecardgame/static/css/main.d3ba437d.chunk.css",
-    "main.js": "/thecardgame/static/js/main.0bc24ffa.chunk.js",
-    "main.js.map": "/thecardgame/static/js/main.0bc24ffa.chunk.js.map",
+    "main.js": "/thecardgame/static/js/main.a700a891.chunk.js",
+    "main.js.map": "/thecardgame/static/js/main.a700a891.chunk.js.map",
     "runtime-main.js": "/thecardgame/static/js/runtime-main.7d58137d.js",
     "runtime-main.js.map": "/thecardgame/static/js/runtime-main.7d58137d.js.map",
     "static/css/2.de424728.chunk.css": "/thecardgame/static/css/2.de424728.chunk.css",
-    "static/js/2.8a743148.chunk.js": "/thecardgame/static/js/2.8a743148.chunk.js",
-    "static/js/2.8a743148.chunk.js.map": "/thecardgame/static/js/2.8a743148.chunk.js.map",
+    "static/js/2.a27e47e6.chunk.js": "/thecardgame/static/js/2.a27e47e6.chunk.js",
+    "static/js/2.a27e47e6.chunk.js.map": "/thecardgame/static/js/2.a27e47e6.chunk.js.map",
     "index.html": "/thecardgame/index.html",
-    "precache-manifest.533a4d4823325ea54fb3d767110ab63d.js": "/thecardgame/precache-manifest.533a4d4823325ea54fb3d767110ab63d.js",
+    "precache-manifest.8cfee24e7536997f03a84b5f17ccbfc0.js": "/thecardgame/precache-manifest.8cfee24e7536997f03a84b5f17ccbfc0.js",
     "service-worker.js": "/thecardgame/service-worker.js",
     "static/css/2.de424728.chunk.css.map": "/thecardgame/static/css/2.de424728.chunk.css.map",
     "static/css/main.d3ba437d.chunk.css.map": "/thecardgame/static/css/main.d3ba437d.chunk.css.map",
-    "static/js/2.8a743148.chunk.js.LICENSE.txt": "/thecardgame/static/js/2.8a743148.chunk.js.LICENSE.txt",
+    "static/js/2.a27e47e6.chunk.js.LICENSE.txt": "/thecardgame/static/js/2.a27e47e6.chunk.js.LICENSE.txt",
     "static/media/blue_card.png": "/thecardgame/static/media/blue_card.db0b65ea.png",
     "static/media/headerImage.png": "/thecardgame/static/media/headerImage.22c1bb2d.png",
     "static/media/red_card.png": "/thecardgame/static/media/red_card.2abfa2da.png"
@@ -21,8 +21,8 @@
   "entrypoints": [
     "static/js/runtime-main.7d58137d.js",
     "static/css/2.de424728.chunk.css",
-    "static/js/2.8a743148.chunk.js",
+    "static/js/2.a27e47e6.chunk.js",
     "static/css/main.d3ba437d.chunk.css",
-    "static/js/main.0bc24ffa.chunk.js"
+    "static/js/main.a700a891.chunk.js"
   ]
 }
