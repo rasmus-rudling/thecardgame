@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/thecardgame/static/css/main.6de7398a.chunk.css",
-    "main.js": "/thecardgame/static/js/main.ea6da742.chunk.js",
-    "main.js.map": "/thecardgame/static/js/main.ea6da742.chunk.js.map",
+    "main.css": "/thecardgame/static/css/main.f22e15b2.chunk.css",
+    "main.js": "/thecardgame/static/js/main.4cae23b4.chunk.js",
+    "main.js.map": "/thecardgame/static/js/main.4cae23b4.chunk.js.map",
     "runtime-main.js": "/thecardgame/static/js/runtime-main.7d58137d.js",
     "runtime-main.js.map": "/thecardgame/static/js/runtime-main.7d58137d.js.map",
     "static/css/2.de424728.chunk.css": "/thecardgame/static/css/2.de424728.chunk.css",
     "static/js/2.490391ae.chunk.js": "/thecardgame/static/js/2.490391ae.chunk.js",
     "static/js/2.490391ae.chunk.js.map": "/thecardgame/static/js/2.490391ae.chunk.js.map",
     "index.html": "/thecardgame/index.html",
-    "precache-manifest.ae4855ebfb1062963b1c3e683d503f07.js": "/thecardgame/precache-manifest.ae4855ebfb1062963b1c3e683d503f07.js",
+    "precache-manifest.bb5a6b69e1e8f3d47b858062754799df.js": "/thecardgame/precache-manifest.bb5a6b69e1e8f3d47b858062754799df.js",
     "service-worker.js": "/thecardgame/service-worker.js",
     "static/css/2.de424728.chunk.css.map": "/thecardgame/static/css/2.de424728.chunk.css.map",
-    "static/css/main.6de7398a.chunk.css.map": "/thecardgame/static/css/main.6de7398a.chunk.css.map",
+    "static/css/main.f22e15b2.chunk.css.map": "/thecardgame/static/css/main.f22e15b2.chunk.css.map",
     "static/js/2.490391ae.chunk.js.LICENSE.txt": "/thecardgame/static/js/2.490391ae.chunk.js.LICENSE.txt",
     "static/media/blue_card.png": "/thecardgame/static/media/blue_card.db0b65ea.png",
     "static/media/headerImage.png": "/thecardgame/static/media/headerImage.22c1bb2d.png",
@@ -22,7 +22,7 @@
     "static/js/runtime-main.7d58137d.js",
     "static/css/2.de424728.chunk.css",
     "static/js/2.490391ae.chunk.js",
-    "static/css/main.6de7398a.chunk.css",
-    "static/js/main.ea6da742.chunk.js"
+    "static/css/main.f22e15b2.chunk.css",
+    "static/js/main.4cae23b4.chunk.js"
   ]
 }
