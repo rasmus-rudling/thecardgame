@@ -22,7 +22,10 @@ function ChatView({email, resultHandler}) {
     const [name, setName] = useState('');
     const [imgURL, setImgURL] = useState('');
     const [askIfReady, setAskIfReady] = useState(true);
-    const [otherNames, setotherNames] = useState(['','','']);
+    const [otherPersons, setotherPersons] = useState(['','','']);
+
+    const anonymousMode = true;
+    const prankMode = false;
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(async _usr => {
@@ -44,9 +47,12 @@ function ChatView({email, resultHandler}) {
                                     .collection('users')
                                     .doc(userEmail)
                                     .onSnapshot(function(doc) {
-                                        setotherNames(oldArray => {
+                                        setotherPersons(oldArray => {
                                             let tempArr = [...oldArray];
-                                            tempArr[index] = doc.data().name;
+                                            tempArr[index] = {
+                                                name: doc.data().name,
+                                                imgURL: doc.data().imgURL
+                                            };
                                             return tempArr;
                                         })
                                     })
@@ -77,27 +83,72 @@ function ChatView({email, resultHandler}) {
     let firstMailInCHat;
     let teamReady;
 
-    const myTeamUsers = [
-        {
-            rName: otherNames[0],
-            name: 'My Sjögren',
-            imgURL: 'https://i.imgur.com/N8uazyK.jpg'
-        },
-        {
-            rName: otherNames[1],
-            name: 'Kevin Ström',
-            imgURL: 'https://i.imgur.com/6zqOXhR.jpg'
-        },
-        {
-            rName: otherNames[2],
-            name: 'Martin Berglund',
-            imgURL: 'https://i.imgur.com/l7sJZwW.jpg'
-        },
-        // En fjärde???
+    let myTeamUsers = [];
 
-    ]
-
+    if (anonymousMode) {
+        myTeamUsers = [
+            {
+                rName: otherPersons[0].name,
+                name: 'Anonym Räv',
+                imgURL: 'https://i.imgur.com/Uk0fWiL.jpg'
+            },
+            {
+                rName: otherPersons[1].name,
+                name: 'Anonym Elefant',
+                imgURL: 'https://i.imgur.com/DG31vdf.jpg'
+            },
+            {
+                rName: otherPersons[2].name,
+                name: 'Anonym Koala',
+                imgURL: 'https://i.imgur.com/VvUs6sM.jpg'
+            },
+            // En fjärde???
+        ]
+    } else if (prankMode) {
+        myTeamUsers = [
+            {
+                rName: otherPersons[0].name,
+                name: 'My Sjögren',
+                imgURL: 'https://i.imgur.com/N8uazyK.jpg'
+            },
+            {
+                rName: otherPersons[1].name,
+                name: 'Kevin Ström',
+                imgURL: 'https://i.imgur.com/6zqOXhR.jpg'
+            },
+            {
+                rName: otherPersons[2].name,
+                name: 'Martin Berglund',
+                imgURL: 'https://i.imgur.com/l7sJZwW.jpg'
+            },
+            // En fjärde???
+        ]
+    } else {
+        myTeamUsers = [
+            {
+                rName: otherPersons[0].name,
+                name: otherPersons[0].name,
+                imgURL: otherPersons[0].imgURL
+            },
+            {
+                rName: otherPersons[1].name,
+                name: otherPersons[1].name,
+                imgURL: otherPersons[1].imgURL
+            },
+            {
+                rName: otherPersons[2].name,
+                name: otherPersons[2].name,
+                imgURL: otherPersons[2].imgURL
+            },
+            // En fjärde???
+        ]
+    }
     
+
+    const myIndex = myTeamUsers.findIndex(userObject => {
+        return userObject.rName === name
+    })
+
     useEffect(() => {
         chats.filter((_chat, _index) => {
             let bool = false;
@@ -279,11 +330,18 @@ function ChatView({email, resultHandler}) {
                     colElement.append(messageElement);
                     rowElement.append(colElement);
                 } else if (_message.sender === name) { // the users own messges
-                    imgElement.src = _message.senderImgURL
+                    
                     const messageContainer = document.createElement('div');
                     const nameTimeContainer =  document.createElement('div');
                     
-                    nameTimeContainer.innerText =  `${_message.timestamp} ${_message.sender}` 
+                    if (anonymousMode && myTeamUsers[myIndex] !== undefined) {
+                        imgElement.src = myTeamUsers[myIndex].imgURL;
+                        nameTimeContainer.innerText =  `${_message.timestamp} ${myTeamUsers[myIndex].name}`; 
+                    } else {
+                        nameTimeContainer.innerText =  `${_message.timestamp} ${_message.sender}`;
+                        imgElement.src = _message.senderImgURL;
+                    }
+                    
                     messageElement.innerText = ` ${_message.message}`;
                     messageContainer.append(nameTimeContainer)
                     messageContainer.append(messageElement);
@@ -304,81 +362,86 @@ function ChatView({email, resultHandler}) {
                     // console.log(textMessage.toUpperCase(), 1)
                     // console.log(myTeamUsers[1].name.split(" ")[0].toUpperCase(), 2)
                     // console.log('')
-
-                    if (name === myTeamUsers[0].rName) {
-                        let searchMask = myTeamUsers[0].name.split(" ")[0];
-                        let regEx = new RegExp(searchMask, "ig");
-                        let replaceMask = myTeamUsers[0].rName.split(" ")[0];
-                        
-                        textMessage = textMessage.replace(regEx, replaceMask);
-
-                        if (_message.sender === myTeamUsers[1].rName) {
-                            let searchMask = myTeamUsers[1].rName.split(" ")[0];
+                    if (prankMode) {
+                        if (name === myTeamUsers[0].rName) {
+                            let searchMask = myTeamUsers[0].name.split(" ")[0];
                             let regEx = new RegExp(searchMask, "ig");
-                            let replaceMask = myTeamUsers[1].name.split(" ")[0];
+                            let replaceMask = myTeamUsers[0].rName.split(" ")[0];
                             
                             textMessage = textMessage.replace(regEx, replaceMask);
-                        } else if (_message.sender === myTeamUsers[2].rName) {
-                            let searchMask = myTeamUsers[2].rName.split(" ")[0];
-                            let regEx = new RegExp(searchMask, "ig");
-                            let replaceMask = myTeamUsers[2].name.split(" ")[0];
-                            
-                            textMessage = textMessage.replace(regEx, replaceMask);
-                        }
-
-                    } else if (name === myTeamUsers[1].rName) {
-                        let searchMask = myTeamUsers[1].name.split(" ")[0];
-                        let regEx = new RegExp(searchMask, "ig");
-                        let replaceMask = myTeamUsers[1].rName.split(" ")[0];
-                        
-                        textMessage = textMessage.replace(regEx, replaceMask);
-                        
-                        
-                        if (_message.sender === myTeamUsers[0].rName) {
-                            let searchMask = myTeamUsers[0].rName.split(" ")[0];
-                            let regEx = new RegExp(searchMask, "ig");
-                            let replaceMask = myTeamUsers[0].name.split(" ")[0];
-                            
-                            textMessage = textMessage.replace(regEx, replaceMask);
-                        } else if (_message.sender === myTeamUsers[2].rName) {
-                            let searchMask = myTeamUsers[2].rName.split(" ")[0];
-                            let regEx = new RegExp(searchMask, "ig");
-                            let replaceMask = myTeamUsers[2].name.split(" ")[0];
-                            
-                            textMessage = textMessage.replace(regEx, replaceMask);
-                        }
-                    } else if (name === myTeamUsers[2].rName) {
-                        let searchMask = myTeamUsers[2].name.split(" ")[0];
-                        let regEx = new RegExp(searchMask, "ig");
-                        let replaceMask = myTeamUsers[2].rName.split(" ")[0];
-                        
-                        textMessage = textMessage.replace(regEx, replaceMask);
-
-                        if (_message.sender === myTeamUsers[0].rName) {
-                            let searchMask = myTeamUsers[0].rName.split(" ")[0];
-                            let regEx = new RegExp(searchMask, "ig");
-                            let replaceMask = myTeamUsers[0].name.split(" ")[0];
-                            
-                            textMessage = textMessage.replace(regEx, replaceMask);
-                        } else if (_message.sender === myTeamUsers[1].rName) {
-                            let searchMask = myTeamUsers[1].rName.split(" ")[0];
-                            let regEx = new RegExp(searchMask, "ig");
-                            let replaceMask = myTeamUsers[1].name.split(" ")[0];
-                            
-                            textMessage = textMessage.replace(regEx, replaceMask);
-                        }
-                    }
     
-                    if (myTeamUsers[0].rName === _message.sender) {
-                        imgElement.src = myTeamUsers[0].imgURL;
-                        nameTimeContainer.innerText = `${_message.timestamp} ${myTeamUsers[0].name}`;
-                    } else if (myTeamUsers[1].rName === _message.sender) {
-                        imgElement.src = myTeamUsers[1].imgURL;
-                        nameTimeContainer.innerText = `${_message.timestamp} ${myTeamUsers[1].name}`;
-                    } else if (myTeamUsers[2].rName === _message.sender) {
-                        imgElement.src = myTeamUsers[2].imgURL;
-                        nameTimeContainer.innerText = `${_message.timestamp} ${myTeamUsers[2].name}`;
+                            if (_message.sender === myTeamUsers[1].rName) {
+                                let searchMask = myTeamUsers[1].rName.split(" ")[0];
+                                let regEx = new RegExp(searchMask, "ig");
+                                let replaceMask = myTeamUsers[1].name.split(" ")[0];
+                                
+                                textMessage = textMessage.replace(regEx, replaceMask);
+                            } else if (_message.sender === myTeamUsers[2].rName) {
+                                let searchMask = myTeamUsers[2].rName.split(" ")[0];
+                                let regEx = new RegExp(searchMask, "ig");
+                                let replaceMask = myTeamUsers[2].name.split(" ")[0];
+                                
+                                textMessage = textMessage.replace(regEx, replaceMask);
+                            }
+    
+                        } else if (name === myTeamUsers[1].rName) {
+                            let searchMask = myTeamUsers[1].name.split(" ")[0];
+                            let regEx = new RegExp(searchMask, "ig");
+                            let replaceMask = myTeamUsers[1].rName.split(" ")[0];
+                            
+                            textMessage = textMessage.replace(regEx, replaceMask);
+                            
+                            
+                            if (_message.sender === myTeamUsers[0].rName) {
+                                let searchMask = myTeamUsers[0].rName.split(" ")[0];
+                                let regEx = new RegExp(searchMask, "ig");
+                                let replaceMask = myTeamUsers[0].name.split(" ")[0];
+                                
+                                textMessage = textMessage.replace(regEx, replaceMask);
+                            } else if (_message.sender === myTeamUsers[2].rName) {
+                                let searchMask = myTeamUsers[2].rName.split(" ")[0];
+                                let regEx = new RegExp(searchMask, "ig");
+                                let replaceMask = myTeamUsers[2].name.split(" ")[0];
+                                
+                                textMessage = textMessage.replace(regEx, replaceMask);
+                            }
+                        } else if (name === myTeamUsers[2].rName) {
+                            let searchMask = myTeamUsers[2].name.split(" ")[0];
+                            let regEx = new RegExp(searchMask, "ig");
+                            let replaceMask = myTeamUsers[2].rName.split(" ")[0];
+                            
+                            textMessage = textMessage.replace(regEx, replaceMask);
+    
+                            if (_message.sender === myTeamUsers[0].rName) {
+                                let searchMask = myTeamUsers[0].rName.split(" ")[0];
+                                let regEx = new RegExp(searchMask, "ig");
+                                let replaceMask = myTeamUsers[0].name.split(" ")[0];
+                                
+                                textMessage = textMessage.replace(regEx, replaceMask);
+                            } else if (_message.sender === myTeamUsers[1].rName) {
+                                let searchMask = myTeamUsers[1].rName.split(" ")[0];
+                                let regEx = new RegExp(searchMask, "ig");
+                                let replaceMask = myTeamUsers[1].name.split(" ")[0];
+                                
+                                textMessage = textMessage.replace(regEx, replaceMask);
+                            }
+                        }
+
+                        if (myTeamUsers[0].rName === _message.sender) {
+                            imgElement.src = myTeamUsers[0].imgURL;
+                            nameTimeContainer.innerText = `${_message.timestamp} ${myTeamUsers[0].name}`;
+                        } else if (myTeamUsers[1].rName === _message.sender) {
+                            imgElement.src = myTeamUsers[1].imgURL;
+                            nameTimeContainer.innerText = `${_message.timestamp} ${myTeamUsers[1].name}`;
+                        } else if (myTeamUsers[2].rName === _message.sender) {
+                            imgElement.src = myTeamUsers[2].imgURL;
+                            nameTimeContainer.innerText = `${_message.timestamp} ${myTeamUsers[2].name}`;
+                        }
+                    } else {
+                        imgElement.src = _message.senderImgURL;
+                        nameTimeContainer.innerText = `${_message.timestamp} ${_message.sender}`;
                     }
+                    
                     // --------------------------
                      
                     messageElement.innerText = textMessage;
@@ -544,7 +607,16 @@ function ChatView({email, resultHandler}) {
                             <Col md={4}>      
                                 <div id="userinfo">
                                     <b>Inloggad som:</b><br/> 
-                                    <img src={imgURL} alt="" /> {name}
+                                    {
+                                        anonymousMode && myTeamUsers[myIndex] !== undefined ?
+                                            <div>
+                                                <img src={myTeamUsers[myIndex].imgURL} /> {myTeamUsers[myIndex].name}
+                                            </div>
+                                        :
+                                            <div>
+                                                <img src={imgURL} alt="" /> {name}
+                                            </div>
+                                    }
                                 </div>  
                             </Col>
 
