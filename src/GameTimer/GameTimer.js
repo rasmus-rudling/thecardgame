@@ -19,13 +19,13 @@ const GameTimer = (props) => {
             props.increaseTimeHandler(60);
             setLastMinute(true);
             props.lockChatHandler();
-        } else {
+        } else if (props.startTimer) {
             setTimeout(() => {
                 props.increaseTimeHandler(props.seconds - 1)
             }, 1000)
         }
         
-    }, [props.seconds])
+    }, [props.seconds, props.startTimer])
 
     return (
         <div id='GameTimerContainer' className={classes.timeText}>

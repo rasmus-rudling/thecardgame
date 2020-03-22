@@ -33,6 +33,7 @@ function ChatView({email, resultHandler}) {
     const [user1Online, setUser1Online] = useState('');
     const [user2Online, setUser2Online] = useState('');
     const [user3Online, setUser3Online] = useState('');
+    const [startTimer, setStartTimer] = useState(false);
 
     const anonymousMode = true;
     const prankMode = false;
@@ -145,7 +146,6 @@ function ChatView({email, resultHandler}) {
 
     function lockChatHandler() {
         document.getElementById('msg-box').disabled = true;
-        console.log(currentUsers)
         const chatRef = firebase.firestore().collection('chats').doc(currentUsers);
         alert('Nu har ni en minut på er att välja kort!')
         chatRef.update({
@@ -251,17 +251,19 @@ function ChatView({email, resultHandler}) {
                 setLoggedInUsers(_chat.usersLoggedIn)
         
                 const chatRef = firebase.firestore().collection('chats').doc(currentUsers);
-
+                
+                if (loggedInUsers.length === 3) {
+                    console.log('asd')
+                    setStartTimer(true);
+                }
 
                 // --- Visa inloggade användare ---
                 console.log(`loggedInUsers: ${loggedInUsers}`)
-                console.log(`myTeamUsers[1].mail: ${myTeamUsers[1].mail}`)
                 if (loggedInUsers.includes(myTeamUsers[0].mail)) {
                     setUser1Online('🌐');
                 } 
                 
                 if (loggedInUsers.includes(myTeamUsers[1].mail)) {
-                    console.log('Hon är med')
                     setUser2Online('🌐');
                 }
                 
@@ -689,7 +691,8 @@ function ChatView({email, resultHandler}) {
                             seconds={seconds} 
                             increaseTimeHandler={increaseTimeHandler} 
                             lockChatHandler={lockChatHandler} 
-                            chooseCardAlert={chooseCardAlert} />
+                            chooseCardAlert={chooseCardAlert}
+                            startTimer={startTimer} />
                     </div>  
                 </Col>
             </Row>
