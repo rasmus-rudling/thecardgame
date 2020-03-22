@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/thecardgame/static/css/main.094e23ea.chunk.css",
-    "main.js": "/thecardgame/static/js/main.68b67a55.chunk.js",
-    "main.js.map": "/thecardgame/static/js/main.68b67a55.chunk.js.map",
+    "main.css": "/thecardgame/static/css/main.f67ac9e7.chunk.css",
+    "main.js": "/thecardgame/static/js/main.d96812cc.chunk.js",
+    "main.js.map": "/thecardgame/static/js/main.d96812cc.chunk.js.map",
     "runtime-main.js": "/thecardgame/static/js/runtime-main.7d58137d.js",
     "runtime-main.js.map": "/thecardgame/static/js/runtime-main.7d58137d.js.map",
     "static/css/2.de424728.chunk.css": "/thecardgame/static/css/2.de424728.chunk.css",
-    "static/js/2.1e2ff460.chunk.js": "/thecardgame/static/js/2.1e2ff460.chunk.js",
-    "static/js/2.1e2ff460.chunk.js.map": "/thecardgame/static/js/2.1e2ff460.chunk.js.map",
+    "static/js/2.466dd78e.chunk.js": "/thecardgame/static/js/2.466dd78e.chunk.js",
+    "static/js/2.466dd78e.chunk.js.map": "/thecardgame/static/js/2.466dd78e.chunk.js.map",
     "index.html": "/thecardgame/index.html",
-    "precache-manifest.7e88d5caca00b17f36a4bc93b47dc2d9.js": "/thecardgame/precache-manifest.7e88d5caca00b17f36a4bc93b47dc2d9.js",
+    "precache-manifest.f8a30d4c5bf7813681de1e9fd7da1121.js": "/thecardgame/precache-manifest.f8a30d4c5bf7813681de1e9fd7da1121.js",
     "service-worker.js": "/thecardgame/service-worker.js",
     "static/css/2.de424728.chunk.css.map": "/thecardgame/static/css/2.de424728.chunk.css.map",
-    "static/css/main.094e23ea.chunk.css.map": "/thecardgame/static/css/main.094e23ea.chunk.css.map",
-    "static/js/2.1e2ff460.chunk.js.LICENSE.txt": "/thecardgame/static/js/2.1e2ff460.chunk.js.LICENSE.txt",
+    "static/css/main.f67ac9e7.chunk.css.map": "/thecardgame/static/css/main.f67ac9e7.chunk.css.map",
+    "static/js/2.466dd78e.chunk.js.LICENSE.txt": "/thecardgame/static/js/2.466dd78e.chunk.js.LICENSE.txt",
     "static/media/blue_card.png": "/thecardgame/static/media/blue_card.db0b65ea.png",
     "static/media/headerImage.png": "/thecardgame/static/media/headerImage.22c1bb2d.png",
     "static/media/red_card.png": "/thecardgame/static/media/red_card.2abfa2da.png"
@@ -21,8 +21,8 @@
   "entrypoints": [
     "static/js/runtime-main.7d58137d.js",
     "static/css/2.de424728.chunk.css",
-    "static/js/2.1e2ff460.chunk.js",
-    "static/css/main.094e23ea.chunk.css",
-    "static/js/main.68b67a55.chunk.js"
+    "static/js/2.466dd78e.chunk.js",
+    "static/css/main.f67ac9e7.chunk.css",
+    "static/js/main.d96812cc.chunk.js"
   ]
 }
