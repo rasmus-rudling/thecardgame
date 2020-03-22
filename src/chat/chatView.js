@@ -12,6 +12,7 @@ import './chat2.css';
 import OtherTeamView from './otherTeamView';
 import reglerShort from './spelreglerS';
 import reglerLong from './spelreglerL';
+import GameTimer from '../GameTimer/GameTimer';
 
 
 const firebase = require('firebase');
@@ -27,9 +28,12 @@ function ChatView({email, resultHandler}) {
     const [currentUsers, setCurrentUsers] = useState('');
     const [usersVoted, setUsersVoted] = useState([]);
     const [teamReady, setTeamReady] = useState(false);
+    const [seconds, setSeconds] = useState(0);
 
     const anonymousMode = true;
     const prankMode = false;
+
+    
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(async _usr => {
@@ -61,8 +65,8 @@ function ChatView({email, resultHandler}) {
                                         })
                                     })
                             }),
-                            
-                            setCurrentUsers(setCurrentUsersHandler(chats[0].users))
+                            setCurrentUsers(setCurrentUsersHandler(chats[0].users)),
+                            setTeamReady(chats[0].teamReady)
                             
                         )
                     })
@@ -81,6 +85,10 @@ function ChatView({email, resultHandler}) {
         
     }, []);
 
+    function increaseTimeHandler(newTime) {
+        setSeconds(newTime)
+    }
+
     function setCurrentUsersHandler(usersMailArray) {
         let currentUsersString = '';
 
@@ -96,9 +104,7 @@ function ChatView({email, resultHandler}) {
     }
     
     const askIfReadyHandler = () => {
-        if (askIfReady) {
-            setAskIfReady(false);
-        }
+        setAskIfReady(false);
     }
 
     function firstMailInChatHandler(_firstMailInChat) {
@@ -111,6 +117,21 @@ function ChatView({email, resultHandler}) {
 
     function setTeamReadyHandler(usersReadyBool) {
         setTeamReady(usersReadyBool)
+    }
+
+    function lockChatHandler() {
+        document.getElementById('msg-box').disabled = true;
+        const chatRef = firebase.firestore().collection('chats').doc(currentUsers);
+        alert('Nu har ni en minut på er att välja kort!')
+        chatRef.update({
+            teamReady: true
+        })
+
+
+    }
+
+    function chooseCardAlert() {
+        alert('Nu måste du välja kort!!!')
     }
 
     let myTeamUsers = [];
@@ -283,9 +304,7 @@ function ChatView({email, resultHandler}) {
                                     teamReady: true
                                 })
         
-                                if (email === firstMailInChat) {
-                                    askIfReadyHandler();
-                                }
+                                setAskIfReady(false);
                             }
         
                             chatRef.update({
@@ -488,7 +507,7 @@ function ChatView({email, resultHandler}) {
                 objDiv.scrollTop = objDiv.scrollHeight;  
             })
         }
-    })
+    }, [chats, name, imgURL, askIfReady, otherPersons, firstMailInChat, currentUsers, usersVoted, teamReady])
 
     function submitMessage(event) {
         event.preventDefault();
@@ -552,9 +571,9 @@ function ChatView({email, resultHandler}) {
     // ---
 
     let timerContent = null;
-
+    console.log(askIfReady)
     if (email === firstMailInChat && askIfReady) {
-
+        
         timerContent = (
             <TimerReady currentUsers={currentUsers} />
         )
@@ -617,10 +636,15 @@ function ChatView({email, resultHandler}) {
                 <Col>
                     <div id="text">
                         {reglerShort}
+
+                        <GameTimer 
+                            seconds={seconds} 
+                            increaseTimeHandler={increaseTimeHandler} 
+                            lockChatHandler={lockChatHandler} 
+                            chooseCardAlert={chooseCardAlert} />
                     </div>  
                 </Col>
             </Row>
-
 
             <Row > {/* ROW FOR THE CHAT WINDOWS */}
                 <Col sm={12} lg={6} >  {/* ACTIVE CHAT */}

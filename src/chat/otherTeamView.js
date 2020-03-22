@@ -94,7 +94,6 @@ function OtherTeamView ({anonymousMode}) {
             setSentTexts2(sentTexts2 => sentTexts2 + 1)
         }
 
-        
         if (sentTexts0 < fewestSentTexts) {
             setFewestSentTexts(sentTexts0);
         } else if (sentTexts1 < fewestSentTexts) {
