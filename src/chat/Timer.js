@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 function Timer({otherChats, handleChange}) {
-    const [limit, setLimit] = useState(120);
+    const [limit, setLimit] = useState(50);
     const [seconds, setSeconds] = useState(0);
-    const [totSeconds, setTotSeconds] = useState(-120);
+    const [totSeconds, setTotSeconds] = useState(-50);
 
     function randn_bm(min, max, skew) {
         let u = 0, v = 0;
@@ -48,12 +48,14 @@ function Timer({otherChats, handleChange}) {
                 randIntNormal = Math.round(randn_bm(2, 30, 1));
                 setLimit(randIntNormal);
             }
+        } else {
+            interval = setInterval(() => {
+                setSeconds(seconds => seconds + 1);
+                setTotSeconds(totSeconds => totSeconds + 1);
+            }, 1000);
         }
 
-        interval = setInterval(() => {
-            setSeconds(seconds => seconds + 1);
-            setTotSeconds(totSeconds => totSeconds + 1);
-        }, 1000);
+        
         
         return () => clearInterval(interval);
     });

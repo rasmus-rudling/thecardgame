@@ -10,29 +10,26 @@ const GameTimer = (props) => {
         setDisplaySeconds(props.seconds % 60)
         setDisplayMinutes(Math.floor(props.seconds / 60))
 
-        console.log(props.seconds);
-
-        if (lastMinute && props.seconds === 60) {
+        if (lastMinute && props.seconds === 0) {
             props.chooseCardAlert();
         }
 
-        if (props.seconds >= 600) {
+        if (props.seconds === 0) {
             document.getElementById('GameTimerContainer').className = classes.redText;
-            props.increaseTimeHandler(0);
+            props.increaseTimeHandler(60);
             setLastMinute(true);
             props.lockChatHandler();
-            console.log('Nu måste du bestämma dig inom en minut!')
         } else {
             setTimeout(() => {
-                props.increaseTimeHandler(props.seconds + 1)
+                props.increaseTimeHandler(props.seconds - 1)
             }, 1000)
         }
         
     }, [props.seconds])
 
     return (
-        <div id='GameTimerContainer'>
-            {displayMinutes < 10 ? `0${displayMinutes}` : `${displayMinutes}`}:{displaySeconds < 10 ? `0${displaySeconds}` : `${displaySeconds}`}
+        <div id='GameTimerContainer' className={classes.timeText}>
+            Tid kvar: {displayMinutes < 10 ? `0${displayMinutes}` : `${displayMinutes}`}:{displaySeconds < 10 ? `0${displaySeconds}` : `${displaySeconds}`}
         </div>
     )
 }

@@ -2,3 +2,8 @@
     font-weight: bold;
     color: red;
 }
+
+.timeText {
+    margin-top: 10px;
+    font-size: 20px;
+}

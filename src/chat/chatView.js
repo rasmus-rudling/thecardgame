@@ -28,7 +28,11 @@ function ChatView({email, resultHandler}) {
     const [currentUsers, setCurrentUsers] = useState('');
     const [usersVoted, setUsersVoted] = useState([]);
     const [teamReady, setTeamReady] = useState(false);
-    const [seconds, setSeconds] = useState(0);
+    const [seconds, setSeconds] = useState(600);
+    const [loggedInUsers, setLoggedInUsers] = useState([]);
+    const [user1Online, setUser1Online] = useState('');
+    const [user2Online, setUser2Online] = useState('');
+    const [user3Online, setUser3Online] = useState('');
 
     const anonymousMode = true;
     const prankMode = false;
@@ -59,7 +63,8 @@ function ChatView({email, resultHandler}) {
                                             let tempArr = [...oldArray];
                                             tempArr[index] = {
                                                 name: doc.data().name,
-                                                imgURL: doc.data().imgURL
+                                                imgURL: doc.data().imgURL,
+                                                mail: userEmail
                                             };
                                             return tempArr;
                                         })
@@ -67,12 +72,37 @@ function ChatView({email, resultHandler}) {
                             }),
                             setCurrentUsers(setCurrentUsersHandler(chats[0].users)),
                             setTeamReady(chats[0].teamReady)
-                            
                         )
                     })
             }
         })
+        
+        firebase
+            .firestore() 
+            .collection('chats') 
+            .where('users', 'array-contains', email)
+            .get()
+            .then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                    let _loggedInUsers = [...doc.data().usersLoggedIn];
 
+                    if (!_loggedInUsers.includes(email)) {
+                        _loggedInUsers.push(email)
+                    }
+                    let chatId = doc.id;
+
+                    setLoggedInUsers(_loggedInUsers)
+
+                    firebase 
+                        .firestore() 
+                        .collection('chats') 
+                        .doc(chatId)
+                        .update({
+                            usersLoggedIn: _loggedInUsers,
+                        })
+                })
+            })
+        
         firebase
             .firestore()
             .collection('users')
@@ -81,8 +111,6 @@ function ChatView({email, resultHandler}) {
                 setName(doc.data().name)
                 setImgURL(doc.data().imgURL)
             })
-
-        
     }, []);
 
     function increaseTimeHandler(newTime) {
@@ -102,10 +130,6 @@ function ChatView({email, resultHandler}) {
 
         return currentUsersString;
     }
-    
-    const askIfReadyHandler = () => {
-        setAskIfReady(false);
-    }
 
     function firstMailInChatHandler(_firstMailInChat) {
         setFirstMailInChat(_firstMailInChat)
@@ -121,13 +145,12 @@ function ChatView({email, resultHandler}) {
 
     function lockChatHandler() {
         document.getElementById('msg-box').disabled = true;
+        console.log(currentUsers)
         const chatRef = firebase.firestore().collection('chats').doc(currentUsers);
         alert('Nu har ni en minut på er att välja kort!')
         chatRef.update({
             teamReady: true
         })
-
-
     }
 
     function chooseCardAlert() {
@@ -141,17 +164,20 @@ function ChatView({email, resultHandler}) {
             {
                 rName: otherPersons[0].name,
                 name: 'Anonym Räv',
-                imgURL: 'https://i.imgur.com/Uk0fWiL.jpg'
+                imgURL: 'https://i.imgur.com/Uk0fWiL.jpg',
+                mail: otherPersons[0].mail
             },
             {
                 rName: otherPersons[1].name,
                 name: 'Anonym Elefant',
-                imgURL: 'https://i.imgur.com/DG31vdf.jpg'
+                imgURL: 'https://i.imgur.com/DG31vdf.jpg',
+                mail: otherPersons[1].mail
             },
             {
                 rName: otherPersons[2].name,
                 name: 'Anonym Koala',
-                imgURL: 'https://i.imgur.com/VvUs6sM.jpg'
+                imgURL: 'https://i.imgur.com/VvUs6sM.jpg',
+                mail: otherPersons[2].mail
             },
             // En fjärde???
         ]
@@ -160,17 +186,20 @@ function ChatView({email, resultHandler}) {
             {
                 rName: otherPersons[0].name,
                 name: 'My Sjögren',
-                imgURL: 'https://i.imgur.com/N8uazyK.jpg'
+                imgURL: 'https://i.imgur.com/N8uazyK.jpg',
+                mail: otherPersons[0].mail
             },
             {
                 rName: otherPersons[1].name,
                 name: 'Kevin Ström',
-                imgURL: 'https://i.imgur.com/6zqOXhR.jpg'
+                imgURL: 'https://i.imgur.com/6zqOXhR.jpg',
+                mail: otherPersons[1].mail
             },
             {
                 rName: otherPersons[2].name,
                 name: 'Martin Berglund',
-                imgURL: 'https://i.imgur.com/l7sJZwW.jpg'
+                imgURL: 'https://i.imgur.com/l7sJZwW.jpg',
+                mail: otherPersons[2].mail
             },
             // En fjärde???
         ]
@@ -179,17 +208,20 @@ function ChatView({email, resultHandler}) {
             {
                 rName: otherPersons[0].name,
                 name: otherPersons[0].name,
-                imgURL: otherPersons[0].imgURL
+                imgURL: otherPersons[0].imgURL,
+                mail: otherPersons[0].mail
             },
             {
                 rName: otherPersons[1].name,
                 name: otherPersons[1].name,
-                imgURL: otherPersons[1].imgURL
+                imgURL: otherPersons[1].imgURL,
+                mail: otherPersons[1].mail
             },
             {
                 rName: otherPersons[2].name,
                 name: otherPersons[2].name,
-                imgURL: otherPersons[2].imgURL
+                imgURL: otherPersons[2].imgURL,
+                mail: otherPersons[2].mail
             },
             // En fjärde???
         ]
@@ -216,9 +248,27 @@ function ChatView({email, resultHandler}) {
                 
                 setTeamReadyHandler(_chat.teamReady)
                 setUsersVotedHandler(_chat.usersVoted);
+                setLoggedInUsers(_chat.usersLoggedIn)
         
                 const chatRef = firebase.firestore().collection('chats').doc(currentUsers);
-        
+
+
+                // --- Visa inloggade användare ---
+                console.log(`loggedInUsers: ${loggedInUsers}`)
+                console.log(`myTeamUsers[1].mail: ${myTeamUsers[1].mail}`)
+                if (loggedInUsers.includes(myTeamUsers[0].mail)) {
+                    setUser1Online('🌐');
+                } 
+                
+                if (loggedInUsers.includes(myTeamUsers[1].mail)) {
+                    console.log('Hon är med')
+                    setUser2Online('🌐');
+                }
+                
+                if (loggedInUsers.includes(myTeamUsers[2].mail)) {
+                    setUser3Online('🌐');
+                }
+                
                 // --- Visa valda kort ---
                 if (teamReady) {
                     setTimeout(() => {
@@ -507,7 +557,7 @@ function ChatView({email, resultHandler}) {
                 objDiv.scrollTop = objDiv.scrollHeight;  
             })
         }
-    }, [chats, name, imgURL, askIfReady, otherPersons, firstMailInChat, currentUsers, usersVoted, teamReady])
+    }, [chats, name, imgURL, askIfReady, otherPersons, firstMailInChat, currentUsers, usersVoted, teamReady, loggedInUsers])
 
     function submitMessage(event) {
         event.preventDefault();
@@ -571,9 +621,7 @@ function ChatView({email, resultHandler}) {
     // ---
 
     let timerContent = null;
-    console.log(askIfReady)
     if (email === firstMailInChat && askIfReady) {
-        
         timerContent = (
             <TimerReady currentUsers={currentUsers} />
         )
@@ -656,13 +704,14 @@ function ChatView({email, resultHandler}) {
                                     {
                                         anonymousMode && myTeamUsers[myIndex] !== undefined ?
                                             <div>
-                                                <img src={myTeamUsers[myIndex].imgURL} /> {myTeamUsers[myIndex].name}
+                                                <img src={myTeamUsers[myIndex].imgURL} /> {myTeamUsers[myIndex].name}🌐
                                             </div>
                                         :
                                             <div>
-                                                <img src={imgURL} alt="" /> {name}
+                                                <img src={imgURL} alt="" /> {name}🌐
                                             </div>
                                     }
+                                    
                                 </div>  
                             </Col>
 
@@ -673,21 +722,21 @@ function ChatView({email, resultHandler}) {
                                     {
                                         name !== myTeamUsers[0].rName ? 
                                             <div className='teamMates'>
-                                                <img src={myTeamUsers[0].imgURL} alt="" /> {myTeamUsers[0].name}
+                                                <img src={myTeamUsers[0].imgURL} alt="" /> {myTeamUsers[0].name} {user1Online}
                                             </div>
                                         : null
                                     }
                                     {
                                         name !== myTeamUsers[1].rName ? 
                                             <div className='teamMates'>
-                                                <img src={myTeamUsers[1].imgURL} alt="" /> {myTeamUsers[1].name}
+                                                <img src={myTeamUsers[1].imgURL} alt="" /> {myTeamUsers[1].name} {user2Online}
                                             </div>
                                         : null
                                     }
                                     {
                                         name !== myTeamUsers[2].rName ? 
                                             <div className='teamMates'>
-                                                <img src={myTeamUsers[2].imgURL} alt="" /> {myTeamUsers[2].name}
+                                                <img src={myTeamUsers[2].imgURL} alt="" /> {myTeamUsers[2].name} {user3Online}
                                             </div>
                                         : null
                                     }
