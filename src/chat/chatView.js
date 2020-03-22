@@ -24,8 +24,8 @@ function ChatView({email, resultHandler}) {
     const [askIfReady, setAskIfReady] = useState(true);
     const [otherPersons, setotherPersons] = useState(['','','']);
 
-    const anonymousMode = false;
-    const prankMode = true;
+    const anonymousMode = true;
+    const prankMode = false;
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(async _usr => {
@@ -692,7 +692,7 @@ function ChatView({email, resultHandler}) {
                 </Col>
 
                 <Col sm={12} lg={6}> {/* 2ND CHAT */}
-                    <OtherTeamView />
+                    <OtherTeamView anonymousMode={anonymousMode} />
 
                     {voteBoxContent}
                 </Col>

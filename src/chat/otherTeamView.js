@@ -3,7 +3,7 @@ import {Row, Col} from 'react-bootstrap';
 import Timer from './Timer';
 
 
-function OtherTeamView () {
+function OtherTeamView ({anonymousMode}) {
     const [otherChats, setOtherChats] = useState([]);
     const [sentTexts0, setSentTexts0] = useState(0);
     const [sentTexts1, setSentTexts1] = useState(0);
@@ -14,24 +14,41 @@ function OtherTeamView () {
 
     const invisibleText = '　';
 
-    const otherTeamUsers = [
-        {
-            name: 'Alexander Öberg',
-            imgURL: 'https://i.imgur.com/zQK9g6C.jpg'
-        },
-        {
-            name: 'Anna Gustavsson',
-            imgURL: 'https://i.imgur.com/wfIuhfl.jpg'
-        },
-        {
-            name: 'Julia Lindholm',
-            imgURL: 'https://i.imgur.com/Fci8yao.jpg'
-        },
-        {
-            name: 'Martin Berglund',
-            imgURL: 'https://i.imgur.com/l7sJZwW.jpg'
-        }
-    ]
+    let otherTeamUsers = [];
+    
+    if (anonymousMode) {
+        otherTeamUsers = [
+            {
+                name: 'Anonym Fågel',
+                imgURL: 'https://i.imgur.com/EE6kRq5.jpg'
+            },
+            {
+                name: 'Anonym Krokodil',
+                imgURL: 'https://i.imgur.com/o7EwPio.jpg'
+            },
+            {
+                name: 'Anonym Tiger',
+                imgURL: 'https://i.imgur.com/XYCgUkQ.jpg'
+            }
+        ]
+    } else {
+        otherTeamUsers = [
+            {
+                name: 'Alexander Öberg',
+                imgURL: 'https://i.imgur.com/zQK9g6C.jpg'
+            },
+            {
+                name: 'Anna Gustavsson',
+                imgURL: 'https://i.imgur.com/wfIuhfl.jpg'
+            },
+            {
+                name: 'Julia Lindholm',
+                imgURL: 'https://i.imgur.com/Fci8yao.jpg'
+            }
+        ]
+    }
+
+    
 
     function randn_bm(min, max, skew) {
         let u = 0, v = 0;
