@@ -23,6 +23,10 @@ function ChatView({email, resultHandler}) {
     const [imgURL, setImgURL] = useState('');
     const [askIfReady, setAskIfReady] = useState(true);
     const [otherPersons, setotherPersons] = useState(['','','']);
+    const [firstMailInChat, setFirstMailInChat] = useState('');
+    const [currentUsers, setCurrentUsers] = useState('');
+    const [usersVoted, setUsersVoted] = useState([]);
+    const [teamReady, setTeamReady] = useState(false);
 
     const anonymousMode = true;
     const prankMode = false;
@@ -41,7 +45,7 @@ function ChatView({email, resultHandler}) {
                         await (
                             setChats(chats),
                             
-                            chats[0].users.forEach((userEmail, index) => {
+                            chats[0].users.forEach((userEmail, index, array) => {
                                 firebase
                                     .firestore()
                                     .collection('users')
@@ -56,7 +60,10 @@ function ChatView({email, resultHandler}) {
                                             return tempArr;
                                         })
                                     })
-                            })
+                            }),
+                            
+                            setCurrentUsers(setCurrentUsersHandler(chats[0].users))
+                            
                         )
                     })
             }
@@ -70,7 +77,23 @@ function ChatView({email, resultHandler}) {
                 setName(doc.data().name)
                 setImgURL(doc.data().imgURL)
             })
+
+        
     }, []);
+
+    function setCurrentUsersHandler(usersMailArray) {
+        let currentUsersString = '';
+
+        usersMailArray.forEach((userEmail, index, array) => {
+            if (index !== array.length - 1) { 
+                currentUsersString += userEmail + ":"; 
+            } else {
+                currentUsersString += userEmail;
+            }
+        })
+
+        return currentUsersString;
+    }
     
     const askIfReadyHandler = () => {
         if (askIfReady) {
@@ -78,10 +101,17 @@ function ChatView({email, resultHandler}) {
         }
     }
 
-    let currentUsers = "";
-    let usersVoted = [];
-    let firstMailInCHat;
-    let teamReady;
+    function firstMailInChatHandler(_firstMailInChat) {
+        setFirstMailInChat(_firstMailInChat)
+    }
+
+    function setUsersVotedHandler(usersVotedArray) {
+        setUsersVoted(usersVotedArray)
+    }
+
+    function setTeamReadyHandler(usersReadyBool) {
+        setTeamReady(usersReadyBool)
+    }
 
     let myTeamUsers = [];
 
@@ -144,330 +174,321 @@ function ChatView({email, resultHandler}) {
         ]
     }
     
-
     const myIndex = myTeamUsers.findIndex(userObject => {
         return userObject.rName === name
     })
 
     useEffect(() => {
-        chats.filter((_chat, _index) => {
-            let bool = false;
-    
-            _chat.users.forEach(user => {
-                if (user === email) {
-                    bool = true;
-                }
-            })
-    
-            return bool;
-        }).forEach((_chat, _index) => {
-            document.getElementById('chatMessages').innerHTML = "";
-    
-            _chat.users.forEach((user, index, array) => {
-                if (index !== array.length - 1) { 
-                    currentUsers += user + ":"; 
-                } else {
-                    currentUsers += user
-                }
-            })
-    
-    
-            teamReady = _chat.teamReady;
-    
-            usersVoted = _chat.usersVoted;
-    
-            const chatRef = firebase.firestore().collection('chats').doc(currentUsers);
-    
-            // --- Visa valda kort ---
-            if (teamReady) {
-                setTimeout(() => {
-                    
-                    const chosenRed = _chat.chosenRedCard;
-                    const chosenBlue = _chat.chosenBlueCard;
-                    const tempCardsContainer = document.createElement('div');
-    
-                    for (let r = 0; r < chosenRed; r++) {
-                        const redCardElement = document.createElement('img');
-                        redCardElement.src = require('../red_card.png');
-                        redCardElement.className = 'choicesCard';
-                        tempCardsContainer.append(redCardElement)
+        if (currentUsers !== '') {
+            chats.filter((_chat, _index) => {
+                let bool = false;
+        
+                _chat.users.forEach(user => {
+                    if (user === email) {
+                        bool = true;
                     }
-                    
-                    for (let b = 0; b < chosenBlue; b++) {
-                        const blueCardElement = document.createElement('img');
-                        blueCardElement.src = require('../blue_card.png');
-                        blueCardElement.className = 'choicesCard';
-                        tempCardsContainer.append(blueCardElement)
-                    }
-    
-                    const chosenCardContainer = document.getElementById('chosenCardContainer');
-    
-                    if (chosenCardContainer !== null) {
-                        chosenCardContainer.innerHTML = '';
-                        chosenCardContainer.append(tempCardsContainer);
-                    }
-    
-                }, 50)
-                
-            }
-            // -----------------------
-    
-            if (_chat.chosenBlueCard + _chat.chosenRedCard === 3) {
-                const finalCard = _chat.chosenRedCard >= 2 ? 'redCard' : 'blueCard';
-                const otherTeamCard = _chat.otherTeamFinalCard;
-                let myPoints = -1;
-                let othersPoints = -1;
-    
-                if (finalCard === 'redCard' && otherTeamCard === 'redCard') {
-                    myPoints = 0;
-                    othersPoints = 0;
-                } else if (finalCard === 'redCard' && otherTeamCard === 'blueCard') {
-                    myPoints = 100;
-                    othersPoints = 0;
-                } else if (finalCard === 'blueCard' && otherTeamCard === 'redCard') {
-                    myPoints = 0;
-                    othersPoints = 100;
-                } else if (finalCard === 'blueCard' && otherTeamCard === 'blueCard') {
-                    myPoints = 50;
-                    othersPoints = 50;
-                }
-    
-                chatRef.update({
-                    teamPoints: myPoints,
-                    finalCard: finalCard
                 })
-    
-                resultHandler(finalCard, otherTeamCard, myPoints, othersPoints)
-    
-                history.push('/result')
-            }
-    
-            _chat.messages.forEach(_message => { 
-                const messageElement = document.createElement('div');
-                const rowElement = document.createElement('div');
-                const colElement = document.createElement('div');
-                const imgElement = document.createElement('img');
-                firstMailInCHat = currentUsers.split(':')[0]
-    
-                rowElement.className = 'row';
-                colElement.className = 'col';
+        
+                return bool;
+            }).forEach((_chat, _index) => {
+                document.getElementById('chatMessages').innerHTML = "";
                 
-                if (_message.sender === 'Admin') {
-                    const ready = _chat.readyToChoose;
-                    const notReady = _chat.notReadyToChoose;
+                setTeamReadyHandler(_chat.teamReady)
+                setUsersVotedHandler(_chat.usersVoted);
+        
+                const chatRef = firebase.firestore().collection('chats').doc(currentUsers);
+        
+                // --- Visa valda kort ---
+                if (teamReady) {
+                    setTimeout(() => {
+                        
+                        const chosenRed = _chat.chosenRedCard;
+                        const chosenBlue = _chat.chosenBlueCard;
+                        const tempCardsContainer = document.createElement('div');
+        
+                        for (let r = 0; r < chosenRed; r++) {
+                            const redCardElement = document.createElement('img');
+                            redCardElement.src = require('../red_card.png');
+                            redCardElement.className = 'choicesCard';
+                            tempCardsContainer.append(redCardElement)
+                        }
+                        
+                        for (let b = 0; b < chosenBlue; b++) {
+                            const blueCardElement = document.createElement('img');
+                            blueCardElement.src = require('../blue_card.png');
+                            blueCardElement.className = 'choicesCard';
+                            tempCardsContainer.append(blueCardElement)
+                        }
+        
+                        const chosenCardContainer = document.getElementById('chosenCardContainer');
+        
+                        if (chosenCardContainer !== null) {
+                            chosenCardContainer.innerHTML = '';
+                            chosenCardContainer.append(tempCardsContainer);
+                        }
+                    }, 50)
+                }
+                // -----------------------
+        
+                if (_chat.chosenBlueCard + _chat.chosenRedCard === 3) {
+                    const finalCard = _chat.chosenRedCard >= 2 ? 'redCard' : 'blueCard';
+                    const otherTeamCard = _chat.otherTeamFinalCard;
+                    let myPoints = -1;
+                    let othersPoints = -1;
+        
+                    if (finalCard === 'redCard' && otherTeamCard === 'redCard') {
+                        myPoints = 0;
+                        othersPoints = 0;
+                    } else if (finalCard === 'redCard' && otherTeamCard === 'blueCard') {
+                        myPoints = 100;
+                        othersPoints = 0;
+                    } else if (finalCard === 'blueCard' && otherTeamCard === 'redCard') {
+                        myPoints = 0;
+                        othersPoints = 100;
+                    } else if (finalCard === 'blueCard' && otherTeamCard === 'blueCard') {
+                        myPoints = 50;
+                        othersPoints = 50;
+                    }
+        
+                    chatRef.update({
+                        teamPoints: myPoints,
+                        finalCard: finalCard
+                    })
+        
+                    resultHandler(finalCard, otherTeamCard, myPoints, othersPoints)
+        
+                    history.push('/result')
+                }
+        
+                _chat.messages.forEach(_message => { 
+                    const messageElement = document.createElement('div');
+                    const rowElement = document.createElement('div');
+                    const colElement = document.createElement('div');
+                    const imgElement = document.createElement('img');
+    
+                    if (firstMailInChat === '') {
+                        firstMailInChatHandler(currentUsers.split(':')[0])
+                    }
                     
-                    if (ready + notReady === 3) {
-                        if (ready >= 2) {
+                    rowElement.className = 'row';
+                    colElement.className = 'col';
+                    
+                    if (_message.sender === 'Admin') {
+                        const ready = _chat.readyToChoose;
+                        const notReady = _chat.notReadyToChoose;
+                        
+                        if (ready + notReady === 3) {
+                            if (ready >= 2) {
+                                chatRef.update({
+                                    teamReady: true
+                                })
+        
+                                if (email === firstMailInChat) {
+                                    askIfReadyHandler();
+                                }
+                            }
+        
                             chatRef.update({
-                                teamReady: true
+                                messages: firebase.firestore.FieldValue.arrayRemove(_message)
                             })
-    
-                            if (email === firstMailInCHat) {
-                                askIfReadyHandler();
+        
+                            chatRef.update({
+                                readyToChoose: 0,
+                                notReadyToChoose: 0
+                            })
+                        }
+        
+                        messageElement.className = 'adminMessages';
+                        messageElement.innerText = ` ${_message.message}`;
+                        const buttonElementYes = document.createElement('button');
+                        const buttonElementNo = document.createElement('button');
+        
+                        buttonElementYes.innerText = 'Ja';
+                        buttonElementNo.innerText = 'Nej';
+        
+                        if (usersVoted.includes(email)) {
+                            buttonElementYes.className = 'hide';
+                            buttonElementNo.className = 'hide';
+                        } else {
+                            buttonElementYes.className = '';
+                            buttonElementNo.className = '';
+                        }
+        
+                        buttonElementYes.addEventListener("click", () => {
+                            buttonElementYes.className = 'hide';
+                            buttonElementNo.className = 'hide';
+        
+                            chatRef.update({
+                                readyToChoose: _chat.readyToChoose + 1,
+                                usersVoted: firebase.firestore.FieldValue.arrayUnion(email)
+                            })
+                        });
+        
+                        buttonElementNo.addEventListener("click", () => {
+                            buttonElementYes.className = 'hide';
+                            buttonElementNo.className = 'hide';
+        
+                            chatRef.update({
+                                notReadyToChoose: _chat.notReadyToChoose + 1,
+                                usersVoted: firebase.firestore.FieldValue.arrayUnion(email)
+                            })
+                        });
+        
+                        messageElement.append(buttonElementYes);
+                        messageElement.append(buttonElementNo);
+        
+                        // Låt dessa motsvara hur många readyToAnswer i databsen
+                        // När minst två är gröna så ska välj-kort-rutan visas
+        
+                        for (let i = 0; i < ready; i++) {
+                            messageElement.append('✔️');
+                        }
+        
+                        for (let i = 0; i < notReady; i++) {
+                            messageElement.append('❌');
+                        }
+                        
+                        colElement.append(messageElement);
+                        rowElement.append(colElement);
+                    } else if (_message.sender === name) { // the users own messges
+                        
+                        const messageContainer = document.createElement('div');
+                        const nameTimeContainer =  document.createElement('div');
+                        
+                        if (anonymousMode && myTeamUsers[myIndex] !== undefined) {
+                            imgElement.src = myTeamUsers[myIndex].imgURL;
+                            nameTimeContainer.innerText =  `${_message.timestamp} ${myTeamUsers[myIndex].name}`; 
+                        } else {
+                            nameTimeContainer.innerText =  `${_message.timestamp} ${_message.sender}`;
+                            imgElement.src = _message.senderImgURL;
+                        }
+                        
+                        messageElement.innerText = ` ${_message.message}`;
+                        messageContainer.append(nameTimeContainer)
+                        messageContainer.append(messageElement);
+                        messageContainer.append(imgElement);
+        
+                        messageContainer.className = 'myMessagesBox'
+                        messageElement.className = 'myMessages';
+                        nameTimeContainer.className = 'nameTimeTag';
+                        colElement.append(messageContainer)
+                        rowElement.append(colElement)
+                    } else { // messages from other people in chat 1
+                        const messageContainer = document.createElement('div');
+                        const nameTimeContainer =  document.createElement('div');
+                        let textMessage = _message.message;
+        
+                        // --------------------------
+                        // --- FAKE:A MEDDELANDEN ---
+                        // console.log(textMessage.toUpperCase(), 1)
+                        // console.log(myTeamUsers[1].name.split(" ")[0].toUpperCase(), 2)
+                        // console.log('')
+                        if (prankMode) {
+                            if (name === myTeamUsers[0].rName) {
+                                let searchMask = myTeamUsers[0].name.split(" ")[0];
+                                let regEx = new RegExp(searchMask, "ig");
+                                let replaceMask = myTeamUsers[0].rName.split(" ")[0];
+                                
+                                textMessage = textMessage.replace(regEx, replaceMask);
+        
+                                if (_message.sender === myTeamUsers[1].rName) {
+                                    let searchMask = myTeamUsers[1].rName.split(" ")[0];
+                                    let regEx = new RegExp(searchMask, "ig");
+                                    let replaceMask = myTeamUsers[1].name.split(" ")[0];
+                                    
+                                    textMessage = textMessage.replace(regEx, replaceMask);
+                                } else if (_message.sender === myTeamUsers[2].rName) {
+                                    let searchMask = myTeamUsers[2].rName.split(" ")[0];
+                                    let regEx = new RegExp(searchMask, "ig");
+                                    let replaceMask = myTeamUsers[2].name.split(" ")[0];
+                                    
+                                    textMessage = textMessage.replace(regEx, replaceMask);
+                                }
+        
+                            } else if (name === myTeamUsers[1].rName) {
+                                let searchMask = myTeamUsers[1].name.split(" ")[0];
+                                let regEx = new RegExp(searchMask, "ig");
+                                let replaceMask = myTeamUsers[1].rName.split(" ")[0];
+                                
+                                textMessage = textMessage.replace(regEx, replaceMask);
+                                
+                                
+                                if (_message.sender === myTeamUsers[0].rName) {
+                                    let searchMask = myTeamUsers[0].rName.split(" ")[0];
+                                    let regEx = new RegExp(searchMask, "ig");
+                                    let replaceMask = myTeamUsers[0].name.split(" ")[0];
+                                    
+                                    textMessage = textMessage.replace(regEx, replaceMask);
+                                } else if (_message.sender === myTeamUsers[2].rName) {
+                                    let searchMask = myTeamUsers[2].rName.split(" ")[0];
+                                    let regEx = new RegExp(searchMask, "ig");
+                                    let replaceMask = myTeamUsers[2].name.split(" ")[0];
+                                    
+                                    textMessage = textMessage.replace(regEx, replaceMask);
+                                }
+                            } else if (name === myTeamUsers[2].rName) {
+                                let searchMask = myTeamUsers[2].name.split(" ")[0];
+                                let regEx = new RegExp(searchMask, "ig");
+                                let replaceMask = myTeamUsers[2].rName.split(" ")[0];
+                                
+                                textMessage = textMessage.replace(regEx, replaceMask);
+        
+                                if (_message.sender === myTeamUsers[0].rName) {
+                                    let searchMask = myTeamUsers[0].rName.split(" ")[0];
+                                    let regEx = new RegExp(searchMask, "ig");
+                                    let replaceMask = myTeamUsers[0].name.split(" ")[0];
+                                    
+                                    textMessage = textMessage.replace(regEx, replaceMask);
+                                } else if (_message.sender === myTeamUsers[1].rName) {
+                                    let searchMask = myTeamUsers[1].rName.split(" ")[0];
+                                    let regEx = new RegExp(searchMask, "ig");
+                                    let replaceMask = myTeamUsers[1].name.split(" ")[0];
+                                    
+                                    textMessage = textMessage.replace(regEx, replaceMask);
+                                }
                             }
                         }
     
-                        chatRef.update({
-                            messages: firebase.firestore.FieldValue.arrayRemove(_message)
-                        })
-    
-                        chatRef.update({
-                            readyToChoose: 0,
-                            notReadyToChoose: 0
-                        })
-                    }
-    
-                    messageElement.className = 'adminMessages';
-                    messageElement.innerText = ` ${_message.message}`;
-                    const buttonElementYes = document.createElement('button');
-                    const buttonElementNo = document.createElement('button');
-    
-                    buttonElementYes.innerText = 'Ja';
-                    buttonElementNo.innerText = 'Nej';
-    
-                    if (usersVoted.includes(email)) {
-                        buttonElementYes.className = 'hide';
-                        buttonElementNo.className = 'hide';
-                    } else {
-                        buttonElementYes.className = '';
-                        buttonElementNo.className = '';
-                    }
-    
-                    buttonElementYes.addEventListener("click", () => {
-                        buttonElementYes.className = 'hide';
-                        buttonElementNo.className = 'hide';
-    
-                        chatRef.update({
-                            readyToChoose: _chat.readyToChoose + 1,
-                            usersVoted: firebase.firestore.FieldValue.arrayUnion(email)
-                        })
-                    });
-    
-                    buttonElementNo.addEventListener("click", () => {
-                        buttonElementYes.className = 'hide';
-                        buttonElementNo.className = 'hide';
-    
-                        chatRef.update({
-                            notReadyToChoose: _chat.notReadyToChoose + 1,
-                            usersVoted: firebase.firestore.FieldValue.arrayUnion(email)
-                        })
-                    });
-    
-                    messageElement.append(buttonElementYes);
-                    messageElement.append(buttonElementNo);
-    
-                    // Låt dessa motsvara hur många readyToAnswer i databsen
-                    // När minst två är gröna så ska välj-kort-rutan visas
-    
-                    for (let i = 0; i < ready; i++) {
-                        messageElement.append('✔️');
-                    }
-    
-                    for (let i = 0; i < notReady; i++) {
-                        messageElement.append('❌');
-                    }
-                    
-                    colElement.append(messageElement);
-                    rowElement.append(colElement);
-                } else if (_message.sender === name) { // the users own messges
-                    
-                    const messageContainer = document.createElement('div');
-                    const nameTimeContainer =  document.createElement('div');
-                    
-                    if (anonymousMode && myTeamUsers[myIndex] !== undefined) {
-                        imgElement.src = myTeamUsers[myIndex].imgURL;
-                        nameTimeContainer.innerText =  `${_message.timestamp} ${myTeamUsers[myIndex].name}`; 
-                    } else {
-                        nameTimeContainer.innerText =  `${_message.timestamp} ${_message.sender}`;
-                        imgElement.src = _message.senderImgURL;
-                    }
-                    
-                    messageElement.innerText = ` ${_message.message}`;
-                    messageContainer.append(nameTimeContainer)
-                    messageContainer.append(messageElement);
-                    messageContainer.append(imgElement);
-    
-                    messageContainer.className = 'myMessagesBox'
-                    messageElement.className = 'myMessages';
-                    nameTimeContainer.className = 'nameTimeTag';
-                    colElement.append(messageContainer)
-                    rowElement.append(colElement)
-                } else { // messages from other people in chat 1
-                    const messageContainer = document.createElement('div');
-                    const nameTimeContainer =  document.createElement('div');
-                    let textMessage = _message.message;
-    
-                    // --------------------------
-                    // --- FAKE:A MEDDELANDEN ---
-                    // console.log(textMessage.toUpperCase(), 1)
-                    // console.log(myTeamUsers[1].name.split(" ")[0].toUpperCase(), 2)
-                    // console.log('')
-                    if (prankMode) {
-                        if (name === myTeamUsers[0].rName) {
-                            let searchMask = myTeamUsers[0].name.split(" ")[0];
-                            let regEx = new RegExp(searchMask, "ig");
-                            let replaceMask = myTeamUsers[0].rName.split(" ")[0];
-                            
-                            textMessage = textMessage.replace(regEx, replaceMask);
-    
-                            if (_message.sender === myTeamUsers[1].rName) {
-                                let searchMask = myTeamUsers[1].rName.split(" ")[0];
-                                let regEx = new RegExp(searchMask, "ig");
-                                let replaceMask = myTeamUsers[1].name.split(" ")[0];
-                                
-                                textMessage = textMessage.replace(regEx, replaceMask);
-                            } else if (_message.sender === myTeamUsers[2].rName) {
-                                let searchMask = myTeamUsers[2].rName.split(" ")[0];
-                                let regEx = new RegExp(searchMask, "ig");
-                                let replaceMask = myTeamUsers[2].name.split(" ")[0];
-                                
-                                textMessage = textMessage.replace(regEx, replaceMask);
+                        if (prankMode || anonymousMode) {
+                            if (myTeamUsers[0].rName === _message.sender) {
+                                imgElement.src = myTeamUsers[0].imgURL;
+                                nameTimeContainer.innerText = `${_message.timestamp} ${myTeamUsers[0].name}`;
+                            } else if (myTeamUsers[1].rName === _message.sender) {
+                                imgElement.src = myTeamUsers[1].imgURL;
+                                nameTimeContainer.innerText = `${_message.timestamp} ${myTeamUsers[1].name}`;
+                            } else if (myTeamUsers[2].rName === _message.sender) {
+                                imgElement.src = myTeamUsers[2].imgURL;
+                                nameTimeContainer.innerText = `${_message.timestamp} ${myTeamUsers[2].name}`;
                             }
-    
-                        } else if (name === myTeamUsers[1].rName) {
-                            let searchMask = myTeamUsers[1].name.split(" ")[0];
-                            let regEx = new RegExp(searchMask, "ig");
-                            let replaceMask = myTeamUsers[1].rName.split(" ")[0];
-                            
-                            textMessage = textMessage.replace(regEx, replaceMask);
-                            
-                            
-                            if (_message.sender === myTeamUsers[0].rName) {
-                                let searchMask = myTeamUsers[0].rName.split(" ")[0];
-                                let regEx = new RegExp(searchMask, "ig");
-                                let replaceMask = myTeamUsers[0].name.split(" ")[0];
-                                
-                                textMessage = textMessage.replace(regEx, replaceMask);
-                            } else if (_message.sender === myTeamUsers[2].rName) {
-                                let searchMask = myTeamUsers[2].rName.split(" ")[0];
-                                let regEx = new RegExp(searchMask, "ig");
-                                let replaceMask = myTeamUsers[2].name.split(" ")[0];
-                                
-                                textMessage = textMessage.replace(regEx, replaceMask);
-                            }
-                        } else if (name === myTeamUsers[2].rName) {
-                            let searchMask = myTeamUsers[2].name.split(" ")[0];
-                            let regEx = new RegExp(searchMask, "ig");
-                            let replaceMask = myTeamUsers[2].rName.split(" ")[0];
-                            
-                            textMessage = textMessage.replace(regEx, replaceMask);
-    
-                            if (_message.sender === myTeamUsers[0].rName) {
-                                let searchMask = myTeamUsers[0].rName.split(" ")[0];
-                                let regEx = new RegExp(searchMask, "ig");
-                                let replaceMask = myTeamUsers[0].name.split(" ")[0];
-                                
-                                textMessage = textMessage.replace(regEx, replaceMask);
-                            } else if (_message.sender === myTeamUsers[1].rName) {
-                                let searchMask = myTeamUsers[1].rName.split(" ")[0];
-                                let regEx = new RegExp(searchMask, "ig");
-                                let replaceMask = myTeamUsers[1].name.split(" ")[0];
-                                
-                                textMessage = textMessage.replace(regEx, replaceMask);
-                            }
+                        } else {
+                            imgElement.src = _message.senderImgURL;
+                            nameTimeContainer.innerText = `${_message.timestamp} ${_message.sender}`;
                         }
-                    }
-
-                    if (prankMode || anonymousMode) {
-                        if (myTeamUsers[0].rName === _message.sender) {
-                            imgElement.src = myTeamUsers[0].imgURL;
-                            nameTimeContainer.innerText = `${_message.timestamp} ${myTeamUsers[0].name}`;
-                        } else if (myTeamUsers[1].rName === _message.sender) {
-                            imgElement.src = myTeamUsers[1].imgURL;
-                            nameTimeContainer.innerText = `${_message.timestamp} ${myTeamUsers[1].name}`;
-                        } else if (myTeamUsers[2].rName === _message.sender) {
-                            imgElement.src = myTeamUsers[2].imgURL;
-                            nameTimeContainer.innerText = `${_message.timestamp} ${myTeamUsers[2].name}`;
-                        }
-                    } else {
-                        imgElement.src = _message.senderImgURL;
-                        nameTimeContainer.innerText = `${_message.timestamp} ${_message.sender}`;
-                    }
-                                         
-                    messageElement.innerText = textMessage;
-    
-                    messageContainer.append(nameTimeContainer);
-                    messageContainer.append(imgElement);
-    
-                    messageContainer.append(messageElement);
-                    
-    
-                    messageContainer.className = 'otherMessagesBox'
-                    messageElement.className = 'otherMessages';
-                    nameTimeContainer.className = 'nameTimeTag';
-                    colElement.append(messageContainer)
-                    rowElement.append(colElement)
-                    
-                }     
-    
-                document.getElementById('chatMessages').append(rowElement);
+                                             
+                        messageElement.innerText = textMessage;
+        
+                        messageContainer.append(nameTimeContainer);
+                        messageContainer.append(imgElement);
+        
+                        messageContainer.append(messageElement);
+                        
+        
+                        messageContainer.className = 'otherMessagesBox'
+                        messageElement.className = 'otherMessages';
+                        nameTimeContainer.className = 'nameTimeTag';
+                        colElement.append(messageContainer)
+                        rowElement.append(colElement)
+                        
+                    }     
+        
+                    document.getElementById('chatMessages').append(rowElement);
+                })
+        
+                const objDiv = document.getElementById("chatMessages");
+                objDiv.scrollTop = objDiv.scrollHeight;  
             })
-    
-            const objDiv = document.getElementById("chatMessages");
-            objDiv.scrollTop = objDiv.scrollHeight;  
-        })
+        }
     })
-    
 
     function submitMessage(event) {
         event.preventDefault();
@@ -532,7 +553,8 @@ function ChatView({email, resultHandler}) {
 
     let timerContent = null;
 
-    if (email === firstMailInCHat && askIfReady) {
+    if (email === firstMailInChat && askIfReady) {
+
         timerContent = (
             <TimerReady currentUsers={currentUsers} />
         )

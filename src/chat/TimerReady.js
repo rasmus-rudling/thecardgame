@@ -4,14 +4,14 @@ const firebase = require('firebase');
 
 function TimerReady({currentUsers}) {
     const [seconds, setSeconds] = useState(0);
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(3);
 
     useEffect(() => {
         let interval = null;
 
         if (seconds >= limit) {
 
-            setLimit(30); //setLimit(45);
+            setLimit(30);
 
             setSeconds(0);
 
@@ -24,6 +24,7 @@ function TimerReady({currentUsers}) {
             const strMinuteStamp = minuteStamp < 10 ? `0${minuteStamp}` : `${minuteStamp}`;
             const strHourStamp = hourStamp < 10 ? `0${hourStamp}` : `${hourStamp}`;
             
+            // console.log(`[TimerReady.js] ${currentUsers}`)
             firebase
                 .firestore()
                 .collection('chats')
