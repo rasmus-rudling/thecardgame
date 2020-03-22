@@ -15,8 +15,14 @@ function StartView({email, setEmail, password, setPassword, loginError, setLogin
             history.push('/chat');
         
         }, error => {
-            setLoginError('Server error');
-            console.log(error)
+            if (error.message === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
+                console.log('Fel mailadress!')
+            } else if (error.message === 'The password is invalid or the user does not have a password.') {
+                console.log('Fel lösenord!')
+            } else {
+                console.log(error)
+            }
+            
         });
     }
 
