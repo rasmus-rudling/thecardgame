@@ -57,6 +57,11 @@
     max-height: 40px;
   }
   
+#loginimg{
+  position: absolute;
+  top:50%;
+}
+
 
 /* VOTE BOX */
 

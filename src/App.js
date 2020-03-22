@@ -66,7 +66,7 @@ function App() {
                     />
                 </Route>
                 
-                <Route exact path="/chat">
+                <Route exact path="/thecardgame/chat">
                     <ChatView
                         email = {email}
                         resultHandler = {resultHandler}

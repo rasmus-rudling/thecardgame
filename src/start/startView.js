@@ -13,7 +13,7 @@ function StartView({email, setEmail, password, setPassword, loginError, setLogin
         event.preventDefault();
               
         firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-            history.push('/chat');
+            history.push('/thecardgame/chat');
         
         }, error => {
             if (error.message === 'There is no user record corresponding to this identifier. The user may have been deleted.') {

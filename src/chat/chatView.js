@@ -708,11 +708,11 @@ function ChatView({email, resultHandler}) {
                                         anonymousMode && myTeamUsers[myIndex] !== undefined ?
                                             <div>
                                                 <img src={myTeamUsers[myIndex].imgURL} /> {myTeamUsers[myIndex].name}
-                                                <img src={require('../bilder/onlineDot.png')}/>
+                                                <img src={require('../bilder/onlineDot.png')} id="loginimg"/>
                                             </div>
                                         :
                                             <div>
-                                                <img src={imgURL} alt="" /> {name} <img src={require('../bilder/onlineDot.png')}/>
+                                                <img src={imgURL} alt="" /> {name} <img src={require('../bilder/onlineDot.png')}  id="loginimg"/>
 
                                             </div>
                                     }
