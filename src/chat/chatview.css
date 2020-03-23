@@ -62,12 +62,6 @@
     object-fit: cover;
     max-height: 40px;
   }
-  
-#loginimg{
-  position: absolute;
-  top:50%;
-}
-
 
 /* VOTE BOX */
 
@@ -197,4 +191,9 @@ margin-bottom: 20px;
 
 .teamMates {
     display: inline-block;
+}
+
+#loginimg {
+    position: absolute;
+    top: 50%;
 }

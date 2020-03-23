@@ -4,7 +4,7 @@ const firebase = require('firebase');
 
 function TimerReady({currentUsers}) {
     const [seconds, setSeconds] = useState(0);
-    const [limit, setLimit] = useState(180);
+    const [limit, setLimit] = useState(10);
 
     useEffect(() => {
         let interval = null;

@@ -23,7 +23,7 @@ function ChatView({email, resultHandler}) {
     const [name, setName] = useState('');
     const [imgURL, setImgURL] = useState('');
     const [askIfReady, setAskIfReady] = useState(true);
-    const [otherPersons, setotherPersons] = useState(['','','']);
+    const [otherPersons, setotherPersons] = useState(['', '', '', '']);
     const [firstMailInChat, setFirstMailInChat] = useState('');
     const [currentUsers, setCurrentUsers] = useState('');
     const [usersVoted, setUsersVoted] = useState([]);
@@ -33,10 +33,11 @@ function ChatView({email, resultHandler}) {
     const [user1Online, setUser1Online] = useState('');
     const [user2Online, setUser2Online] = useState('');
     const [user3Online, setUser3Online] = useState('');
+    const [user4Online, setUser4Online] = useState('');
     const [startTimer, setStartTimer] = useState(false);
 
-    const anonymousMode = true;
-    const prankMode = false;
+    const anonymousMode = false;
+    const prankMode = true;
 
     
 
@@ -53,6 +54,8 @@ function ChatView({email, resultHandler}) {
                         const chats = res.docs.map(_doc => _doc.data());
                         await (
                             setChats(chats),
+                            console.log(chats),
+                            console.log(_usr.email),
                             
                             chats[0].users.forEach((userEmail, index, array) => {
                                 firebase
@@ -179,7 +182,12 @@ function ChatView({email, resultHandler}) {
                 imgURL: 'https://i.imgur.com/VvUs6sM.jpg',
                 mail: otherPersons[2].mail
             },
-            // En fjärde???
+            {
+                rName: otherPersons[3] !== '' ? otherPersons[3].name : null,
+                name: 'Anonym Zebra',
+                imgURL: 'https://i.imgur.com/8iycv62.jpg',
+                mail: otherPersons[3] !== '' ? otherPersons[3].mail : null
+            }
         ]
     } else if (prankMode) {
         myTeamUsers = [
@@ -201,7 +209,12 @@ function ChatView({email, resultHandler}) {
                 imgURL: 'https://i.imgur.com/l7sJZwW.jpg',
                 mail: otherPersons[2].mail
             },
-            // En fjärde???
+            {
+                rName: otherPersons[3] !== '' ? otherPersons[3].name : null,
+                name: 'Sara Olsson',
+                imgURL: 'https://i.imgur.com/pidgrFa.jpg',
+                mail: otherPersons[3] !== '' ? otherPersons[3].mail : null
+            }
         ]
     } else {
         myTeamUsers = [
@@ -223,7 +236,12 @@ function ChatView({email, resultHandler}) {
                 imgURL: otherPersons[2].imgURL,
                 mail: otherPersons[2].mail
             },
-            // En fjärde???
+            {
+                rName: otherPersons[3] !== '' ? otherPersons[3].name : null,
+                name: otherPersons[3] !== '' ? otherPersons[3].name : null,
+                imgURL: otherPersons[3] !== '' ? otherPersons[3].imgURL: null,
+                mail: otherPersons[3] !== '' ? otherPersons[3].mail : null
+            }
         ]
     }
     
@@ -252,9 +270,16 @@ function ChatView({email, resultHandler}) {
         
                 const chatRef = firebase.firestore().collection('chats').doc(currentUsers);
                 
-                if (loggedInUsers.length === 3) {
-                    console.log('asd')
+                console.log(myTeamUsers[3].rName)
+
+                if (myTeamUsers[3].rName === null && loggedInUsers.length === 3) {
                     setStartTimer(true);
+                } else if (loggedInUsers.length === 4) {
+                    setStartTimer(true);
+                }
+
+                if (myTeamUsers[3].rName !== null && loggedInUsers.length !== 4) {
+                    setStartTimer(false);
                 }
 
                 // --- Visa inloggade användare ---
@@ -269,6 +294,10 @@ function ChatView({email, resultHandler}) {
                 
                 if (loggedInUsers.includes(myTeamUsers[2].mail)) {
                     setUser3Online('https://i.imgur.com/LWKMROF.png');
+                }
+
+                if (loggedInUsers.includes(myTeamUsers[3].mail)) {
+                    setUser4Online('https://i.imgur.com/LWKMROF.png');
                 }
                 
                 // --- Visa valda kort ---
@@ -303,7 +332,7 @@ function ChatView({email, resultHandler}) {
                 }
                 // -----------------------
         
-                if (_chat.chosenBlueCard + _chat.chosenRedCard === 3) {
+                if ((_chat.chosenBlueCard + _chat.chosenRedCard === 3 && myTeamUsers[3].rName === null) || (_chat.chosenBlueCard + _chat.chosenRedCard === 4 && myTeamUsers[3].rName !== null)) {
                     const finalCard = _chat.chosenRedCard >= 2 ? 'redCard' : 'blueCard';
                     const otherTeamCard = _chat.otherTeamFinalCard;
                     let myPoints = -1;
@@ -350,7 +379,7 @@ function ChatView({email, resultHandler}) {
                         const ready = _chat.readyToChoose;
                         const notReady = _chat.notReadyToChoose;
                         
-                        if (ready + notReady === 3) {
+                        if ((ready + notReady === 3 && myTeamUsers[3].rName === null) || ((ready + notReady === 4 && myTeamUsers[3].rName !== null))) {
                             if (ready >= 2) {
                                 chatRef.update({
                                     teamReady: true
@@ -711,11 +740,12 @@ function ChatView({email, resultHandler}) {
                                         anonymousMode && myTeamUsers[myIndex] !== undefined ?
                                             <div>
                                                 <img src={myTeamUsers[myIndex].imgURL} /> {myTeamUsers[myIndex].name}
-                                                <img src={require('../bilder/onlineDot.png')} id="loginimg"/>
+                                                <img src={require('../bilder/onlineDot.png')} id={myTeamUsers[3].rName === null ? 'loginimg' : ''} />
                                             </div>
                                         :
                                             <div>
-                                                <img src={imgURL} alt="" /> {name} <img src={require('../bilder/onlineDot.png')}  id="loginimg"/>
+                                                {console.log(myTeamUsers[3].rName)}
+                                                <img src={imgURL} alt="" /> {name} <img src={require('../bilder/onlineDot.png')}  id={myTeamUsers[3].rName === null ? 'loginimg' : ''} />
 
                                             </div>
                                     }
@@ -745,6 +775,13 @@ function ChatView({email, resultHandler}) {
                                         name !== myTeamUsers[2].rName ? 
                                             <div className='teamMates'>
                                                 <img src={myTeamUsers[2].imgURL} alt="" /> {myTeamUsers[2].name} <img src={user3Online} alt="" />
+                                            </div>
+                                        : null
+                                    }
+                                    {
+                                        name !== myTeamUsers[3].rName && myTeamUsers[3].rName !== null ? 
+                                            <div className='teamMates'>
+                                                <img src={myTeamUsers[3].imgURL} alt="" /> {myTeamUsers[3].name} <img src={user4Online} alt="" />
                                             </div>
                                         : null
                                     }
