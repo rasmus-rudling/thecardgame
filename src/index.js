@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { BrowserRouter } from 'react-router-dom';
 
 const firebase = require('firebase');
 require('firebase/firestore');
@@ -23,8 +24,9 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 ReactDOM.render(
-    <App />
-    , 
+    <BrowserRouter basename='https://rrudling.github.io/'>
+      <App />
+    </BrowserRouter>, 
     document.getElementById('root'));
 
 
