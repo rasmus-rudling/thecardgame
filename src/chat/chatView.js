@@ -36,8 +36,8 @@ function ChatView({email, resultHandler}) {
     const [user4Online, setUser4Online] = useState('');
     const [startTimer, setStartTimer] = useState(false);
 
-    const anonymousMode = false;
-    const prankMode = true;
+    const aMode = true;
+    const pMode = false;
 
     
 
@@ -162,7 +162,7 @@ function ChatView({email, resultHandler}) {
 
     let myTeamUsers = [];
 
-    if (anonymousMode) {
+    if (aMode) {
         myTeamUsers = [
             {
                 rName: otherPersons[0].name,
@@ -189,7 +189,7 @@ function ChatView({email, resultHandler}) {
                 mail: otherPersons[3] !== '' ? otherPersons[3].mail : null
             }
         ]
-    } else if (prankMode) {
+    } else if (pMode) {
         myTeamUsers = [
             {
                 rName: otherPersons[0].name,
@@ -458,7 +458,7 @@ function ChatView({email, resultHandler}) {
                         const messageContainer = document.createElement('div');
                         const nameTimeContainer =  document.createElement('div');
                         
-                        if (anonymousMode && myTeamUsers[myIndex] !== undefined) {
+                        if (aMode && myTeamUsers[myIndex] !== undefined) {
                             imgElement.src = myTeamUsers[myIndex].imgURL;
                             nameTimeContainer.innerText =  `${_message.timestamp} ${myTeamUsers[myIndex].name}`; 
                         } else {
@@ -486,7 +486,7 @@ function ChatView({email, resultHandler}) {
                         // console.log(textMessage.toUpperCase(), 1)
                         // console.log(myTeamUsers[1].name.split(" ")[0].toUpperCase(), 2)
                         // console.log('')
-                        if (prankMode) {
+                        if (pMode) {
                             if (name === myTeamUsers[0].rName) {
                                 let searchMask = myTeamUsers[0].name.split(" ")[0];
                                 let regEx = new RegExp(searchMask, "ig");
@@ -552,7 +552,7 @@ function ChatView({email, resultHandler}) {
                             }
                         }
     
-                        if (prankMode || anonymousMode) {
+                        if (pMode || aMode) {
                             if (myTeamUsers[0].rName === _message.sender) {
                                 imgElement.src = myTeamUsers[0].imgURL;
                                 nameTimeContainer.innerText = `${_message.timestamp} ${myTeamUsers[0].name}`;
@@ -737,7 +737,7 @@ function ChatView({email, resultHandler}) {
                                 <div id="userinfo">
                                     <b>Inloggad som:</b><br/> 
                                     {
-                                        anonymousMode && myTeamUsers[myIndex] !== undefined ?
+                                        aMode && myTeamUsers[myIndex] !== undefined ?
                                             <div>
                                                 <img src={myTeamUsers[myIndex].imgURL} /> {myTeamUsers[myIndex].name}
                                                 <img src={require('../bilder/onlineDot.png')} id={myTeamUsers[3].rName === null ? 'loginimg' : ''} />
@@ -832,7 +832,7 @@ function ChatView({email, resultHandler}) {
                 </Col>
 
                 <Col sm={12} lg={6}> {/* 2ND CHAT */}
-                    <OtherTeamView anonymousMode={anonymousMode} />
+                    <OtherTeamView anonymousMode={aMode} />
 
                     {voteBoxContent}
                 </Col>
