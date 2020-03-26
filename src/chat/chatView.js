@@ -14,7 +14,6 @@ import reglerShort from './spelreglerS';
 import reglerLong from './spelreglerL';
 import GameTimer from '../GameTimer/GameTimer';
 
-
 const firebase = require('firebase');
 
 function ChatView({email, resultHandler}) {
@@ -35,6 +34,7 @@ function ChatView({email, resultHandler}) {
     const [user3Online, setUser3Online] = useState('');
     const [user4Online, setUser4Online] = useState('');
     const [startTimer, setStartTimer] = useState(false);
+    const [timerContent, setTimerContent] = useState(null);
 
     const aMode = true;
     const pMode = false;
@@ -52,8 +52,6 @@ function ChatView({email, resultHandler}) {
                         const chats = res.docs.map(_doc => _doc.data());
                         await (
                             setChats(chats),
-                            console.log(chats),
-                            console.log(_usr.email),
                             
                             chats[0].users.forEach((userEmail, index, array) => {
                                 firebase
@@ -268,7 +266,6 @@ function ChatView({email, resultHandler}) {
         
                 const chatRef = firebase.firestore().collection('chats').doc(currentUsers);
                 
-                console.log(myTeamUsers[3].rName)
 
                 if (myTeamUsers[3].rName === null && loggedInUsers.length === 3) {
                     setStartTimer(true);
@@ -281,7 +278,6 @@ function ChatView({email, resultHandler}) {
                 }
 
                 // --- Visa inloggade användare ---
-                console.log(`loggedInUsers: ${loggedInUsers}`)
                 if (loggedInUsers.includes(myTeamUsers[0].mail)) {
                     setUser1Online('https://i.imgur.com/LWKMROF.png');
                 } 
@@ -329,7 +325,20 @@ function ChatView({email, resultHandler}) {
                     }, 50)
                 }
                 // -----------------------
-        
+                console.log(`firstMailInChat: ${firstMailInChat}`)
+
+                if (firstMailInChat === '') {
+                    console.log('Hej01');
+                    firstMailInChatHandler(currentUsers.split(':')[0])
+                }
+
+                if (email === firstMailInChat && askIfReady) {
+                    console.log(`startTimer: ${startTimer}`)
+                    setTimerContent(
+                        <TimerReady currentUsers={currentUsers} startTimer={startTimer} />
+                    )
+                }
+
                 if ((_chat.chosenBlueCard + _chat.chosenRedCard === 3 && myTeamUsers[3].rName === null) || (_chat.chosenBlueCard + _chat.chosenRedCard === 4 && myTeamUsers[3].rName !== null)) {
                     const finalCard = _chat.chosenRedCard >= 2 ? 'redCard' : 'blueCard';
                     const otherTeamCard = _chat.otherTeamFinalCard;
@@ -365,10 +374,6 @@ function ChatView({email, resultHandler}) {
                     const rowElement = document.createElement('div');
                     const colElement = document.createElement('div');
                     const imgElement = document.createElement('img');
-    
-                    if (firstMailInChat === '') {
-                        firstMailInChatHandler(currentUsers.split(':')[0])
-                    }
                     
                     rowElement.className = 'row';
                     colElement.className = 'col';
@@ -589,7 +594,17 @@ function ChatView({email, resultHandler}) {
                 objDiv.scrollTop = objDiv.scrollHeight;  
             })
         }
-    }, [chats, name, imgURL, askIfReady, otherPersons, firstMailInChat, currentUsers, usersVoted, teamReady, loggedInUsers])
+    }, [chats, name, imgURL, askIfReady, otherPersons, firstMailInChat, currentUsers, seconds, usersVoted, teamReady, loggedInUsers])
+
+    // const history = useHistory();
+    // const [seconds, setSeconds] = useState(600);
+    // const [loggedInUsers, setLoggedInUsers] = useState([]);
+    // const [user1Online, setUser1Online] = useState('');
+    // const [user2Online, setUser2Online] = useState('');
+    // const [user3Online, setUser3Online] = useState('');
+    // const [user4Online, setUser4Online] = useState('');
+    // const [startTimer, setStartTimer] = useState(false);
+
 
     function submitMessage(event) {
         event.preventDefault();
@@ -650,14 +665,6 @@ function ChatView({email, resultHandler}) {
         </div>
     );
 
-    // ---
-
-    let timerContent = null;
-    if (email === firstMailInChat && askIfReady) {
-        timerContent = (
-            <TimerReady currentUsers={currentUsers} />
-        )
-    }
 
     let voteBoxContent = null;
 
@@ -742,7 +749,6 @@ function ChatView({email, resultHandler}) {
                                             </div>
                                         :
                                             <div>
-                                                {console.log(myTeamUsers[3].rName)}
                                                 <img src={imgURL} alt="" /> {name} <img src={require('../bilder/onlineDot.png')}  id={myTeamUsers[3].rName === null ? 'loginimg' : ''} />
 
                                             </div>

@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 
 const firebase = require('firebase');
 
-function TimerReady({currentUsers}) {
+function TimerReady({currentUsers, startTimer}) {
     const [seconds, setSeconds] = useState(0);
-    const [limit, setLimit] = useState(180);
-    
+    const [limit, setLimit] = useState(5);
+
     useEffect(() => {
         let interval = null;
+        console.log(`seconds: ${seconds}`);
 
         if (seconds >= limit) {
 
@@ -43,11 +44,14 @@ function TimerReady({currentUsers}) {
         }
 
         interval = setInterval(() => {
-            setSeconds(seconds => seconds + 1);
+            if (startTimer) {
+                setSeconds(seconds => seconds + 1);
+            }
+            
         }, 1000);
         
         return () => clearInterval(interval);
-    }, [seconds, currentUsers]);
+    }, [seconds, currentUsers, startTimer]);
 
     return (
         <div>
