@@ -8,7 +8,6 @@ function TimerReady({currentUsers, startTimer}) {
 
     useEffect(() => {
         let interval = null;
-        console.log(`seconds: ${seconds}`);
 
         if (seconds >= limit) {
 

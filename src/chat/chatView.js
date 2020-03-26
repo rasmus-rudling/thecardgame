@@ -325,15 +325,12 @@ function ChatView({email, resultHandler}) {
                     }, 50)
                 }
                 // -----------------------
-                console.log(`firstMailInChat: ${firstMailInChat}`)
 
                 if (firstMailInChat === '') {
-                    console.log('Hej01');
                     firstMailInChatHandler(currentUsers.split(':')[0])
                 }
 
                 if (email === firstMailInChat && askIfReady) {
-                    console.log(`startTimer: ${startTimer}`)
                     setTimerContent(
                         <TimerReady currentUsers={currentUsers} startTimer={startTimer} />
                     )
