@@ -39,8 +39,6 @@ function ChatView({email, resultHandler}) {
     const aMode = true;
     const pMode = false;
 
-    
-
     useEffect(() => {
         firebase.auth().onAuthStateChanged(async _usr => {
             if (!_usr) { // Om användaren INTE finns --> Skicka användaren till startsidan
@@ -670,8 +668,8 @@ function ChatView({email, resultHandler}) {
                     <Col>
                         <h5>VÄLJ KORT HÄR</h5> 
                         
-                        Se till att vara överrens i gruppen innan valet görs.
-                        Ni väljer kort som ett lag.
+                        Se till att vara överrens i gruppen innan valet görs. 
+                        <strong> Alla i laget måste välja.</strong>
                     </Col>
                 </Row>
 
