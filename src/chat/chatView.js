@@ -399,7 +399,7 @@ function ChatView({email, resultHandler}) {
                         }
         
                         messageElement.className = 'adminMessages';
-                        messageElement.innerText = ` ${_message.message}`;
+                        messageElement.innerText = ` ${_message.message} Alla i laget måste välja.`;
                         const buttonElementYes = document.createElement('button');
                         const buttonElementNo = document.createElement('button');
         
@@ -574,7 +574,6 @@ function ChatView({email, resultHandler}) {
                         messageContainer.append(imgElement);
         
                         messageContainer.append(messageElement);
-                        
         
                         messageContainer.className = 'otherMessagesBox'
                         messageElement.className = 'otherMessages';
@@ -607,11 +606,14 @@ function ChatView({email, resultHandler}) {
         event.preventDefault();
         const newMessage = document.getElementById('msg-box').value;
         
+        console.log(newMessage, 'Hej01');
         const d = new Date();
         const minuteStamp = d.getMinutes();
         const hourStamp = d.getHours();
         const strMinuteStamp = minuteStamp < 10 ? `0${minuteStamp}` : `${minuteStamp}`;
         const strHourStamp = hourStamp < 10 ? `0${hourStamp}` : `${hourStamp}`;
+
+        console.log(currentUsers);
 
         firebase
             .firestore()
