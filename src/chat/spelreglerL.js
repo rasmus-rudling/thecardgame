@@ -21,6 +21,9 @@ var reglerLong = <div>
     När båda lagen har tagit sitt beslut kommer en ruta upp med vilka som vann. Motståndarlaget kan inte se att ni gått till beslut förrän efter spelet är över.
     < br/>
     <br />
+    <font color="red"><b>Ni kommer alltså endast köra <u>en</u> match idag, som pågår i 10 minuter. (Och inte 45 minuter som stod i Doodlen). </b> Ni som kommer via kursen DM1578 på KTH får fortfarande högskolepoäng för de 45 minuterna.</font>
+    <br />
+    <br />
     <b><i>Lycka till!</i></b>
 
 </div>;
