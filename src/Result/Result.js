@@ -7,6 +7,7 @@ const firebase = require('firebase');
 const Result = (props) => {
     const redCard = document.createElement('img');
     const blueCard = document.createElement('img');
+    const [header, setHeader] = useState('');
 
     redCard.src = require('../red_card.png');
     blueCard.src = require('../blue_card.png');
@@ -17,11 +18,22 @@ const Result = (props) => {
         <Container fluid className={classes.container}>
             {
                 setTimeout(() => {
-                    alert('Tack för att du deltog i denna deltävling! Nu är du klar och kan stänga ned hemsidan!')
-                }, 3000)
+                    const pElement = document.createElement('p');
+                    const aElement = document.createElement('a');
+                    pElement.innerText = 'Tack för att du deltog i denna deltävling! Nu ska du fylla i följande formulär';
+                    aElement.href = "https://docs.google.com/forms/d/e/1FAIpQLSe3ZdMMPDt7dQvwFFDuBMzWEF2fUWGWCWVgVM1OGU_7BIWvig/viewform";
+                    aElement.innerText = 'Länk till formulär';
+
+                    const headerElement = document.getElementById('header');
+
+                    headerElement.append(pElement);
+                    headerElement.append(aElement);
+                    
+                }, 2000)
             }
             <Row className={classes.row}>
                 <Col md={6} className={classes.myTeam}>
+                    <h1 id='header'></h1>
                     <h1>Ert val</h1>
                     {
                         props.finalCard === 'redCard' ? 

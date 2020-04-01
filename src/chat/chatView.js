@@ -36,8 +36,8 @@ function ChatView({email, resultHandler}) {
     const [startTimer, setStartTimer] = useState(false);
     const [timerContent, setTimerContent] = useState(null);
 
-    const aMode = true;
-    const pMode = false;
+    const aMode = false;
+    const pMode = true;
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(async _usr => {
