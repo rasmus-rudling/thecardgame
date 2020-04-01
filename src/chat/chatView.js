@@ -590,7 +590,7 @@ function ChatView({email, resultHandler}) {
                 objDiv.scrollTop = objDiv.scrollHeight;  
             })
         }
-    }, [chats, name, imgURL, askIfReady, otherPersons, firstMailInChat, currentUsers, seconds, usersVoted, teamReady, loggedInUsers])
+    }, [chats, name, imgURL, askIfReady, otherPersons, firstMailInChat, currentUsers, usersVoted, teamReady, loggedInUsers])
 
     // const history = useHistory();
     // const [seconds, setSeconds] = useState(600);

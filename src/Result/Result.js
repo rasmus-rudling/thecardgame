@@ -7,13 +7,10 @@ const firebase = require('firebase');
 const Result = (props) => {
     const redCard = document.createElement('img');
     const blueCard = document.createElement('img');
-    const [header, setHeader] = useState('');
 
     redCard.src = require('../red_card.png');
     blueCard.src = require('../blue_card.png');
-
     
-
     return (
         <Container fluid className={classes.container}>
             {
@@ -25,11 +22,10 @@ const Result = (props) => {
                     aElement.innerText = 'Länk till formulär';
 
                     const headerElement = document.getElementById('header');
-
+                    
                     headerElement.append(pElement);
                     headerElement.append(aElement);
-                    
-                }, 2000)
+                }, 1500)
             }
             <Row className={classes.row}>
                 <Col md={6} className={classes.myTeam}>
