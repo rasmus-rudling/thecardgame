@@ -14,18 +14,14 @@ const Result = (props) => {
     return (
         <Container fluid className={classes.container}>
             {
-                {/* setTimeout(() => {
+                setTimeout(() => {
                     const pElement = document.createElement('p');
-                    const aElement = document.createElement('a');
-                    pElement.innerText = 'Tack för att du deltog i denna deltävling! Nu ska du fylla i följande formulär';
-                    aElement.href = "https://docs.google.com/forms/d/e/1FAIpQLSe3ZdMMPDt7dQvwFFDuBMzWEF2fUWGWCWVgVM1OGU_7BIWvig/viewform";
-                    aElement.innerText = 'Länk till formulär';
-
+                    pElement.innerText = 'Tack för att du deltog i denna deltävling! Om det här är din andra omgång ska du nu gå in och svara på formuläret som du nu fått på mailen!';
+                    
                     const headerElement = document.getElementById('header');
                     
                     headerElement.append(pElement);
-                    headerElement.append(aElement);
-                }, 1500) */}
+                }, 1500)
             }
             <Row className={classes.row}>
                 <Col md={6} className={classes.myTeam}>
