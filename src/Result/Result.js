@@ -14,7 +14,7 @@ const Result = (props) => {
     return (
         <Container fluid className={classes.container}>
             {
-                setTimeout(() => {
+                {/* setTimeout(() => {
                     const pElement = document.createElement('p');
                     const aElement = document.createElement('a');
                     pElement.innerText = 'Tack för att du deltog i denna deltävling! Nu ska du fylla i följande formulär';
@@ -25,7 +25,7 @@ const Result = (props) => {
                     
                     headerElement.append(pElement);
                     headerElement.append(aElement);
-                }, 1500)
+                }, 1500) */}
             }
             <Row className={classes.row}>
                 <Col md={6} className={classes.myTeam}>
