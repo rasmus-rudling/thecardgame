@@ -36,7 +36,7 @@ function ChatView({email, resultHandler}) {
     const [startTimer, setStartTimer] = useState(false);
     const [timerContent, setTimerContent] = useState(null);
 
-    const aMode = false;
+    const aMode = true;
     const pMode = false;
 
     useEffect(() => {
