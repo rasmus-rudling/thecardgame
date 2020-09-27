@@ -82,9 +82,8 @@ function StartView({email, setEmail, password, setPassword, loginError, setLogin
                                 </Button>
                             </Form.Group>
                             <Form.Group>
-                                <Link to={`/chat`} className="noLogIn">Inget konto? Fortsätt utan att logga in</Link>
+                                <div className="noLogIn">Inget konto? Smygkika på sidan ändå genom att <Link to={`/chat`} className="noLogIn"><u>klicka här</u></Link></div>
                             </Form.Group>
-                            
                         </Form>
                     </div>
                 </Col>

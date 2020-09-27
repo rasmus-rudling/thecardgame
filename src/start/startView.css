@@ -33,6 +33,6 @@
 }
 
 .noLogIn {
-    max-width: 50%;
     font-size: small;
+    text-align: center;
 }
