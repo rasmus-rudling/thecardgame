@@ -31,3 +31,8 @@
 .redText {
     color: red;
 }
+
+.noLogIn {
+    font-size: small;
+    text-align: center;
+}
