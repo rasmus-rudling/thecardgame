@@ -363,7 +363,7 @@ function ChatView({email, resultHandler}) {
         
                     resultHandler(finalCard, otherTeamCard, myPoints, othersPoints)
         
-                    history.push('/result')
+                    // history.push('/result')
                 }
         
                 _chat.messages.forEach(_message => { 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import {Container, Row, Col, Form, Button} from 'react-bootstrap';
 import './startView.css'
 
@@ -81,7 +81,9 @@ function StartView({email, setEmail, password, setPassword, loginError, setLogin
                                     Logga in
                                 </Button>
                             </Form.Group>
-                            
+                            <Form.Group>
+                                <div className="noLogIn">Inget konto? Smygkika på sidan ändå genom att <Link to={`/chat`} className="noLogIn"><u>klicka här</u></Link></div>
+                            </Form.Group>
                         </Form>
                     </div>
                 </Col>
