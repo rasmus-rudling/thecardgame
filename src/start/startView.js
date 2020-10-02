@@ -82,7 +82,9 @@ function StartView({email, setEmail, password, setPassword, loginError, setLogin
                                 </Button>
                             </Form.Group>
                             <Form.Group>
-                                <div className="noLogIn">Inget konto? Smygkika på sidan ändå genom att <Link to={`/chat`} className="noLogIn"><u>klicka här</u></Link></div>
+                                <Button type="submit" variant="outline-dark" onClick={() => {setEmail('anna@kth.se'); setPassword('hej123')}}>
+                                    Inget konto? Smygkika på sidan ändå genom att klicka här
+                                </Button>
                             </Form.Group>
                         </Form>
                     </div>
