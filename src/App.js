@@ -11,7 +11,7 @@ import {
 
 
 function App() {
-    const [email, setEmail] = useState("angus@kth.se");
+    const [email, setEmail] = useState("anna@kth.se");
     const [password, setPassword] = useState("");
     const [loginError, setLoginError] = useState('');
     const [finalCard, setFinalCard] = useState('');
@@ -37,9 +37,6 @@ function App() {
     function updateEmail(newEmail) {
         setEmail(newEmail)
     }
-
-// Kanske går att lösa på snyggare sätt än att ha ett separat state för chatView.
-//  const [emailInChat, setEmailInChat] = React.useState("No user");
 
     return (    
         <Router>
