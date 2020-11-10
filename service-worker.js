@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/thecardgame/precache-manifest.98880ddec8d22ba256e67ca4b59d7261.js"
+  "/thecardgame/precache-manifest.ee51c5cce7537a0bb5cd0408471705c0.js"
 );
 
 self.addEventListener('message', (event) => {
