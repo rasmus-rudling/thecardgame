@@ -78,12 +78,12 @@ function StartView({email, setEmail, password, setPassword, loginError, setLogin
 
                             <Form.Group>
                                 <Button type="submit">
-                                    Logga in
+                                    Sign in
                                 </Button>
                             </Form.Group>
                             <Form.Group>
                                 <Button type="submit" variant="outline-dark" onClick={() => {setEmail('anna@kth.se'); setPassword('hej123')}}>
-                                    Inget konto? Smygkika på sidan ändå genom att klicka här
+                                    No account? Take a look at the page anyway by clicking here!
                                 </Button>
                             </Form.Group>
                         </Form>
